@@ -138,4 +138,6 @@
     <string name="Exit">나가기</string>
     <string name="infoNotice">리스트를 길게 눌러 북마크, 수정, 제거 가능.</string>
     <string name="bookmark_info"><![CDATA[<북마크> 길게눌러 제거 가능]]></string>
+    <string name="Contents">내용</string>
+    <string name="WriteNotice">공지 작성</string>
 </resources>
