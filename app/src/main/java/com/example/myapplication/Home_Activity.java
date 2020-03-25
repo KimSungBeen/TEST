@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -55,7 +56,6 @@ public class Home_Activity extends AppCompatActivity {
 //    String videoURL = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";//테스트용 영상
     String path = "android.resource://com.example.myapplication/" + R.raw.video; //(홈)추천영상
     String noticeTitle      = "Empty";
-
 
     //액티비티를 생성하는 구간
     @Override
