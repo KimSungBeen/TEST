@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="20dp"
+    tools:context=".Notice_write_Activity">
+
+    <!--    공지사항 제목-->
+    <TextView
+        android:id="@+id/TV_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Notice_title"
+        android:textColor="@color/red"/>
+
+    <EditText
+        android:id="@+id/ET_noticeTitle"
+        android:layout_width="330dp"
+        android:maxWidth="330dp"
+        android:layout_height="wrap_content"
+        android:maxHeight="80dp"/>
+
+    <!--    공지사항 내용-->
+    <TextView
+        android:id="@+id/TV_contents"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Notice_contents"
+        android:textColor="@color/red" />
+
+    <EditText
+        android:id="@+id/ET_noticeContents"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:maxWidth="330dp"/>
+
+    <Button
+        android:id="@+id/BTN_noticeComplete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Write_complete"/>
+
+</LinearLayout>

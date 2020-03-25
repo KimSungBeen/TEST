@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="5dp"
+    tools:context=".Diary_write_Activity">
+
+<!--    레이아웃 배치용 가이드라인-->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/GUI_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.15"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/GUI_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9"/>
+
+<!--    타이틀-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Workout_diary"
+        android:gravity="center"
+        android:textSize="32sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/GUI_horizontal"/>
+
+<!--    날짜-->
+    <TextView
+        android:id="@+id/TV_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/GUI_horizontal"
+        app:layout_constraintRight_toLeftOf="@id/GUI_vertical"/>
+
+<!--    일지 작성-->
+    <TextView
+        android:id="@+id/TV_contents"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/contents"
+        android:textColor="@color/red"
+        app:layout_constraintTop_toBottomOf="@id/IV_image"
+        app:layout_constraintBottom_toTopOf="@id/ET_diary"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <EditText
+        android:id="@+id/ET_diary"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/TV_contents"
+        app:layout_constraintWidth_percent="0.9" />
+
+<!--    작성완료 버튼-->
+    <Button
+        android:id="@+id/BTN_diaryComplete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Write_complete"
+        app:layout_constraintTop_toBottomOf="@id/ET_diary"
+        app:layout_constraintRight_toRightOf="@id/GUI_vertical"/>
+
+    <Button
+        android:id="@+id/BTN_camera"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:text="@string/Photo"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toTopOf="@id/GUI_horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:ignore="SmallSp" />
+
+    <Button
+        android:id="@+id/BTN_gallary"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:text="@string/Gallary"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toTopOf="@id/GUI_horizontal"
+        app:layout_constraintLeft_toRightOf="@id/BTN_camera"
+        tools:ignore="SmallSp" />
+
+    <ImageView
+        android:id="@+id/IV_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/emptyimage"
+        app:layout_constraintTop_toBottomOf="@id/GUI_horizontal"
+        app:layout_constraintBottom_toTopOf="@id/ET_diary"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/GUI_vertical"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

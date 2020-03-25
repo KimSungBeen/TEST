@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="5dp"
+    tools:context=".Home_Activity">
+
+<!--    메뉴-->
+
+    <Button
+        android:id="@+id/BTN_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Menu"
+        android:background="@color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/TV_mainLogo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/TV_mainLogo"/>
+
+<!--    메인로고-->
+    <TextView
+        android:id="@+id/TV_mainLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Workout_mate"
+        android:textColor="@color/mainLogo"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+<!--    공지사항-->
+    <TextView
+        android:id="@+id/TV_notice"
+        android:textColor="@color/noticeTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="@string/Notice"
+        android:layout_marginTop="10dp"
+        android:background="@color/notice"
+        app:layout_constraintTop_toBottomOf="@id/TV_mainLogo"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Movie_info"
+        android:textColor="@color/black"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@id/IV_thumbnail"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <ImageView
+        android:id="@+id/IV_thumbnail"
+        android:layout_width="400dp"
+        android:layout_height="200dp"
+        android:layout_marginBottom="5dp"
+        android:src="@drawable/thumbnail1"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toTopOf="@id/GUI_horizontal8"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <!--    운동영상-->
+    <VideoView
+        android:id="@+id/VV_movie"
+        android:layout_width="400dp"
+        android:layout_height="200dp"
+        android:layout_marginBottom="5dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/GUI_horizontal8"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/GUI_horizontal8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.82"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/guideLine"
+        app:layout_constraintTop_toBottomOf = "@id/GUI_horizontal8" />
+
+<!--    음악플레이어-->
+    <TextView
+        android:id="@+id/TV_musicInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Music_info"
+        android:textStyle="italic|bold"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/TV_play"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/TV_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Back"
+        android:textSize="32dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/GUI_horizontal9.2"
+        app:layout_constraintRight_toRightOf="@id/TV_play"
+        tools:ignore ="spUsage" />
+
+    <TextView
+        android:id="@+id/TV_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Play"
+        android:textSize="32dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toTopOf="@id/GUI_horizontal9.2"
+        app:layout_constraintLeft_toLeftOf="@id/TV_back"
+        app:layout_constraintRight_toRightOf="@id/TV_stop"
+        tools:ignore ="spUsage" />
+
+    <TextView
+        android:id="@+id/TV_stop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Stop"
+        android:textSize="32dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toTopOf="@id/GUI_horizontal9.2"
+        app:layout_constraintLeft_toLeftOf="@id/TV_play"
+        app:layout_constraintRight_toRightOf="@id/TV_next"
+        tools:ignore ="spUsage" />
+
+    <TextView
+        android:id="@+id/TV_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Next"
+        android:textSize="32dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toTopOf="@id/GUI_horizontal9.2"
+        app:layout_constraintLeft_toLeftOf="@id/TV_stop"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:ignore ="spUsage" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintBottom_toTopOf="@id/BTN_info"
+        android:layout_marginBottom="3dp"
+        android:background="@color/black"/>
+
+    <!--    음악플레이어 배치용 가이드라인-->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/GUI_horizontal9.2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.92"/>
+
+    <!--    컨텐츠-->
+    <Button
+        android:id="@+id/BTN_home"
+        android:text="@string/Home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/currentButton"
+        android:background="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+    <Button
+        android:id="@+id/BTN_diary"
+        android:text="@string/Workout_diary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+    <Button
+        android:id="@+id/BTN_info"
+        android:text="@string/Workout_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/BTN_stopwatch"
+        app:layout_constraintStart_toEndOf="@id/BTN_home" />
+    <Button
+        android:id="@+id/BTN_stopwatch"
+        android:text="@string/Stop_watch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/BTN_diary"
+        app:layout_constraintLeft_toRightOf="@id/BTN_info"/>
+
+    <TextView
+        android:id="@+id/TV_bookmarkInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bookmark_info"
+        android:textColor="@color/black"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@id/IV_bookmarkNum1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/TV_notice" />
+
+<!--    북마크-->
+
+    <ImageView
+        android:id="@+id/IV_bookmarkNum1"
+        android:layout_width="100dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="5dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@mipmap/ic_launcher_round"
+        app:layout_constraintBottom_toTopOf="@id/TV_bookmarkNum1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/TV_bookmarkInfo"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/IV_bookmarkNum2"
+        android:layout_width="100dp"
+        android:layout_height="0dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@mipmap/ic_launcher_round"
+        app:layout_constraintBottom_toBottomOf="@id/IV_bookmarkNum1"
+        app:layout_constraintEnd_toStartOf="@id/IV_bookmarkNum3"
+        app:layout_constraintStart_toEndOf="@id/IV_bookmarkNum1"
+        app:layout_constraintTop_toTopOf="@id/IV_bookmarkNum1"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/IV_bookmarkNum3"
+        android:layout_width="100dp"
+        android:layout_height="0dp"
+        android:src="@mipmap/ic_launcher_round"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintBottom_toBottomOf="@id/IV_bookmarkNum2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/IV_bookmarkNum2"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/TV_bookmarkNum1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxWidth="100dp"
+        android:maxLines="1"
+        android:layout_marginTop="5dp"
+        android:text="bookmarkNum1"
+        app:layout_constraintEnd_toEndOf="@id/IV_bookmarkNum1"
+        app:layout_constraintStart_toStartOf="@id/IV_bookmarkNum1"
+        app:layout_constraintTop_toBottomOf="@id/IV_bookmarkNum1"
+        app:layout_constraintBottom_toTopOf="@id/IV_bookmarkNum4"/>
+
+    <TextView
+        android:id="@+id/TV_bookmarkNum2"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:maxWidth="100dp"
+        android:maxLines="1"
+        android:layout_weight="1"
+        android:text="bookmarkNum2"
+        app:layout_constraintEnd_toEndOf="@id/IV_bookmarkNum2"
+        app:layout_constraintStart_toStartOf="@id/IV_bookmarkNum2"
+        app:layout_constraintTop_toTopOf="@+id/TV_bookmarkNum1" />
+
+    <TextView
+        android:id="@+id/TV_bookmarkNum3"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:maxWidth="100dp"
+        android:maxLines="1"
+        android:text="bookmarkNum3"
+        app:layout_constraintEnd_toEndOf="@id/IV_bookmarkNum3"
+        app:layout_constraintStart_toStartOf="@id/IV_bookmarkNum3"
+        app:layout_constraintTop_toTopOf="@+id/TV_bookmarkNum1" />
+
+    <ImageView
+        android:id="@+id/IV_bookmarkNum4"
+        android:layout_width="100dp"
+        android:layout_height="0dp"
+        android:src="@mipmap/ic_launcher_round"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TV_bookmarkNum1"
+        app:layout_constraintBottom_toTopOf="@id/TV_bookmarkNum4"/>
+
+    <ImageView
+        android:id="@+id/IV_bookmarkNum5"
+        android:layout_width="100dp"
+        android:layout_height="0dp"
+        android:src="@mipmap/ic_launcher_round"
+        app:layout_constraintBottom_toBottomOf="@+id/IV_bookmarkNum4"
+        app:layout_constraintEnd_toStartOf="@+id/IV_bookmarkNum6"
+        app:layout_constraintStart_toEndOf="@+id/IV_bookmarkNum4"
+        app:layout_constraintTop_toTopOf="@+id/IV_bookmarkNum4"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/IV_bookmarkNum6"
+        android:layout_width="100dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:src="@mipmap/ic_launcher_round"
+        app:layout_constraintBottom_toBottomOf="@+id/IV_bookmarkNum4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/IV_bookmarkNum4" />
+
+    <TextView
+        android:id="@+id/TV_bookmarkNum4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:maxWidth="100dp"
+        android:maxLines="1"
+        android:text="bookmarkNum4"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="@+id/IV_bookmarkNum4"
+        app:layout_constraintStart_toStartOf="@+id/IV_bookmarkNum4"
+        app:layout_constraintTop_toBottomOf="@+id/IV_bookmarkNum4"
+        tools:ignore="NestedWeights" />
+
+    <TextView
+        android:id="@+id/TV_bookmarkNum5"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:maxWidth="100dp"
+        android:maxLines="1"
+        android:text="bookmarkNum5"
+        app:layout_constraintEnd_toEndOf="@+id/IV_bookmarkNum5"
+        app:layout_constraintStart_toStartOf="@+id/IV_bookmarkNum5"
+        app:layout_constraintTop_toTopOf="@+id/TV_bookmarkNum4" />
+
+    <TextView
+        android:id="@+id/TV_bookmarkNum6"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:maxWidth="100dp"
+        android:maxLines="1"
+        android:text="bookmarkNum6"
+        app:layout_constraintEnd_toEndOf="@+id/IV_bookmarkNum6"
+        app:layout_constraintStart_toStartOf="@+id/IV_bookmarkNum6"
+        app:layout_constraintTop_toTopOf="@+id/TV_bookmarkNum4" />
+
+
+    <!--    <com.google.android.exoplayer2.ui.PlayerView-->
+<!--        android:id="@+id/EXO_movie"-->
+<!--        android:layout_width="400dp"-->
+<!--        android:layout_height="225dp"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/VV_movie"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="parent"/>-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

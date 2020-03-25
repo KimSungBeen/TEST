@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene
+    xmlns:motion="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        app:constraintSetStart="@layout/activity_home"
+        app:duration="1000">
+
+        <OnClick
+            motion:touchAnchorId="@id/TV_recommendationMovie"/>
+    </Transition>
+
+
+</MotionScene>

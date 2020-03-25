@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="5dp"
+    app:layout_constraintHorizontal_weight="10"
+    tools:context=".Workout_info_Activity">
+
+    <!--    메뉴-->
+    <Button
+        android:id="@id/BTN_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Menu"
+        android:background="@color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/TV_mainLogo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/TV_mainLogo"/>
+
+    <!--    메인로고-->
+    <TextView
+        android:id="@+id/TV_mainLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Workout_info"
+        android:textColor="@color/mainLogo"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <!-- 정보 유형선택-->
+    <!--    동영상-->
+    <Button
+        android:id="@+id/BTN_video"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:text="@string/Movie"
+        android:textColor="@color/currentButton"
+        app:layout_constraintWidth_percent="0.5"
+        app:layout_constraintTop_toBottomOf="@id/TV_mainLogo"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <!--    문서-->
+    <Button
+        android:id="@+id/BTN_file"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:text="@string/Text"
+        app:layout_constraintWidth_percent="0.5"
+        app:layout_constraintTop_toBottomOf="@id/TV_mainLogo"
+        app:layout_constraintLeft_toRightOf="@id/BTN_video" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/infoNotice"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="@+id/BTN_write"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/BTN_write" />
+
+<!--    작성버튼-->
+    <Button
+        android:id="@+id/BTN_write"
+        android:layout_width="90dp"
+        android:layout_height="40dp"
+        android:text="@string/writeFile"
+        android:textStyle="italic|bold"
+        app:layout_constraintTop_toBottomOf="@id/BTN_file"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <TextView
+        android:id="@+id/test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/BTN_write"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/V_menu"
+        app:layout_constraintTop_toBottomOf="@id/BTN_write">
+
+        <!--    리싸이클러뷰-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/RV_video"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbarSize="5dp"
+            android:scrollbars="vertical"
+            app:layout_constraintBottom_toTopOf="@id/V_menu"
+            app:layout_constraintTop_toBottomOf="@id/BTN_write" />
+
+    </LinearLayout>
+
+    <!--    경계선-->
+    <View
+        android:id="@+id/V_menu"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintBottom_toTopOf="@id/BTN_info"
+        android:layout_marginBottom="3dp"
+        android:background="@color/black"/>
+
+    <!--    컨텐츠-->
+    <Button
+        android:id="@id/BTN_home"
+        android:text="@string/Home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+    <Button
+        android:id="@id/BTN_diary"
+        android:text="@string/Workout_diary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+    <Button
+        android:id="@id/BTN_info"
+        android:text="@string/Workout_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:background="@color/white"
+        android:textColor="@color/currentButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/BTN_stopwatch"
+        app:layout_constraintStart_toEndOf="@id/BTN_home" />
+    <Button
+        android:id="@id/BTN_stopwatch"
+        android:text="@string/Stop_watch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/BTN_diary"
+        app:layout_constraintLeft_toRightOf="@id/BTN_info"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
