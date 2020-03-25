@@ -44,4 +44,6 @@ public class SingleTon {
         context.registerReceiver(receiver, intentFilter);
     }
 
+
+    //브런치 테스트
 }
