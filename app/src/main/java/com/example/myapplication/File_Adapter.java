@@ -38,7 +38,7 @@ public class File_Adapter extends BaseAdapter {
     //convertView: 전환되는뷰, parent: 뷰그룹 자체
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Log.d("File Adapter", "Create [Position: " + position + "]");
+//        Log.d("File Adapter", "Create [Position: " + position + "]");
         Context context = parent.getContext(); // 뷰그룹에 고유한 값 저장
         if(convertView == null){ // 뷰에 아무것도 없으면
             LayoutInflater list = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE); //리스트뷰에 아이템을 합치는 명령

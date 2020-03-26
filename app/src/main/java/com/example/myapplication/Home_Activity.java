@@ -5,13 +5,18 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.MediaController;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -23,7 +28,9 @@ import java.io.InputStream;
 
 import static com.example.myapplication.Music_Service.isPlaying;
 import static com.example.myapplication.Music_Service.mediaPlayer;
+import static com.example.myapplication.Music_Service.moveSeekBarThread;
 import static com.example.myapplication.Music_Service.musicAmount;
+import static com.example.myapplication.Music_Service.musicHandler;
 import static com.example.myapplication.Music_Service.musicNum;
 import static com.example.myapplication.Notice_write_Activity.SP_data;
 
@@ -33,6 +40,8 @@ public class Home_Activity extends AppCompatActivity {
 
     public static final int REQUEST_TO_NOTICE = 11;
     public static final int BOOKMARK_COUNT = 6;
+    public static SeekBar musicSeekBar; //MP3 Player SeekBar
+    public static TextView TV_currentMusicTime, TV_allMusicTime;
     int videoPosition; // 영상이 Pause 되면 그 위치를 저장하기 위한 변수
 
     //북마크번호에 따른 Url
@@ -42,7 +51,7 @@ public class Home_Activity extends AppCompatActivity {
     //뷰 선언
     Button BTN_info, BTN_stopwatch, BTN_diary;
     Button BTN_menu;
-    TextView TV_notice, TV_back, TV_play, TV_stop, TV_next,
+    TextView TV_notice, TV_back, TV_play, TV_pause, TV_stop, TV_next,
             TV_bookmarkNum1, TV_bookmarkNum2, TV_bookmarkNum3, TV_bookmarkNum4, TV_bookmarkNum5, TV_bookmarkNum6;
     ImageView  IV_thumbnail,
             IV_bookmarkNum1, IV_bookmarkNum2, IV_bookmarkNum3, IV_bookmarkNum4, IV_bookmarkNum5, IV_bookmarkNum6;
@@ -50,7 +59,7 @@ public class Home_Activity extends AppCompatActivity {
 //    PlayerView playerView;
 //    SimpleExoPlayer simpleExoPlayer;
 
-    VideoView VV_movie; //비디오 실행을 도와주는 뷰
+    VideoView VV_movie;
     MediaController mediaController; // 미디어 제어 (재생이나 정지) 버튼을 담당
 
 //    String videoURL = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";//테스트용 영상
@@ -72,11 +81,14 @@ public class Home_Activity extends AppCompatActivity {
         BTN_menu        = findViewById(R.id.BTN_menu);
         TV_back         = findViewById(R.id.TV_back);
         TV_play         = findViewById(R.id.TV_play);
+        TV_pause        = findViewById(R.id.TV_pause);
         TV_stop         = findViewById(R.id.TV_stop);
         TV_next         = findViewById(R.id.TV_next);
         TV_notice       = findViewById(R.id.TV_notice);
         VV_movie        = findViewById(R.id.VV_movie);
         IV_thumbnail    = findViewById(R.id.IV_thumbnail);
+        TV_currentMusicTime = findViewById(R.id.TV_currentMusicTime);
+        TV_allMusicTime    = findViewById(R.id.TV_allMusicTime);
 
         //북마크 뷰 초기화
         IV_bookmarkNum1 = findViewById(R.id.IV_bookmarkNum1);
@@ -92,6 +104,9 @@ public class Home_Activity extends AppCompatActivity {
         IV_bookmarkNum6 = findViewById(R.id.IV_bookmarkNum6);
         TV_bookmarkNum6 = findViewById(R.id.TV_bookmarkNum6);
 
+        //MP3 Player SeekBar
+        musicSeekBar = findViewById(R.id.musicSeekBar);
+
         //운동 영상 Player
         mediaController = new MediaController(this); // 컨트롤러 생성
         mediaController.setAnchorView(VV_movie); //컨트롤러를 비디오뷰에 셋팅
@@ -106,7 +121,8 @@ public class Home_Activity extends AppCompatActivity {
             SP_notice.getString("notice", "");
             String[] notice = (SP_notice.getString("notice", "")).split(",");
             noticeTitle = notice[0];
-        }catch (Exception ignored) {
+        }catch (Exception e) {
+            e.printStackTrace();
         }
         TV_notice.setText(noticeTitle);
 
@@ -157,7 +173,8 @@ public class Home_Activity extends AppCompatActivity {
                     image = BitmapFactory.decodeStream(inputStream);
                     inputStream.close();
                 }
-            } catch (Exception ignored) {
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
             //북마크 번호에 맞는 데이터를 각 View에 셋팅
@@ -275,8 +292,8 @@ public class Home_Activity extends AppCompatActivity {
                 try {
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(bookmarkNum1Url));
                     startActivity(intent);
-                } catch (Exception ignored) {
-
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -317,8 +334,8 @@ public class Home_Activity extends AppCompatActivity {
                 try {
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(bookmarkNum2Url));
                     startActivity(intent);
-                } catch (Exception ignored) {
-
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -359,8 +376,8 @@ public class Home_Activity extends AppCompatActivity {
                 try {
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(bookmarkNum3Url));
                     startActivity(intent);
-                } catch (Exception ignored) {
-
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -401,8 +418,8 @@ public class Home_Activity extends AppCompatActivity {
                 try {
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(bookmarkNum4Url));
                     startActivity(intent);
-                } catch (Exception ignored) {
-
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -443,8 +460,8 @@ public class Home_Activity extends AppCompatActivity {
                 try {
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(bookmarkNum5Url));
                     startActivity(intent);
-                } catch (Exception ignored) {
-
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -485,8 +502,8 @@ public class Home_Activity extends AppCompatActivity {
                 try {
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(bookmarkNum6Url));
                     startActivity(intent);
-                } catch (Exception ignored) {
-
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -554,6 +571,7 @@ public class Home_Activity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
 //==================================================================================================
 
         //공지사항 액티비티로 이동
@@ -561,11 +579,11 @@ public class Home_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Home_Activity.this, Notice_read_Activity.class);
-//                startActivity(intent);
                 startActivityForResult(intent, REQUEST_TO_NOTICE);
 
             }
         });
+
 //==================================================================================================
 
         //동영상을 클릭리스너
@@ -580,20 +598,32 @@ public class Home_Activity extends AppCompatActivity {
 
 //==================================================================================================
 
+        //서비스용 인텐트
+        Intent serviceIntent = new Intent(Home_Activity.this, Music_Service.class);
+
         //음악플레이어 뒤로가기
         TV_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 //이전에 실행되고 있던 음악 종료
                 if (isPlaying) {
                     mediaPlayer[musicNum].stop();
                     mediaPlayer[musicNum].reset();
+                    stopService(serviceIntent);
+
+                    //이전곡 재생
+                    if (musicNum > 0) {
+                        musicNum--;
+                    }
+                    startService(serviceIntent);
                 }
 
-                if (musicNum > 0) {
-                    musicNum--;
-                    Intent intent = new Intent(Home_Activity.this, Music_Service.class);
-                    startService(intent);
+                //실행중이 아니라면 일반 재생
+                if(!isPlaying) {
+                    startService(serviceIntent);
+                    TV_play.setVisibility(View.INVISIBLE);
+                    TV_pause.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -602,8 +632,24 @@ public class Home_Activity extends AppCompatActivity {
         TV_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Home_Activity.this, Music_Service.class);
-                startService(intent);
+                if(isPlaying) {
+                    mediaPlayer[musicNum].start();
+                    moveSeekBarThread.run(); //SeekBar 움직임 출력하는 쓰레드
+                }else {
+                    startService(serviceIntent);
+                }
+                TV_play.setVisibility(View.INVISIBLE);
+                TV_pause.setVisibility(View.VISIBLE);
+            }
+        });
+
+        //음악플레이어 일시정지
+        TV_pause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mediaPlayer[musicNum].pause();
+                TV_play.setVisibility(View.VISIBLE);
+                TV_pause.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -611,8 +657,9 @@ public class Home_Activity extends AppCompatActivity {
         TV_stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Home_Activity.this, Music_Service.class);
-                stopService(intent);
+                stopService(serviceIntent);
+                TV_play.setVisibility(View.VISIBLE);
+                TV_pause.setVisibility(View.INVISIBLE);
                 isPlaying = false;
             }
         });
@@ -625,16 +672,50 @@ public class Home_Activity extends AppCompatActivity {
                 if (isPlaying) {
                     mediaPlayer[musicNum].stop();
                     mediaPlayer[musicNum].reset();
+                    stopService(serviceIntent);
+
+                    //다음곡 재생
+                    if (musicNum < musicAmount - 1) {
+                        musicNum++;
+                    }
+                    startService(serviceIntent);
                 }
 
-                if (musicNum < musicAmount - 1) {
-                    musicNum++;
-                    Intent intent = new Intent(Home_Activity.this, Music_Service.class);
-                    startService(intent);
+                //실행중이 아니라면 일반 재생
+                if(!isPlaying) {
+                    startService(serviceIntent);
+                    TV_play.setVisibility(View.INVISIBLE);
+                    TV_pause.setVisibility(View.VISIBLE);
                 }
             }
         });
+
+        //SeekBar 컨트롤에 반응하는 메소드
+        musicSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+                try {
+                    if (fromUser) {
+                        mediaPlayer[musicNum].seekTo(progress);
+                        musicSeekBar.setProgress(progress);
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
     }
+
 //==================================================================================================
 
     //다른 작업요청으로 인해 현재 액티비티가 멈춰진 구간
@@ -648,7 +729,7 @@ public class Home_Activity extends AppCompatActivity {
 
     }
 
-    //==================================================================================================
+//==================================================================================================
 
     //공지사항 작성에서 돌아왔을때 제목을 출력
     @Override

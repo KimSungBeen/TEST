@@ -102,7 +102,7 @@ public class Workout_info_files_Activity extends AppCompatActivity {
 
                 //JSON 배열의 크기만큼 반복해서 데이터를 읽음
                 for (int i = 0; i < jsonArray.length(); i++) {
-                    Log.d("onnn", "생성");
+//                    Log.d("onnn", "생성");
                     jsonObject = (JSONObject) jsonArray.get(i);
 
                     Uri bitmapUri = Uri.parse(jsonObject.get("image").toString()); //이미지의 uri 읽어오기
@@ -116,7 +116,8 @@ public class Workout_info_files_Activity extends AppCompatActivity {
                             image = BitmapFactory.decodeStream(inputStream);
                             inputStream.close();
                         }
-                    } catch (Exception ignored) {
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
 
                     //읽은 데이터로 리스트 복구
@@ -213,6 +214,7 @@ public class Workout_info_files_Activity extends AppCompatActivity {
                         Toast.makeText(Workout_info_files_Activity.this, title + "로 이동", Toast.LENGTH_SHORT).show();
                     }
                 } catch(Exception e) {
+                    e.printStackTrace();
                     Toast.makeText(Workout_info_files_Activity.this, "잘못된 URL", Toast.LENGTH_SHORT).show();
                 }
 
@@ -334,7 +336,7 @@ public class Workout_info_files_Activity extends AppCompatActivity {
 
             //리스트의 갯수만큼 반복해서 데이터를 저장
             for(int i = 0; i < File_Adapter.getCount(); i++) {
-                Log.d("onnn", "저장");
+//                Log.d("onnn", "저장");
                 JSONObject fileObject = new JSONObject();
 
                 //이미지를 Bitmap -> Uri -> String 으로 바꿔서 저장
@@ -402,8 +404,8 @@ public class Workout_info_files_Activity extends AppCompatActivity {
                     inputStream.close();
                 }
 
-            } catch (Exception ignored) {
-
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
             //게시글 작성완료할 때

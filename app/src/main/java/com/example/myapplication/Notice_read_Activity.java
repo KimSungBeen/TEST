@@ -51,7 +51,8 @@ public class Notice_read_Activity extends AppCompatActivity {
             String[] notice = SP_notice.getString("notice", "").split(",");
             noticeTitle = notice[0];
             noticeContents = notice[1];
-        }catch (Exception ignored) {
+        }catch (Exception e) {
+            e.printStackTrace();
         }
         TV_noticeTitle.setText(noticeTitle);
         TV_noticeContents.setText(noticeContents);

@@ -73,7 +73,8 @@ public class Diary_write_Activity extends AppCompatActivity {
                 inputStream.close();
 
                 IV_image.setImageBitmap(bitmap);
-            } catch (Exception ignore) {
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
             IV_image.setImageBitmap(bitmap);
@@ -171,8 +172,8 @@ public class Diary_write_Activity extends AppCompatActivity {
                     inputStream.close();
 
                     IV_image.setImageBitmap(bitmap);
-                } catch (Exception ignored) {
-
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 Toast.makeText(this, "이미지 가져오기 성공", Toast.LENGTH_SHORT).show();
 

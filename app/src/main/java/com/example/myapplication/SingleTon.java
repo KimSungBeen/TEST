@@ -29,6 +29,7 @@ public class SingleTon {
             try {
                 return Uri.parse(path);
             }catch (NullPointerException e) {
+                e.printStackTrace();
                 return null;
             }
         } else {

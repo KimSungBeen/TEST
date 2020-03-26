@@ -37,7 +37,7 @@ public class Diary_Adapter extends RecyclerView.Adapter<Diary_Adapter.MyViewHold
     @NonNull
     @Override
     public Diary_Adapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.d("Diary Adapter", "onCreateViewHolder");
+//        Log.d("Diary Adapter", "onCreateViewHolder");
 
         //레이아웃과 아이템 연결
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.diary_item_layout, parent, false);
@@ -51,7 +51,7 @@ public class Diary_Adapter extends RecyclerView.Adapter<Diary_Adapter.MyViewHold
     //각 뷰가 보여질때 호출되는 구간
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Log.d("Diary Adapter", "onBindViewHolder [Position: " + position + "]");
+//        Log.d("Diary Adapter", "onBindViewHolder [Position: " + position + "]");
 
         //아이템 데이터를 셋팅하는 부분
         holder.IV_thumbnail.setImageBitmap(arrayList.get(position).getIV_thumbnail());
@@ -148,7 +148,8 @@ public class Diary_Adapter extends RecyclerView.Adapter<Diary_Adapter.MyViewHold
         try {
             arrayList.remove(position); //아이템에 해당하는 리스트를 제거
             notifyItemRemoved(position); //아이템을 제거(후에 Remove가 적용됨)
-        } catch (Exception ignored){
+        } catch (Exception e){
+            e.printStackTrace();
         }
     }
 
@@ -160,7 +161,8 @@ public class Diary_Adapter extends RecyclerView.Adapter<Diary_Adapter.MyViewHold
             Diary_Item item = new Diary_Item(image, title, contents, url); //아이템의 구조 생성
             arrayList.set(position, item); //해당 아이템의 데이터를 다시 셋팅
             notifyDataSetChanged(); //바뀐 데이터의 값으로 아이템을 다시 셋팅
-        } catch (Exception ignored){
+        } catch (Exception e){
+            e.printStackTrace();
         }
     }
 

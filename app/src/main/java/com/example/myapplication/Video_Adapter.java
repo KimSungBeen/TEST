@@ -45,7 +45,7 @@ public class Video_Adapter extends RecyclerView.Adapter<Video_Adapter.MyViewHold
     @NonNull
     @Override
     public Video_Adapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.d("Video Adapter", "onCreateViewHolder");
+//        Log.d("Video Adapter", "onCreateViewHolder");
 
         //레이아웃과 아이템 연결
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout, parent, false);
@@ -59,7 +59,7 @@ public class Video_Adapter extends RecyclerView.Adapter<Video_Adapter.MyViewHold
     //ViewHolder에 데이터를 넣는 작업을 수행함
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Log.d("Video Adapter", "onBindViewHolder [Position: " + position + "]");
+//        Log.d("Video Adapter", "onBindViewHolder [Position: " + position + "]");
 
         //아이템 데이터를 셋팅하는 부분
         holder.IV_thumbnail.setImageBitmap(arrayList.get(position).getIV_thumbnail());
@@ -90,6 +90,7 @@ public class Video_Adapter extends RecyclerView.Adapter<Video_Adapter.MyViewHold
                         Toast.makeText(v.getContext(), title + "로 이동", Toast.LENGTH_SHORT).show();
                     }
                 } catch(Exception e) {
+                    e.printStackTrace();
                     Toast.makeText(v.getContext(), "잘못된 URL", Toast.LENGTH_SHORT).show();
                 }
 
@@ -206,7 +207,8 @@ public class Video_Adapter extends RecyclerView.Adapter<Video_Adapter.MyViewHold
         try {
             arrayList.remove(position); //아이템에 해당하는 리스트를 제거
             notifyItemRemoved(position); //아이템을 제거(후에 Remove가 적용됨)
-        } catch (Exception ignored){
+        } catch (Exception e){
+            e.printStackTrace();
         }
     }
 
@@ -226,7 +228,8 @@ public class Video_Adapter extends RecyclerView.Adapter<Video_Adapter.MyViewHold
             Video_Item item = new Video_Item(image, title, contents, url); //아이템의 구조 생성
             arrayList.set(position, item); //해당 아이템의 데이터를 다시 셋팅
             notifyDataSetChanged(); //바뀐 데이터의 값으로 아이템을 다시 셋팅
-        } catch (Exception ignored){
+        } catch (Exception e){
+            e.printStackTrace();
         }
     }
 

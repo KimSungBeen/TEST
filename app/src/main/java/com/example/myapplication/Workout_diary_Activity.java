@@ -122,7 +122,8 @@ public class Workout_diary_Activity extends AppCompatActivity {
                         image = BitmapFactory.decodeStream(inputStream);
                         inputStream.close();
                     }
-                } catch (Exception ignored) {
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
                 //읽은 데이터로 리스트 복구
@@ -267,7 +268,8 @@ public class Workout_diary_Activity extends AppCompatActivity {
                         image = BitmapFactory.decodeStream(inputStream);
                         inputStream.close();
                     }
-                } catch (Exception ignored) {
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
 

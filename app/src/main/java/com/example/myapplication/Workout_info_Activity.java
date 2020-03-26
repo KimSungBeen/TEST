@@ -104,7 +104,8 @@ public class Workout_info_Activity extends AppCompatActivity {
                     image = BitmapFactory.decodeStream(inputStream);
                     inputStream.close();
                 }
-            } catch (Exception ignored) {
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
             String title = videoData[1];
@@ -113,6 +114,7 @@ public class Workout_info_Activity extends AppCompatActivity {
             try {
                 url = videoData[3];
             }catch (IndexOutOfBoundsException e) {
+                e.printStackTrace();
                 url = null;
             }
 
@@ -275,7 +277,8 @@ public class Workout_info_Activity extends AppCompatActivity {
                     image = BitmapFactory.decodeStream(inputStream);
                     inputStream.close();
                 }
-            } catch (Exception ignored) {
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
             //게시글 작성완료할 때

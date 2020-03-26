@@ -63,12 +63,12 @@
     <ImageView
         android:id="@+id/IV_thumbnail"
         android:layout_width="400dp"
-        android:layout_height="200dp"
+        android:layout_height="0dp"
         android:layout_marginBottom="5dp"
         android:src="@drawable/thumbnail1"
         android:clickable="true"
         android:focusable="true"
-        app:layout_constraintBottom_toTopOf="@id/GUI_horizontal8"
+        app:layout_constraintBottom_toTopOf="@id/TV_musicInfo"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         tools:ignore="ContentDescription" />
@@ -77,25 +77,19 @@
     <VideoView
         android:id="@+id/VV_movie"
         android:layout_width="400dp"
-        android:layout_height="200dp"
+        android:layout_height="0dp"
         android:layout_marginBottom="5dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/GUI_horizontal8"
+        app:layout_constraintBottom_toTopOf="@id/TV_musicInfo"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/GUI_horizontal8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.82"/>
-
     <View
+        android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/guideLine"
-        app:layout_constraintTop_toBottomOf = "@id/GUI_horizontal8" />
+        app:layout_constraintTop_toBottomOf="@id/VV_movie" />
 
 <!--    음악플레이어-->
     <TextView
@@ -107,7 +101,8 @@
         android:textSize="15sp"
         android:textColor="@color/black"
         android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@id/TV_play"
+        app:layout_constraintTop_toBottomOf="@id/view"
+        app:layout_constraintBottom_toTopOf="@id/musicSeekBar"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
@@ -122,7 +117,7 @@
         android:clickable="true"
         android:focusable="true"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/GUI_horizontal9.2"
+        app:layout_constraintBottom_toTopOf="@id/V_menuLine"
         app:layout_constraintRight_toRightOf="@id/TV_play"
         tools:ignore ="spUsage" />
 
@@ -136,10 +131,26 @@
         android:textColor="@color/black"
         android:clickable="true"
         android:focusable="true"
-        app:layout_constraintBottom_toTopOf="@id/GUI_horizontal9.2"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@id/V_menuLine"
         app:layout_constraintLeft_toLeftOf="@id/TV_back"
         app:layout_constraintRight_toRightOf="@id/TV_stop"
         tools:ignore ="spUsage" />
+
+    <TextView
+        android:id="@+id/TV_pause"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="@string/pause"
+        android:textColor="@color/black"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/V_menuLine"
+        app:layout_constraintLeft_toLeftOf="@id/TV_back"
+        app:layout_constraintRight_toRightOf="@id/TV_stop" />
 
     <TextView
         android:id="@+id/TV_stop"
@@ -151,7 +162,7 @@
         android:textColor="@color/black"
         android:clickable="true"
         android:focusable="true"
-        app:layout_constraintBottom_toTopOf="@id/GUI_horizontal9.2"
+        app:layout_constraintBottom_toTopOf="@id/V_menuLine"
         app:layout_constraintLeft_toLeftOf="@id/TV_play"
         app:layout_constraintRight_toRightOf="@id/TV_next"
         tools:ignore ="spUsage" />
@@ -166,25 +177,18 @@
         android:textColor="@color/black"
         android:clickable="true"
         android:focusable="true"
-        app:layout_constraintBottom_toTopOf="@id/GUI_horizontal9.2"
+        app:layout_constraintBottom_toTopOf="@id/V_menuLine"
         app:layout_constraintLeft_toLeftOf="@id/TV_stop"
         app:layout_constraintRight_toRightOf="parent"
         tools:ignore ="spUsage" />
 
     <View
+        android:id="@+id/V_menuLine"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         app:layout_constraintBottom_toTopOf="@id/BTN_info"
         android:layout_marginBottom="3dp"
         android:background="@color/black"/>
-
-    <!--    음악플레이어 배치용 가이드라인-->
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/GUI_horizontal9.2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.92"/>
 
     <!--    컨텐츠-->
     <Button
@@ -384,6 +388,33 @@
         app:layout_constraintEnd_toEndOf="@+id/IV_bookmarkNum6"
         app:layout_constraintStart_toStartOf="@+id/IV_bookmarkNum6"
         app:layout_constraintTop_toTopOf="@+id/TV_bookmarkNum4" />
+
+    <TextView
+        android:id="@+id/TV_currentMusicTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/time"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/musicSeekBar" />
+
+    <SeekBar
+        android:id="@+id/musicSeekBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/TV_play"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:progressTint="@color/red"
+        android:thumbTint="@color/red"
+        app:layout_constraintTop_toBottomOf="@id/TV_musicInfo" />
+
+    <TextView
+        android:id="@+id/TV_allMusicTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/musicSeekBar" />
 
 
     <!--    <com.google.android.exoplayer2.ui.PlayerView-->
