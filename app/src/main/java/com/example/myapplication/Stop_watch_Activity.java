@@ -28,7 +28,7 @@ public class Stop_watch_Activity extends AppCompatActivity {
 
     TextView TV_timeLog;
 
-    static Chronometer chronometer; //시간 측정 위젯
+    static Chronometer chronometer;
     ProgressBar progressBar;
 
     @Override
@@ -38,7 +38,7 @@ public class Stop_watch_Activity extends AppCompatActivity {
 
         SingleTon.broadcastReceiver(this, receiver);
 
-        chronometer = findViewById(R.id.chronometer); //시간 측정 위젯
+        chronometer = findViewById(R.id.chronometer);
         progressBar = findViewById(R.id.progressBar);
 
         //하단 메뉴버튼
@@ -63,6 +63,7 @@ public class Stop_watch_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Stop_watch_Activity.this, Home_Activity.class);
+
                 //FLAG_ACTIVITY_REORDER_TO_FRONT: 실행하려는 액티비티가 이미 스택에 존재하면 그 액티비티를
                 //                                스택의 맨 위로 이동시켜서 실행하게만들어 줌
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -96,7 +97,8 @@ public class Stop_watch_Activity extends AppCompatActivity {
         BTN_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!isRunning){
+                if(!isRunning) {
+
                     //setBase: 파라미터값으로 시간설정, SystemClock: (시스템)시간을 가져옴
                     //elapsedRealtime: 밀리초 단위로
                     chronometer.setBase(SystemClock.elapsedRealtime() - timeOffset); //시작 시간 설정
@@ -144,7 +146,11 @@ public class Stop_watch_Activity extends AppCompatActivity {
 
     }
 
+//==================================================================================================
+
     class ProgressBarTask extends AsyncTask<Void, Integer, Void> {
+
+        public static final int PROGRESSBAR_TIME_OFFSET = 1006; //프로그래스바 진행타임 오차
 
         @Override
         protected void onPreExecute() {
@@ -158,18 +164,15 @@ public class Stop_watch_Activity extends AppCompatActivity {
 
             //스탑워치가 실행중일때 반복문
             while(isRunning) {
+                currentTime = (int) ((SystemClock.elapsedRealtime() - chronometer.getBase() ) /1000) % 60;
+                //Log.i("onnn", "time"+currentTime);
+                publishProgress(currentTime);
 
-                //스탑워치가 카운트될때 마다 현재시간도 +1 카운트
-                chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
-                    @Override
-                    public void onChronometerTick(Chronometer chronometer) {
-                        currentTime++;
-                        publishProgress(currentTime); //onProgressUpdate메소드로 인자값 전달
-                    }
-                });
+                //카운트시간과 프로그레스바의 오차를 줄이기위한 sleep
+                SystemClock.sleep(PROGRESSBAR_TIME_OFFSET);
 
                 //프로그레스바 MAX 값이 되면 다시 0으로 초기화
-                if(currentTime == 60){
+                if(currentTime >= 60){
                     currentTime = 0;
                 }
             }
