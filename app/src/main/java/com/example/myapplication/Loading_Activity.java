@@ -18,7 +18,7 @@ public class Loading_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_loading_);
 
         //로딩화면 쓰레드
-        handler.postDelayed(new Runnable() {
+        handler.postDelayed(new Thread() {
             @Override
             public void run() {
                 Intent intent = new Intent(getApplicationContext(),Home_Activity.class);

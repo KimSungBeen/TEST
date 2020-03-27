@@ -6,7 +6,10 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import static com.example.myapplication.Home_Activity.TV_allMusicTime;
 import static com.example.myapplication.Home_Activity.TV_currentMusicTime;
@@ -14,12 +17,11 @@ import static com.example.myapplication.Home_Activity.musicSeekBar;
 
 public class Music_Service extends Service {
 
-    public static final int SEEKBAR_INITIAL_TIME = 1000; //Seekbar의 이동 주기(1000ms: 1초)
     public static final int musicAmount = 3; //노래의 갯수
     public static int musicNum = 0; //노래의 번호
     public static volatile boolean isPlaying; //음악이 재생되고 있는지에 따른 boolean
-    static Handler musicHandler = new Handler();
-
+    static HandlerClass handlerClass = new HandlerClass();
+    static int position, musicTime, currentMinute, currentSeconds, allMinute, allSeconds;
     static MediaPlayer[] mediaPlayer = new MediaPlayer[musicAmount]; //음악파일 배열
 
     public Music_Service() {
@@ -78,7 +80,10 @@ public class Music_Service extends Service {
             public void onPrepared(MediaPlayer mp) {
                 isPlaying = true;
                 mp.start(); //재생
-                moveSeekBarThread.run();//SeekBar 움직임 출력하는 쓰레드
+//                moveSeekBarThread.run();//SeekBar 움직임 출력하는 쓰레드
+
+                ThreadClass thread = new ThreadClass();
+                thread.start();
             }
         });
 
@@ -97,45 +102,104 @@ public class Music_Service extends Service {
 
     }
 
-    //SeekBar 움직임 출력하는 쓰레드
-    public static final Runnable moveSeekBarThread = new Runnable() {
+//    //SeekBar 움직임 출력
+//    public static final Runnable moveSeekBarThread = new Runnable() {
+//        public void run() {
+//            try {
+//                if (mediaPlayer[musicNum].isPlaying()) {
+//                    int position = mediaPlayer[musicNum].getCurrentPosition(); //현재 재생위치
+//                    int musicTime = mediaPlayer[musicNum].getDuration(); //한 음악파일의 재생시간
+//                    musicSeekBar.setMax(musicTime);
+//                    musicSeekBar.setProgress(position);
+//
+//                    //음악의 현재시간, 총 재생시간 계산
+//                    int currentMinute = (position/1000)/60;
+//                    int currentSeconds = (position/1000)%60;
+//                    int allMinute = (musicTime/1000)/60;
+//                    int allSeconds = (musicTime/1000)%60;
+//
+//                    //음악의 현재시간, 총 재생시간 출력
+//                    if(currentSeconds < 10) {
+//                        String currentMusicTime = currentMinute + ":0" + currentSeconds;
+//                        TV_currentMusicTime.setText(currentMusicTime);
+//                    }else {
+//                        String currentMusicTime = currentMinute + ":" + currentSeconds;
+//                        TV_currentMusicTime.setText(currentMusicTime);
+//                    }
+//                    if(allSeconds < 10) {
+//                        String allMusicTime = allMinute + ":0" + allSeconds;
+//                        TV_allMusicTime.setText(allMusicTime);
+//                    }else {
+//                        String allMusicTime = allMinute + ":" + allSeconds;
+//                        TV_allMusicTime.setText(allMusicTime);
+//                    }
+//
+//                    //(SEEKBAR_INITIAL_TIME: 1000) 1초 마다 쓰레드동작
+//                    musicHandler.postDelayed(this, SEEKBAR_INITIAL_TIME);
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    };
+
+    public static class ThreadClass extends Thread {
+
+        //handler EmptyMessage 상수
+        public static final int SEEBAR_UI_INFO = 0;
+
+        @Override
         public void run() {
+            super.run();
             try {
-                if (mediaPlayer[musicNum].isPlaying()) {
-                    int position = mediaPlayer[musicNum].getCurrentPosition(); //현재 재생위치
-                    int musicTime = mediaPlayer[musicNum].getDuration(); //한 음악파일의 재생시간
-                    musicSeekBar.setMax(musicTime);
-                    musicSeekBar.setProgress(position);
+                while (mediaPlayer[musicNum].isPlaying()) {
+                    position = mediaPlayer[musicNum].getCurrentPosition(); //현재 재생위치
+                    musicTime = mediaPlayer[musicNum].getDuration(); //한 음악파일의 재생시간
 
                     //음악의 현재시간, 총 재생시간 계산
-                    int currentMinute = (position/1000)/60;
-                    int currentSeconds = (position/1000)%60;
-                    int allMinute = (musicTime/1000)/60;
-                    int allSeconds = (musicTime/1000)%60;
+                    currentMinute = (position / 1000) / 60;
+                    currentSeconds = (position / 1000) % 60;
+                    allMinute = (musicTime / 1000) / 60;
+                    allSeconds = (musicTime / 1000) % 60;
 
-                    //음악의 현재시간, 총 재생시간 출력
-                    if(currentSeconds < 10) {
-                        String currentMusicTime = currentMinute + ":0" + currentSeconds;
-                        TV_currentMusicTime.setText(currentMusicTime);
-                    }else {
-                        String currentMusicTime = currentMinute + ":" + currentSeconds;
-                        TV_currentMusicTime.setText(currentMusicTime);
-                    }
-                    if(allSeconds < 10) {
-                        String allMusicTime = allMinute + ":0" + allSeconds;
-                        TV_allMusicTime.setText(allMusicTime);
-                    }else {
-                        String allMusicTime = allMinute + ":" + allSeconds;
-                        TV_allMusicTime.setText(allMusicTime);
-                    }
-
-                    //(SEEKBAR_INITIAL_TIME: 1000) 1초 마다 쓰레드동작
-                    musicHandler.postDelayed(this, SEEKBAR_INITIAL_TIME);
+                    //handler로 UI작업 실행
+                    handlerClass.sendEmptyMessage(SEEBAR_UI_INFO);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-    };
+
+    }
+
+    //Thread에서 계산한 SeekBar에 대한 UI작업 실행
+    public static class HandlerClass extends Handler {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+
+            musicSeekBar.setMax(musicTime);
+            musicSeekBar.setProgress(position);
+
+            //음악의 현재시간, 총 재생시간 출력
+            if(currentSeconds < 10) {
+                String currentMusicTime = currentMinute + ":0" + currentSeconds;
+                TV_currentMusicTime.setText(currentMusicTime);
+            }else {
+                String currentMusicTime = currentMinute + ":" + currentSeconds;
+                TV_currentMusicTime.setText(currentMusicTime);
+            }
+            if(allSeconds < 10) {
+                String allMusicTime = allMinute + ":0" + allSeconds;
+                TV_allMusicTime.setText(allMusicTime);
+            }else {
+                String allMusicTime = allMinute + ":" + allSeconds;
+                TV_allMusicTime.setText(allMusicTime);
+            }
+
+
+
+        }
+    }
 
 }

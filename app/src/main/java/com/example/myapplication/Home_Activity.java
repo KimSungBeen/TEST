@@ -5,13 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.SystemClock;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -28,9 +23,7 @@ import java.io.InputStream;
 
 import static com.example.myapplication.Music_Service.isPlaying;
 import static com.example.myapplication.Music_Service.mediaPlayer;
-import static com.example.myapplication.Music_Service.moveSeekBarThread;
 import static com.example.myapplication.Music_Service.musicAmount;
-import static com.example.myapplication.Music_Service.musicHandler;
 import static com.example.myapplication.Music_Service.musicNum;
 import static com.example.myapplication.Notice_write_Activity.SP_data;
 
@@ -634,7 +627,9 @@ public class Home_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 if(isPlaying) {
                     mediaPlayer[musicNum].start();
-                    moveSeekBarThread.run(); //SeekBar 움직임 출력하는 쓰레드
+                    Music_Service.ThreadClass thread = new Music_Service.ThreadClass();
+                    thread.start();
+
                 }else {
                     startService(serviceIntent);
                 }
