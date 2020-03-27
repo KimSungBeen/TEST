@@ -1,11 +1,14 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,16 +17,19 @@ import static com.example.myapplication.Home_Activity.receiver;
 
 public class Stop_watch_Activity extends AppCompatActivity {
 
+    boolean isRunning; //스톱워치의 실행상태
+    long timeOffset; //일시정지 후 재시작 까지 오차
+    int currentTime; //스탑워치의 현재시간
+    ProgressBarTask progressBarTask;
+
     //뷰 선언
     Button BTN_home, BTN_info, BTN_diary;
     Button BTN_start, BTN_stop, BTN_pause;
 
     TextView TV_timeLog;
 
-    Chronometer chronometer; //시간 측정 위젯
-
-    boolean isRunning; //스톱워치의 실행상태
-    long timeOffset; //일시정지 후 재시작 까지 오차
+    static Chronometer chronometer; //시간 측정 위젯
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +39,7 @@ public class Stop_watch_Activity extends AppCompatActivity {
         SingleTon.broadcastReceiver(this, receiver);
 
         chronometer = findViewById(R.id.chronometer); //시간 측정 위젯
+        progressBar = findViewById(R.id.progressBar);
 
         //하단 메뉴버튼
         BTN_home    = findViewById(R.id.BTN_home);
@@ -95,10 +102,13 @@ public class Stop_watch_Activity extends AppCompatActivity {
                     chronometer.setBase(SystemClock.elapsedRealtime() - timeOffset); //시작 시간 설정
                     chronometer.start();
                     isRunning = true;
+
+                    // ProgressBar 에 대한 AsyncTask 선언, 실행
+                    progressBarTask = new ProgressBarTask();
+                    progressBarTask.execute();
                 }
             }
         });
-
 
         //스톱워치 일시정지
         BTN_pause.setOnClickListener(new View.OnClickListener() {
@@ -134,5 +144,46 @@ public class Stop_watch_Activity extends AppCompatActivity {
 
     }
 
-    //==================================================================================================
+    class ProgressBarTask extends AsyncTask<Void, Integer, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBar.setMax(60);
+        }
+
+        // Background 에서 처리할 작업
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            //스탑워치가 실행중일때 반복문
+            while(isRunning) {
+
+                //스탑워치가 카운트될때 마다 현재시간도 +1 카운트
+                chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+                    @Override
+                    public void onChronometerTick(Chronometer chronometer) {
+                        currentTime++;
+                        publishProgress(currentTime); //onProgressUpdate메소드로 인자값 전달
+                    }
+                });
+
+                //프로그레스바 MAX 값이 되면 다시 0으로 초기화
+                if(currentTime == 60){
+                    currentTime = 0;
+                }
+            }
+            return null;
+        }
+
+        // UI 쓰레드에서의 작업
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+//            Log.i("prog", "doInBackground: "+values[0]);
+            progressBar.setProgress(values[0]);
+        }
+    }
+
+//==================================================================================================
 }
