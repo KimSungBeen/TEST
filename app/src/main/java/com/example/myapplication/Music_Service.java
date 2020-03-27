@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import static com.example.myapplication.Home_Activity.TV_allMusicTime;
 import static com.example.myapplication.Home_Activity.TV_currentMusicTime;
 import static com.example.myapplication.Home_Activity.musicSeekBar;
+import static com.example.myapplication.Home_Activity.receiver;
 
 public class Music_Service extends Service {
 
@@ -35,6 +36,7 @@ public class Music_Service extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        SingleTon.broadcastReceiver(this, receiver);
         Log.i("service","oncreate");
 
         mediaPlayer[0] = MediaPlayer.create(this, R.raw.sametime); //음악 생성
@@ -69,6 +71,8 @@ public class Music_Service extends Service {
                         if (musicNum < musicAmount - 1) {
                             musicNum++;
                         }
+                        Intent receiverIntent = new Intent(Broadcast_Receiver.ACTION_NEXT_MUSIC);
+                        sendBroadcast(receiverIntent);
                         startService(intent);
                     }
                 }
