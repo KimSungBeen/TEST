@@ -1,0 +1,124 @@
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="300dp"
+    android:layout_height="250dp"
+    android:layout_margin="8dp"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:gravity="center"
+            android:text="@string/bookmarkDialog"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/TV_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/white"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/cancel"
+            android:textColor="@color/colorAccent"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+    <TableRow>
+
+        <TextView
+            android:id="@+id/bookmarkNum1"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="20dp"
+            android:background="@mipmap/ic_launcher_round"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="@string/_1"
+            android:textColor="#000000"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/bookmarkNum2"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="20dp"
+            android:background="@mipmap/ic_launcher_round"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="@string/_2"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/bookmarkNum3"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="20dp"
+            android:background="@mipmap/ic_launcher_round"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="@string/_3"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+    </TableRow>
+
+    <TableRow>
+
+        <TextView
+            android:id="@+id/bookmarkNum4"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="20dp"
+            android:background="@mipmap/ic_launcher_round"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="@string/_4"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/bookmarkNum5"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="20dp"
+            android:background="@mipmap/ic_launcher_round"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="@string/_5"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/bookmarkNum6"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="20dp"
+            android:background="@mipmap/ic_launcher_round"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="@string/_6"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+    </TableRow>
+
+</TableLayout>

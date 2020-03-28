@@ -145,4 +145,12 @@
     <string name="addKeyword">키워드 추가</string>
     <string name="removeKeyword">키워드 제거</string>
     <string name="workoutFriend">운동 친구</string>
+    <string name="cancel">취소</string>
+    <string name="_1">1</string>
+    <string name="_2">2</string>
+    <string name="_3">3</string>
+    <string name="_4">4</string>
+    <string name="_5">5</string>
+    <string name="_6">6</string>
+    <string name="bookmarkDialog"><![CDATA[< 북마크 위치선택 >]]></string>
 </resources>

@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,7 +12,12 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.example.myapplication.Notice_write_Activity.SP_data;
 
@@ -30,7 +37,7 @@ public class Video_Adapter extends RecyclerView.Adapter<Video_Adapter.MyViewHold
     static ArrayList<Video_Item> arrayList; //아이템의 데이터가 들어갈 ArrayList
     static final int REQUEST_CORRECTION = 4; //수정하기의 리퀘스트코드
 
-    private Object Context; //startActivityForResult 사용을 위해 ViewGroup을 저장할 변수
+    private Object object; //startActivityForResult 사용을 위해 ViewGroup을 저장할 변수
 
     static int currentVideoPosition;// 수정시 아이템의 위치값을 알아야 하기 때문에 static 변수에 저장
 
@@ -48,7 +55,7 @@ public class Video_Adapter extends RecyclerView.Adapter<Video_Adapter.MyViewHold
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout, parent, false);
         MyViewHolder holder = new MyViewHolder(view);
 
-        Context = parent.getContext();
+        object = parent.getContext();
 
         return holder;
     }
@@ -107,47 +114,9 @@ public class Video_Adapter extends RecyclerView.Adapter<Video_Adapter.MyViewHold
                 dialog.setNeutralButton("북마크", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        currentVideoPosition = holder.getAdapterPosition(); //리스트의 위치번호
 
-                        //Dialog 선언과정
-                        AlertDialog.Builder bookmarkDialog = new AlertDialog.Builder(v.getContext());
-                        bookmarkDialog.setIcon(R.mipmap.ic_launcher);//Dialog icon
-                        bookmarkDialog.setTitle("북마크 번호를 입력하세요. (1 ~ 6)"); //Dialog title
-                        EditText ET_bookmarkNum = new EditText(v.getContext()); //Dialog EditText
-                        bookmarkDialog.setView(ET_bookmarkNum);
-
-                        bookmarkDialog.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                String bookmarkNum = ET_bookmarkNum.getText().toString();
-
-                                //북마크 번호에 해당되는 경우에만 데이터 저장
-                                if(bookmarkNum.equals("1") || bookmarkNum.equals("2") || bookmarkNum.equals("3")
-                                        || bookmarkNum.equals("4") || bookmarkNum.equals("5") || bookmarkNum.equals("6")) {
-                                    currentVideoPosition = holder.getAdapterPosition();
-
-                                    //SharedPreferences선언
-                                    SharedPreferences SP_bookmark = v.getContext().getSharedPreferences(SP_data, 0);
-                                    SharedPreferences.Editor editor = SP_bookmark.edit();
-
-                                    //북마크데이터 (이미지, 제목, url)저장
-                                    Uri saveImageUri = SingleTon.getImageUri(v.getContext(), arrayList.get(currentVideoPosition).getIV_thumbnail());
-                                    String image = String.valueOf(saveImageUri);
-                                    String title = String.valueOf(arrayList.get(currentVideoPosition).getTV_title());
-                                    String url = String.valueOf(arrayList.get(currentVideoPosition).getTV_url());
-                                    String bookmarkData = image + "," + title + "," + url;
-
-                                    editor.putString("bookmarkNum"+bookmarkNum, bookmarkData);
-                                    editor.apply();
-
-                                    Toast.makeText(v.getContext(), bookmarkNum+"번 북마크에 추가완료.", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(v.getContext(), "잘못된 입력입니다. 1 ~ 6의 수를 입력하십시오.", Toast.LENGTH_SHORT).show();
-                                }
-
-                            }
-                        });
-                        bookmarkDialog.show();
-
+                        showDialog(v.getContext()); //북마크 추가하는 다이얼로그창 호출 메소드
                     }
                 });
 
@@ -169,7 +138,7 @@ public class Video_Adapter extends RecyclerView.Adapter<Video_Adapter.MyViewHold
 
                         //Adapter는 Activity가 아니라서 startActivity, startActivityForResult를 사용할 수 없기 때문에
                         //Context라는 Activity 변수를 통하여 메소드를 받아와서 사용
-                        ((Activity) Context).startActivityForResult(intent, REQUEST_CORRECTION);
+                        ((Activity) object).startActivityForResult(intent, REQUEST_CORRECTION);
 
                         dialog.dismiss(); //dialog 닫기
                     }
@@ -190,6 +159,8 @@ public class Video_Adapter extends RecyclerView.Adapter<Video_Adapter.MyViewHold
             }
         });
     }
+
+//==================================================================================================
 
     //item의 총 갯수 리턴 (null이라면 리턴값: 0)
     @Override
@@ -243,4 +214,107 @@ public class Video_Adapter extends RecyclerView.Adapter<Video_Adapter.MyViewHold
         }
     }
 
+//==================================================================================================
+
+    //커스텀 다이얼로그 호출 메소드
+    private void showDialog(Context context){
+        Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.custom_dialog);
+
+        //뷰 선언
+        TextView bookmarNum1 = dialog.findViewById(R.id.bookmarkNum1);
+        TextView bookmarNum2 = dialog.findViewById(R.id.bookmarkNum2);
+        TextView bookmarNum3 = dialog.findViewById(R.id.bookmarkNum3);
+        TextView bookmarNum4 = dialog.findViewById(R.id.bookmarkNum4);
+        TextView bookmarNum5 = dialog.findViewById(R.id.bookmarkNum5);
+        TextView bookmarNum6 = dialog.findViewById(R.id.bookmarkNum6);
+        TextView TV_cancel = dialog.findViewById(R.id.TV_cancel);
+
+        //1번 북마크 클릭리스너
+        bookmarNum1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addBookmark(v, 1);
+                dialog.dismiss();
+            }
+        });
+
+        //2번 북마크 클릭리스너
+        bookmarNum2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addBookmark(v, 2);
+                dialog.dismiss();
+            }
+        });
+
+        //3번 북마크 클릭리스너
+        bookmarNum3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addBookmark(v, 3);
+                dialog.dismiss();
+            }
+        });
+
+        //4번 북마크 클릭리스너
+        bookmarNum4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addBookmark(v, 4);
+                dialog.dismiss();
+            }
+        });
+
+        //5번 북마크 클릭리스너
+        bookmarNum5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addBookmark(v, 5);
+                dialog.dismiss();
+            }
+        });
+
+        //6번 북마크 클릭리스너
+        bookmarNum6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addBookmark(v, 6);
+                dialog.dismiss();
+            }
+        });
+
+        //취소버튼
+        TV_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(), "취소", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+//==================================================================================================
+
+    private void addBookmark(View v, int number) {
+        //SharedPreferences선언
+        SharedPreferences SP_bookmark = v.getContext().getSharedPreferences(SP_data, 0);
+        SharedPreferences.Editor editor = SP_bookmark.edit();
+
+        //북마크데이터 (이미지, 제목, url)저장
+        Uri saveImageUri = SingleTon.getImageUri(v.getContext(), arrayList.get(currentVideoPosition).getIV_thumbnail());
+        String image = String.valueOf(saveImageUri);
+        String title = String.valueOf(arrayList.get(currentVideoPosition).getTV_title());
+        String url = String.valueOf(arrayList.get(currentVideoPosition).getTV_url());
+        String bookmarkData = image + "," + title + "," + url;
+
+        editor.putString("bookmarkNum"+number, bookmarkData);
+        editor.apply();
+
+        Toast.makeText(v.getContext(), number+"번 북마크에 추가완료.", Toast.LENGTH_SHORT).show();
+    }
+
+//==================================================================================================
 }

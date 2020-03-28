@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.app.Activity;
 import android.app.Application;
+import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -293,20 +294,13 @@ public class Home_Activity extends AppCompatActivity {
     //북마크 클릭이벤트
         AlertDialog.Builder dialog = new AlertDialog.Builder(Home_Activity.this);
         dialog.setIcon(R.mipmap.ic_launcher); //Dialog icon
-        dialog.setTitle(""); //Dialog title
-        dialog.setMessage("제거 하시겠습니까?."); //Dialog Message
-
+        dialog.setTitle("제거하시겠습니까?"); //Dialog title
 
         //1번 북마크 클릭(해당Url로 이동)
         IV_bookmarkNum1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(bookmarkNum1Url));
-                    startActivity(intent);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                bookmarkClick(bookmarkNum1Url);
             }
         });
 
@@ -314,26 +308,7 @@ public class Home_Activity extends AppCompatActivity {
         IV_bookmarkNum1.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-
-                dialog.setNegativeButton("제거", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        SharedPreferences SP_bookmark = getSharedPreferences(SP_data, 0);
-                        SharedPreferences.Editor editor = SP_bookmark.edit();
-                        editor.remove("bookmarkNum1");
-                        editor.apply();
-                        dialog.dismiss();
-                        onStart(); //onstart메소드 호출(새로고침효과를 위해)
-                    }
-                });
-
-                dialog.setPositiveButton("취소", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                dialog.show(); //dialog창을 띄운다.
+                bookmarkLongClick(dialog, 1);
 
                 return true;
             }
@@ -343,12 +318,7 @@ public class Home_Activity extends AppCompatActivity {
         IV_bookmarkNum2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(bookmarkNum2Url));
-                    startActivity(intent);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                bookmarkClick(bookmarkNum2Url);
             }
         });
 
@@ -356,26 +326,7 @@ public class Home_Activity extends AppCompatActivity {
         IV_bookmarkNum2.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-
-                dialog.setNegativeButton("제거", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        SharedPreferences SP_bookmark = getSharedPreferences(SP_data, 0);
-                        SharedPreferences.Editor editor = SP_bookmark.edit();
-                        editor.remove("bookmarkNum2");
-                        editor.apply();
-                        dialog.dismiss();
-                        onStart(); //onstart메소드 호출(새로고침효과를 위해)
-                    }
-                });
-
-                dialog.setPositiveButton("취소", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                dialog.show(); //dialog창을 띄운다.
+                bookmarkLongClick(dialog, 2);
 
                 return true;
             }
@@ -385,12 +336,7 @@ public class Home_Activity extends AppCompatActivity {
         IV_bookmarkNum3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(bookmarkNum3Url));
-                    startActivity(intent);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                bookmarkClick(bookmarkNum3Url);
             }
         });
 
@@ -398,26 +344,7 @@ public class Home_Activity extends AppCompatActivity {
         IV_bookmarkNum3.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-
-                dialog.setNegativeButton("제거", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        SharedPreferences SP_bookmark = getSharedPreferences(SP_data, 0);
-                        SharedPreferences.Editor editor = SP_bookmark.edit();
-                        editor.remove("bookmarkNum3");
-                        editor.apply();
-                        dialog.dismiss();
-                        onStart(); //onstart메소드 호출(새로고침효과를 위해)
-                    }
-                });
-
-                dialog.setPositiveButton("취소", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                dialog.show(); //dialog창을 띄운다.
+                bookmarkLongClick(dialog, 3);
 
                 return true;
             }
@@ -427,12 +354,7 @@ public class Home_Activity extends AppCompatActivity {
         IV_bookmarkNum4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(bookmarkNum4Url));
-                    startActivity(intent);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                bookmarkClick(bookmarkNum4Url);
             }
         });
 
@@ -440,26 +362,7 @@ public class Home_Activity extends AppCompatActivity {
         IV_bookmarkNum4.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-
-                dialog.setNegativeButton("제거", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        SharedPreferences SP_bookmark = getSharedPreferences(SP_data, 0);
-                        SharedPreferences.Editor editor = SP_bookmark.edit();
-                        editor.remove("bookmarkNum4");
-                        editor.apply();
-                        dialog.dismiss();
-                        onStart(); //onstart메소드 호출(새로고침효과를 위해)
-                    }
-                });
-
-                dialog.setPositiveButton("취소", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                dialog.show(); //dialog창을 띄운다.
+                bookmarkLongClick(dialog, 4);
 
                 return true;
             }
@@ -469,12 +372,7 @@ public class Home_Activity extends AppCompatActivity {
         IV_bookmarkNum5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(bookmarkNum5Url));
-                    startActivity(intent);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                bookmarkClick(bookmarkNum5Url);
             }
         });
 
@@ -482,26 +380,7 @@ public class Home_Activity extends AppCompatActivity {
         IV_bookmarkNum5.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-
-                dialog.setNegativeButton("제거", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        SharedPreferences SP_bookmark = getSharedPreferences(SP_data, 0);
-                        SharedPreferences.Editor editor = SP_bookmark.edit();
-                        editor.remove("bookmarkNum5");
-                        editor.apply();
-                        dialog.dismiss();
-                        onStart(); //onstart메소드 호출(새로고침효과를 위해)
-                    }
-                });
-
-                dialog.setPositiveButton("취소", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                dialog.show(); //dialog창을 띄운다.
+                bookmarkLongClick(dialog, 5);
 
                 return true;
             }
@@ -511,12 +390,7 @@ public class Home_Activity extends AppCompatActivity {
         IV_bookmarkNum6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(bookmarkNum6Url));
-                    startActivity(intent);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                bookmarkClick(bookmarkNum6Url);
             }
         });
 
@@ -524,26 +398,7 @@ public class Home_Activity extends AppCompatActivity {
         IV_bookmarkNum6.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-
-                dialog.setNegativeButton("제거", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        SharedPreferences SP_bookmark = getSharedPreferences(SP_data, 0);
-                        SharedPreferences.Editor editor = SP_bookmark.edit();
-                        editor.remove("bookmarkNum6");
-                        editor.apply();
-                        dialog.dismiss();
-                        onStart(); //onstart메소드 호출(새로고침효과를 위해)
-                    }
-                });
-
-                dialog.setPositiveButton("취소", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                dialog.show(); //dialog창을 띄운다.
+                bookmarkLongClick(dialog, 6);
 
                 return true;
             }
@@ -751,6 +606,41 @@ public class Home_Activity extends AppCompatActivity {
         VV_movie.pause();
         videoPosition = VV_movie.getCurrentPosition();
 
+    }
+
+//==================================================================================================
+
+    //북마크 클릭 메소드
+    public void bookmarkClick(String url) {
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //북마크 롱클릭 메소드
+    public void bookmarkLongClick(AlertDialog.Builder dialog, int number) {
+        dialog.setNegativeButton("제거", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                SharedPreferences SP_bookmark = getSharedPreferences(SP_data, 0);
+                SharedPreferences.Editor editor = SP_bookmark.edit();
+                editor.remove("bookmarkNum"+number);
+                editor.apply();
+                dialog.dismiss();
+                onStart(); //onstart메소드 호출(새로고침효과를 위해)
+            }
+        });
+
+        dialog.setPositiveButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show(); //dialog창을 띄운다.
     }
 
 //==================================================================================================

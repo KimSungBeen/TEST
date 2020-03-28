@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -137,6 +139,8 @@ public class Workout_info_files_Activity extends AppCompatActivity {
         SingleTon.isBackPress = false;
     }
 
+//==================================================================================================
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -195,6 +199,8 @@ public class Workout_info_files_Activity extends AppCompatActivity {
             }
         });
 
+//==================================================================================================
+
         //아이템을 클릭하면 해당 사이트로 이동
         LV_file.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -238,46 +244,7 @@ public class Workout_info_files_Activity extends AppCompatActivity {
                 dialog.setNeutralButton("북마크", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
-                        //Dialog 선언과정
-                        AlertDialog.Builder bookmarkDialog = new AlertDialog.Builder(Workout_info_files_Activity.this);
-                        bookmarkDialog.setIcon(R.mipmap.ic_launcher);//Dialog icon
-                        bookmarkDialog.setTitle("북마크 번호를 입력하세요. (1 ~ 6)"); //Dialog title
-                        EditText ET_bookmarkNum = new EditText(getApplicationContext()); //Dialog EditText
-                        bookmarkDialog.setView(ET_bookmarkNum);
-
-                        bookmarkDialog.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                String bookmarkNum = ET_bookmarkNum.getText().toString();
-
-                                //북마크 번호에 해당되는 경우에만 데이터 저장
-                                if(bookmarkNum.equals("1") || bookmarkNum.equals("2") || bookmarkNum.equals("3")
-                                        || bookmarkNum.equals("4") || bookmarkNum.equals("5") || bookmarkNum.equals("6")) {
-
-                                    //SharedPreferences선언
-                                    SharedPreferences SP_bookmark = getSharedPreferences(SP_data, 0);
-                                    SharedPreferences.Editor editor = SP_bookmark.edit();
-
-                                    //북마크데이터 (이미지, 제목, url)저장
-                                    Uri saveImageUri = SingleTon.getImageUri(getApplicationContext(), fileItems.get(currentFilePosition).getIV_thumbnail());
-                                    String image = String.valueOf(saveImageUri);
-                                    String title = String.valueOf(fileItems.get(currentFilePosition).getTV_title());
-                                    String url = String.valueOf(fileItems.get(currentFilePosition).getTV_url());
-                                    String bookmarkData = image + "," + title + "," + url;
-
-                                    editor.putString("bookmarkNum"+bookmarkNum, bookmarkData);
-                                    editor.apply();
-
-                                    Toast.makeText(getApplicationContext(), bookmarkNum+"번 북마크에 추가완료.", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "잘못된 입력입니다. 1 ~ 6의 수를 입력하십시오.", Toast.LENGTH_SHORT).show();
-                                }
-
-                            }
-                        });
-                        bookmarkDialog.show();
-
+                        showDialog(view.getContext()); //북마크 추가하는 다이얼로그창 호출 메소드
                     }
                 });
 
@@ -321,6 +288,8 @@ public class Workout_info_files_Activity extends AppCompatActivity {
         });
 
     }
+
+//==================================================================================================
 
     //리스트 데이터 저장
     @Override
@@ -377,6 +346,8 @@ public class Workout_info_files_Activity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+//==================================================================================================
 
     //게시글 작성, 수정이 완료되어 돌아오게 되면 결과를 출력하는 메서드
     @Override
@@ -439,11 +410,118 @@ public class Workout_info_files_Activity extends AppCompatActivity {
 
     }
 
+//==================================================================================================
+
+    //기기 Back버튼에 반응하는 메소드
+    //oncreate에서 리스트 생성시 중복생성되는 오류잡는 용도
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         SingleTon.isBackPress = true;
     }
 
-//=================================================================================================
+//==================================================================================================
+
+    //커스텀 다이얼로그 호출 메소드
+    private void showDialog(Context context){
+        Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.custom_dialog);
+
+        //뷰 선언
+        TextView bookmarNum1 = dialog.findViewById(R.id.bookmarkNum1);
+        TextView bookmarNum2 = dialog.findViewById(R.id.bookmarkNum2);
+        TextView bookmarNum3 = dialog.findViewById(R.id.bookmarkNum3);
+        TextView bookmarNum4 = dialog.findViewById(R.id.bookmarkNum4);
+        TextView bookmarNum5 = dialog.findViewById(R.id.bookmarkNum5);
+        TextView bookmarNum6 = dialog.findViewById(R.id.bookmarkNum6);
+        TextView TV_cancel = dialog.findViewById(R.id.TV_cancel);
+
+        //1번 북마크 클릭리스너
+        bookmarNum1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addBookmark(1);
+                dialog.dismiss();
+            }
+        });
+
+        //2번 북마크 클릭리스너
+        bookmarNum2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addBookmark(2);
+                dialog.dismiss();
+            }
+        });
+
+        //3번 북마크 클릭리스너
+        bookmarNum3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addBookmark(3);
+                dialog.dismiss();
+            }
+        });
+
+        //4번 북마크 클릭리스너
+        bookmarNum4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addBookmark(4);
+                dialog.dismiss();
+            }
+        });
+
+        //5번 북마크 클릭리스너
+        bookmarNum5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addBookmark(5);
+                dialog.dismiss();
+            }
+        });
+
+        //6번 북마크 클릭리스너
+        bookmarNum6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addBookmark(6);
+                dialog.dismiss();
+            }
+        });
+
+        //취소버튼
+        TV_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(), "취소", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+//==================================================================================================
+
+    private void addBookmark(int number) {
+        //SharedPreferences선언
+        SharedPreferences SP_bookmark = getSharedPreferences(SP_data, 0);
+        SharedPreferences.Editor editor = SP_bookmark.edit();
+
+        //북마크데이터 (이미지, 제목, url)저장
+        Uri saveImageUri = SingleTon.getImageUri(getApplicationContext(), fileItems.get(currentFilePosition).getIV_thumbnail());
+        String image = String.valueOf(saveImageUri);
+        String title = String.valueOf(fileItems.get(currentFilePosition).getTV_title());
+        String url = String.valueOf(fileItems.get(currentFilePosition).getTV_url());
+        String bookmarkData = image + "," + title + "," + url;
+
+        editor.putString("bookmarkNum"+number, bookmarkData);
+        editor.apply();
+
+        Toast.makeText(getApplicationContext(), number+"번 북마크에 추가완료.", Toast.LENGTH_SHORT).show();
+    }
+
+//==================================================================================================
+
 }
