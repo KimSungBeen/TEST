@@ -11,7 +11,7 @@
 
 <!--    메뉴-->
     <Button
-        android:id="@id/BTN_menu"
+        android:id="@+id/BTN_workoutFriend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -33,7 +33,7 @@
         android:textColor="@color/mainLogo"
         android:textSize="32sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/BTN_menu"
+        app:layout_constraintBottom_toBottomOf="@+id/BTN_workoutFriend"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:focusable="true" />

@@ -8,8 +8,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -18,13 +18,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
-
 import static com.example.myapplication.Notice_write_Activity.SP_data;
+import static com.example.myapplication.Workout_Friend_Adapter.contacts;
 
-public class Contacts_Activity extends AppCompatActivity {
+public class Workout_Friend_Activity extends AppCompatActivity {
 
-    ArrayList<String> contact = new ArrayList<>();
+    Workout_Friend_Adapter workout_friend_adapter = new Workout_Friend_Adapter();
+
+//    ArrayList<String> contact = new ArrayList<>();
     ListView LV_Contact;
     Button BTN_addKeyword, BTN_removeKeyword, BTN_exit;
     String keyword;
@@ -35,7 +36,9 @@ public class Contacts_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contacts_);
+        setContentView(R.layout.activity_workout_friend);
+
+        Log.i("onnn", "onCreate: ");
 
         //뷰 초기화
         LV_Contact = findViewById(R.id.LV_contact);
@@ -49,6 +52,9 @@ public class Contacts_Activity extends AppCompatActivity {
         keywordArray = sharedPreferences.getString("keyword", "").split(",");
 
 //==================================================================================================
+
+        contacts.clear(); //리스트에 남아있는 데이터 clear
+        LV_Contact.setAdapter(workout_friend_adapter); //리스트뷰에 어댑터 연결
 
         //ContentResolver로 주소록 가져오기
         ContentResolver contentResolver = getContentResolver();
@@ -69,17 +75,15 @@ public class Contacts_Activity extends AppCompatActivity {
 
             //keywordArray의 크기만큼 반복해서 리스트에 데이터를 저장
             for (String s : keywordArray) {
-                if(!s.equals("")) { //keywordArray이 비어있지 않을 때만
+                if (!s.equals("")) { //keywordArray이 비어있지 않을 때만
                     if (name.contains(s)) {
-                        contact.add(name + "\n" + num);
+                        workout_friend_adapter.addItem(name + "\t" + num);
                     }
                 }
             }
 
         }
 
-        //필터링된 리스트 출력
-        LV_Contact.setAdapter(new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, contact));
     }
 
 //==================================================================================================
@@ -94,6 +98,7 @@ public class Contacts_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Home_Activity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -116,7 +121,7 @@ public class Contacts_Activity extends AppCompatActivity {
                         String addKeyword = ET_addKeyword.getText().toString();
 
                         //입력한 값이 있을때
-                        if(!addKeyword.equals("")) {
+                        if (!addKeyword.equals("")) {
 
                             //처음에 입력값이 없을때는 키워드만 추가되고
                             //값이 존재할 때는 ","로 구분되어 변수에 저장함
@@ -133,13 +138,13 @@ public class Contacts_Activity extends AppCompatActivity {
                             editor.apply();
 
                             //키워드 저장후 액티비티 새로고침
-                            Intent intent = new Intent(getApplicationContext(), Contacts_Activity.class);
+                            Intent intent = new Intent(getApplicationContext(), Workout_Friend_Activity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                             startActivity(intent);
 
-                        //입력한 값이 없을때
-                        }else {
-                            Toast.makeText(Contacts_Activity.this, "입력값 없음.", Toast.LENGTH_SHORT).show();
+                            //입력한 값이 없을때
+                        } else {
+                            Toast.makeText(Workout_Friend_Activity.this, "입력값 없음.", Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -150,7 +155,7 @@ public class Contacts_Activity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        Toast.makeText(Contacts_Activity.this, "취소.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Workout_Friend_Activity.this, "취소.", Toast.LENGTH_SHORT).show();
                     }
                 });
                 dialog.show();
@@ -191,7 +196,7 @@ public class Contacts_Activity extends AppCompatActivity {
     //키워드를 제거하는 메소드
     private void removeKeyword(int which, String keyword) {
         for (int i = 0; i < keywordArray.length; i++) {
-            if(i != which) {
+            if (i != which) {
                 if (keyword == null) {
                     keyword = keywordArray[i];
                 } else {
@@ -206,10 +211,10 @@ public class Contacts_Activity extends AppCompatActivity {
         editor.putString("keyword", keyword);
         editor.apply();
 
-        Toast.makeText(Contacts_Activity.this, keywordArray[which]+"제거", Toast.LENGTH_SHORT).show();
+        Toast.makeText(Workout_Friend_Activity.this, keywordArray[which] + "제거", Toast.LENGTH_SHORT).show();
 
         //키워드 저장후 액티비티 새로고침
-        Intent intent = new Intent(getApplicationContext(), Contacts_Activity.class);
+        Intent intent = new Intent(getApplicationContext(), Workout_Friend_Activity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
     }

@@ -73,6 +73,7 @@ public class File_Adapter extends BaseAdapter {
         fileItem.setTV_url(url);
 
         fileItems.add(fileItem); //아이템 ArrayList에 값을 넣어줌
+        notifyDataSetChanged();
     }
 
     //아이템을 수정하는 메소드

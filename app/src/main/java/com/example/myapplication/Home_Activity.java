@@ -56,7 +56,7 @@ public class Home_Activity extends AppCompatActivity {
 
     //뷰 선언
     Button BTN_info, BTN_stopwatch, BTN_diary;
-    Button BTN_menu;
+    Button BTN_workoutFriend;
     TextView TV_notice, TV_back, TV_play, TV_pause, TV_stop, TV_next,
             TV_bookmarkNum1, TV_bookmarkNum2, TV_bookmarkNum3, TV_bookmarkNum4, TV_bookmarkNum5, TV_bookmarkNum6;
     ImageView  IV_thumbnail,
@@ -87,7 +87,7 @@ public class Home_Activity extends AppCompatActivity {
         BTN_info        = findViewById(R.id.BTN_info);
         BTN_stopwatch   = findViewById(R.id.BTN_stopwatch);
         BTN_diary       = findViewById(R.id.BTN_diary);
-        BTN_menu        = findViewById(R.id.BTN_menu);
+        BTN_workoutFriend        = findViewById(R.id.BTN_workoutFriend);
         TV_back         = findViewById(R.id.TV_back);
         TV_play         = findViewById(R.id.TV_play);
         TV_pause        = findViewById(R.id.TV_pause);
@@ -154,6 +154,8 @@ public class Home_Activity extends AppCompatActivity {
 //        simpleExoPlayer.prepare(videoSource);
 //        simpleExoPlayer.setPlayWhenReady(true);
 //    }
+
+//==================================================================================================
 
     //액티비티가 생성된 후 사용자에게 보여지기 시작하는 구간
     //onStart ~ onStop 은 반복적으로 실행 될 수 있기 때문에 보통 생성 관련된 명령은 지양
@@ -281,13 +283,14 @@ public class Home_Activity extends AppCompatActivity {
         VV_movie.seekTo(videoPosition);// 영상이 Pause 되면 다시 실행될때 이전 위치부터 실행
     }
 
+//==================================================================================================
+
     //액티비티가 사용자와 상호작용하는 구간
     @Override
     protected void onResume() {
         super.onResume();
 
-//=========================================북마크 클릭이벤트=========================================
-
+    //북마크 클릭이벤트
         AlertDialog.Builder dialog = new AlertDialog.Builder(Home_Activity.this);
         dialog.setIcon(R.mipmap.ic_launcher); //Dialog icon
         dialog.setTitle(""); //Dialog title
@@ -547,6 +550,16 @@ public class Home_Activity extends AppCompatActivity {
         });
 
 //==================================================================================================
+
+        //운동 친구목록으로 이동
+        BTN_workoutFriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Home_Activity.this, Workout_Friend_Activity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
+            }
+        });
 
         //운동정보 액티비티로 이동
         BTN_info.setOnClickListener(new View.OnClickListener() {

@@ -11,7 +11,7 @@
 
     <!--    메뉴-->
     <Button
-        android:id="@id/BTN_menu"
+        android:id="@+id/BTN_workoutFriend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Menu"
@@ -89,8 +89,11 @@
         android:id="@+id/LV_file"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/BTN_write"
-        app:layout_constraintBottom_toTopOf="@id/V_menu"/>
+        android:background="@color/white"
+        android:divider="@color/white"
+        android:dividerHeight="0px"
+        app:layout_constraintBottom_toTopOf="@id/V_menu"
+        app:layout_constraintTop_toBottomOf="@id/BTN_write" />
 
     <View
         android:id="@+id/V_menu"

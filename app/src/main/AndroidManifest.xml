@@ -35,7 +35,11 @@
         <service android:name=".Music_Service" />
 
         <activity android:name=".Loading_Activity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".Home_Activity"
@@ -54,13 +58,8 @@
         <activity android:name=".Diary_write_Activity" />
         <activity android:name=".Notice_read_Activity" />
         <activity android:name=".Notice_write_Activity" />
-        <activity android:name=".Contacts_Activity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".Workout_Friend_Activity" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>
