@@ -142,4 +142,6 @@
     <string name="WriteNotice">공지 작성</string>
     <string name="pause">||</string>
     <string name="time">00:00</string>
+    <string name="addKeyword">키워드 추가</string>
+    <string name="removeKeyword">키워드 제거</string>
 </resources>

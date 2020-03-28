@@ -1,13 +1,19 @@
 package com.example.myapplication;
 
+import android.app.Activity;
 import android.app.Application;
+import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.provider.MediaStore;
+import android.text.Layout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,6 +25,10 @@ import android.widget.VideoView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
+import androidx.loader.content.CursorLoader;
+import androidx.loader.content.Loader;
 
 import java.io.InputStream;
 
@@ -37,6 +47,8 @@ public class Home_Activity extends AppCompatActivity {
     public static SeekBar musicSeekBar; //MP3 Player SeekBar
     public static TextView TV_currentMusicTime, TV_allMusicTime;
     int videoPosition; // 영상이 Pause 되면 그 위치를 저장하기 위한 변수
+
+    ConstraintLayout layout;
 
     //북마크번호에 따른 Url
     String bookmarkNum1Url, bookmarkNum2Url, bookmarkNum3Url,
@@ -65,6 +77,9 @@ public class Home_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+//        layout = findViewById(R.id.Home_Activity);
+//        layout.setBackgroundResource(R.drawable.loading_image);
 
         SingleTon.broadcastReceiver(this, receiver);
 

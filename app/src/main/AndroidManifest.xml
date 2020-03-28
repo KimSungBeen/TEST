@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -33,15 +35,11 @@
         <service android:name=".Music_Service" />
 
         <activity android:name=".Loading_Activity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".Home_Activity"
-            android:configChanges="orientation"/>
+            android:configChanges="orientation" />
         <activity
             android:name=".Workout_info_Activity"
             android:configChanges="orientation" />
@@ -56,6 +54,13 @@
         <activity android:name=".Diary_write_Activity" />
         <activity android:name=".Notice_read_Activity" />
         <activity android:name=".Notice_write_Activity" />
+        <activity android:name=".Contacts_Activity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

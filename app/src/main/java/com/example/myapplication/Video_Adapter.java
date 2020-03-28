@@ -2,15 +2,12 @@ package com.example.myapplication;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,14 +28,14 @@ import static com.example.myapplication.Notice_write_Activity.SP_data;
 public class Video_Adapter extends RecyclerView.Adapter<Video_Adapter.MyViewHolder> {
 
     static ArrayList<Video_Item> arrayList; //아이템의 데이터가 들어갈 ArrayList
-    public static final int REQUEST_CORRECTION = 4; //수정하기의 리퀘스트코드
+    static final int REQUEST_CORRECTION = 4; //수정하기의 리퀘스트코드
 
-    Object Context; //startActivityForResult 사용을 위해 ViewGroup을 저장할 변수
+    private Object Context; //startActivityForResult 사용을 위해 ViewGroup을 저장할 변수
 
     static int currentVideoPosition;// 수정시 아이템의 위치값을 알아야 하기 때문에 static 변수에 저장
 
-    public Video_Adapter(ArrayList<Video_Item> arrayList) {
-        this.arrayList = arrayList;
+    Video_Adapter(ArrayList<Video_Item> arrayList) {
+        Video_Adapter.arrayList = arrayList;
     }
 
     //viewHolder객체를 생성하는 구간

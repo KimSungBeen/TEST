@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="5dp"
-    tools:context=".Home_Activity">
+    tools:context=".Home_Activity"
+    android:id="@+id/Home_Activity">
 
 <!--    메뉴-->
 

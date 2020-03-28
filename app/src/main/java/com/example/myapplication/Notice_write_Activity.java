@@ -1,8 +1,5 @@
 package com.example.myapplication;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,8 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import static com.example.myapplication.Home_Activity.receiver;
-import static com.example.myapplication.Notice_read_Activity.REQUEST_NOTICE_WRITE;
 
 public class Notice_write_Activity extends AppCompatActivity {
 
