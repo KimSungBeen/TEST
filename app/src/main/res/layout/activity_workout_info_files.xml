@@ -89,7 +89,6 @@
         android:id="@+id/LV_file"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/white"
         android:divider="@color/white"
         android:dividerHeight="0px"
         app:layout_constraintBottom_toTopOf="@id/V_menu"

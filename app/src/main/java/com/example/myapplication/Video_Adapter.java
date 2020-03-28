@@ -101,8 +101,7 @@ public class Video_Adapter extends RecyclerView.Adapter<Video_Adapter.MyViewHold
                 //dialog (선언, 아이콘, 제목, 셋팅 메시지)
                 AlertDialog.Builder dialog = new AlertDialog.Builder(v.getContext());
                 dialog.setIcon(R.mipmap.ic_launcher); //Dialog icon
-                dialog.setTitle(""); //Dialog title
-                dialog.setMessage("작업을 선택하십시오."); //Dialog Message
+                dialog.setTitle("작업을 선택하십시오."); //Dialog title
 
                 //롱클릭 Dialog안에 북마크를 클릭했을 시 북마크 설정이 가능한 Dialog를 다시 띄움
                 dialog.setNeutralButton("북마크", new DialogInterface.OnClickListener() {
@@ -112,8 +111,7 @@ public class Video_Adapter extends RecyclerView.Adapter<Video_Adapter.MyViewHold
                         //Dialog 선언과정
                         AlertDialog.Builder bookmarkDialog = new AlertDialog.Builder(v.getContext());
                         bookmarkDialog.setIcon(R.mipmap.ic_launcher);//Dialog icon
-                        bookmarkDialog.setTitle(""); //Dialog title
-                        bookmarkDialog.setMessage("북마크 번호를 입력하세요. (1 ~ 6)"); //Dialog Message
+                        bookmarkDialog.setTitle("북마크 번호를 입력하세요. (1 ~ 6)"); //Dialog title
                         EditText ET_bookmarkNum = new EditText(v.getContext()); //Dialog EditText
                         bookmarkDialog.setView(ET_bookmarkNum);
 

@@ -9,17 +9,17 @@
     tools:context=".Home_Activity"
     android:id="@+id/Home_Activity">
 
-<!--    메뉴-->
-
     <Button
         android:id="@+id/BTN_workoutFriend"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/workoutFriend"
         android:background="@color/white"
+        android:text="@string/workoutFriend"
+        android:layout_marginRight="5dp"
         app:layout_constraintBottom_toBottomOf="@id/TV_mainLogo"
+        app:layout_constraintEnd_toStartOf="@+id/TV_mainLogo"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/TV_mainLogo"/>
+        app:layout_constraintTop_toTopOf="@id/TV_mainLogo" />
 
 <!--    메인로고-->
     <TextView

@@ -232,8 +232,7 @@ public class Workout_info_files_Activity extends AppCompatActivity {
                 //dialog 선언
                 AlertDialog.Builder dialog = new AlertDialog.Builder(Workout_info_files_Activity.this);
                 dialog.setIcon(R.mipmap.ic_launcher);
-                dialog.setTitle("");
-                dialog.setMessage("작업을 선택하십시오.");
+                dialog.setTitle("작업을 선택하십시오.");
 
                 //롱클릭 Dialog안에 북마크를 클릭했을 시 북마크 설정이 가능한 Dialog를 다시 띄움
                 dialog.setNeutralButton("북마크", new DialogInterface.OnClickListener() {
@@ -243,8 +242,7 @@ public class Workout_info_files_Activity extends AppCompatActivity {
                         //Dialog 선언과정
                         AlertDialog.Builder bookmarkDialog = new AlertDialog.Builder(Workout_info_files_Activity.this);
                         bookmarkDialog.setIcon(R.mipmap.ic_launcher);//Dialog icon
-                        bookmarkDialog.setTitle(""); //Dialog title
-                        bookmarkDialog.setMessage("북마크 번호를 입력하세요. (1 ~ 6)"); //Dialog Message
+                        bookmarkDialog.setTitle("북마크 번호를 입력하세요. (1 ~ 6)"); //Dialog title
                         EditText ET_bookmarkNum = new EditText(getApplicationContext()); //Dialog EditText
                         bookmarkDialog.setView(ET_bookmarkNum);
 

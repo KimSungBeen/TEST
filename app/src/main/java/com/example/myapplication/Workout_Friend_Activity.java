@@ -10,9 +10,11 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -25,7 +27,6 @@ public class Workout_Friend_Activity extends AppCompatActivity {
 
     Workout_Friend_Adapter workout_friend_adapter = new Workout_Friend_Adapter();
 
-//    ArrayList<String> contact = new ArrayList<>();
     ListView LV_Contact;
     Button BTN_addKeyword, BTN_removeKeyword, BTN_exit;
     String keyword;
@@ -38,20 +39,25 @@ public class Workout_Friend_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout_friend);
 
-        Log.i("onnn", "onCreate: ");
-
         //뷰 초기화
         LV_Contact = findViewById(R.id.LV_contact);
         BTN_addKeyword = findViewById(R.id.BTN_addKeyword);
         BTN_removeKeyword = findViewById(R.id.BTN_removeKeyword);
         BTN_exit = findViewById(R.id.BTN_exit);
+    }
 
-        //주소록 키워드
+//==================================================================================================
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+    //주소록 키워드
         SharedPreferences sharedPreferences = getSharedPreferences(SP_data, 0);
         keyword = sharedPreferences.getString("keyword", "");
         keywordArray = sharedPreferences.getString("keyword", "").split(",");
 
-//==================================================================================================
+
 
         contacts.clear(); //리스트에 남아있는 데이터 clear
         LV_Contact.setAdapter(workout_friend_adapter); //리스트뷰에 어댑터 연결
@@ -71,14 +77,14 @@ public class Workout_Friend_Activity extends AppCompatActivity {
         //가져온 주소록을 키워드로 필터링하여 변수에 저장
         while (cursor.moveToNext()) {
             String name = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
-            String num = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+            String number = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
 
             //keywordArray의 크기만큼 반복해서 리스트에 데이터를 저장
             for (String s : keywordArray) {
-                if (!s.equals("")) { //keywordArray이 비어있지 않을 때만
-                    if (name.contains(s)) {
-                        workout_friend_adapter.addItem(name + "\t" + num);
-                    }
+
+                //키워드가 비어있지 않을때 키워드를 포함하는 데이터를 저장함
+                if (!s.equals("") && name.contains(s)) {
+                    workout_friend_adapter.addItem(name, number);
                 }
             }
 
@@ -137,10 +143,7 @@ public class Workout_Friend_Activity extends AppCompatActivity {
                             editor.putString("keyword", keyword);
                             editor.apply();
 
-                            //키워드 저장후 액티비티 새로고침
-                            Intent intent = new Intent(getApplicationContext(), Workout_Friend_Activity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                            startActivity(intent);
+                            onStart(); //액티비티 데이터 다시불러오기 위해
 
                             //입력한 값이 없을때
                         } else {
@@ -175,12 +178,29 @@ public class Workout_Friend_Activity extends AppCompatActivity {
                 //리스트형식의 dialog
                 dialog.setItems(keywordArray, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String keyword = null;
+                    public void onClick(DialogInterface dialog, int index) {
 
-                        //리스트를 클릭할시 해당하는 인덱스: which
-                        removeKeyword(which, keyword);
+                        //dialog (선언, 아이콘, 제목)
+                        AlertDialog.Builder request = new AlertDialog.Builder(v.getContext());
+                        request.setIcon(R.mipmap.ic_launcher);
+                        request.setTitle("제거하시겠습니까?");
 
+                        request.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String keyword = null;
+
+                                //리스트를 클릭할시 해당하는 인덱스: which
+                                removeKeyword(index, keyword);
+                            }
+                        });
+                        request.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(Workout_Friend_Activity.this, "취소", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        request.show();
                     }
                 });
 
@@ -189,14 +209,59 @@ public class Workout_Friend_Activity extends AppCompatActivity {
             }
         });
 
+        //리스트 클릭
+        LV_Contact.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(view.getContext());
+                dialog.setIcon(R.mipmap.ic_launcher); //Dialog icon
+                dialog.setTitle("작업을 선택하십시오."); //Dialog title
+
+                //전화걸기
+                dialog.setNegativeButton("전화", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String number = String.valueOf(((TextView) view.findViewById(R.id.TV_number)).getText());
+                        number = "tel:" + number;
+
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(number));
+                        startActivity(intent);
+                    }
+                });
+
+                //메시지 보내기
+                dialog.setPositiveButton("메시지", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String number = String.valueOf(((TextView) view.findViewById(R.id.TV_number)).getText());
+                        number = "sms:" + number;
+
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(number));
+                        startActivity(intent);
+                    }
+                });
+
+                //취소
+                dialog.setNeutralButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(Workout_Friend_Activity.this, "취소", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.show();
+            }
+        });
+
     }
 
 //==================================================================================================
 
     //키워드를 제거하는 메소드
-    private void removeKeyword(int which, String keyword) {
+    private void removeKeyword(int index, String keyword) {
         for (int i = 0; i < keywordArray.length; i++) {
-            if (i != which) {
+            if (i != index) {
                 if (keyword == null) {
                     keyword = keywordArray[i];
                 } else {
@@ -211,12 +276,9 @@ public class Workout_Friend_Activity extends AppCompatActivity {
         editor.putString("keyword", keyword);
         editor.apply();
 
-        Toast.makeText(Workout_Friend_Activity.this, keywordArray[which] + "제거", Toast.LENGTH_SHORT).show();
+        Toast.makeText(Workout_Friend_Activity.this, "[" + keywordArray[index] + "]키워드 제거", Toast.LENGTH_SHORT).show();
 
-        //키워드 저장후 액티비티 새로고침
-        Intent intent = new Intent(getApplicationContext(), Workout_Friend_Activity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        startActivity(intent);
+        onStart(); //액티비티 데이터 다시불러오기 위해
     }
 
 //==================================================================================================

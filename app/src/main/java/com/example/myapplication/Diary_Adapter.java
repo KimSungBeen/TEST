@@ -91,8 +91,7 @@ public class Diary_Adapter extends RecyclerView.Adapter<Diary_Adapter.MyViewHold
                 //dialog (선언, 아이콘, 제목, 셋팅 메시지)
                 AlertDialog.Builder dialog = new AlertDialog.Builder(v.getContext());
                 dialog.setIcon(R.mipmap.ic_launcher); //Dialog icon
-                dialog.setTitle(""); //Dialog title
-                dialog.setMessage("작업을 선택하십시오."); //Dialog Message
+                dialog.setTitle("작업을 선택하십시오."); //Dialog title
 
                 //Dialog의 수정버튼
                 dialog.setNegativeButton("수정", new DialogInterface.OnClickListener() {
