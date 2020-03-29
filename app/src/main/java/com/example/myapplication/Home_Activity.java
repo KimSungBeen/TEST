@@ -55,7 +55,7 @@ public class Home_Activity extends AppCompatActivity {
 
     //뷰 선언
     Button BTN_info, BTN_stopwatch, BTN_diary;
-    Button BTN_workoutFriend;
+    Button BTN_workoutFriend, BTN_BMI;
     TextView TV_notice, TV_back, TV_play, TV_pause, TV_stop, TV_next,
             TV_bookmarkNum1, TV_bookmarkNum2, TV_bookmarkNum3, TV_bookmarkNum4, TV_bookmarkNum5, TV_bookmarkNum6;
     static TextView TV_musicInfo;
@@ -86,6 +86,7 @@ public class Home_Activity extends AppCompatActivity {
         BTN_stopwatch       = findViewById(R.id.BTN_stopwatch);
         BTN_diary           = findViewById(R.id.BTN_diary);
         BTN_workoutFriend   = findViewById(R.id.BTN_workoutFriend);
+        BTN_BMI             = findViewById(R.id.BTN_BMI);
         TV_back             = findViewById(R.id.TV_back);
         TV_play             = findViewById(R.id.TV_play);
         TV_pause            = findViewById(R.id.TV_pause);
@@ -393,6 +394,15 @@ public class Home_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Home_Activity.this, Workout_Friend_Activity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
+            }
+        });
+
+        //BMI 측정메뉴로 이동
+        BTN_BMI.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Home_Activity.this, Calculation_BIM_Activity.class);
                 startActivity(intent);
             }
         });

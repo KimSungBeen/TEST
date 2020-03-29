@@ -154,4 +154,12 @@
     <string name="_6">6</string>
     <string name="bookmarkDialog"><![CDATA[< 북마크 위치선택 >]]></string>
     <string name="workoutFriendNotice">주소록을 (키워드 이름)으로 등록해주세요! \nex)소모임 김성빈</string>
+    <string name="bmiCalculate">BMI 측정</string>
+    <string name="cm">cm</string>
+    <string name="height">키</string>
+    <string name="woman">여성</string>
+    <string name="man">남성</string>
+    <string name="sex">성별</string>
+    <string name="weight">몸무게</string>
+    <string name="kg">kg</string>
 </resources>
