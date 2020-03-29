@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
@@ -61,37 +62,9 @@ public class Workout_Friend_Activity extends AppCompatActivity {
         contacts.clear(); //리스트에 남아있는 데이터 clear
         LV_Contact.setAdapter(workout_friend_adapter); //리스트뷰에 어댑터 연결
 
-        //ContentResolver로 주소록 가져오기
-        ContentResolver contentResolver = getContentResolver();
-        Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
-        String selection = null;
-        String[] projection = {ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
-                ContactsContract.CommonDataKinds.Phone.NUMBER};
-        String[] selectionArgs = null;
-        String sortOrder = null;
-
-        //Cursor객체에 데이터 저장
-        Cursor cursor = contentResolver.query(uri, projection, selection, selectionArgs, sortOrder);
-
-        //가져온 주소록을 키워드로 필터링하여 변수에 저장
-        while (cursor.moveToNext()) {
-            String[] name = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)).split(" ");
-            String number = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-            String nameOutput = ""; //출력될 이름
-
-            //keywordArray의 크기만큼 반복해서 리스트에 데이터를 저장
-            for (String s : keywordArray) {
-
-                //키워드가 비어있지 않을때 키워드를 포함하는 데이터를 저장함
-                if (!s.equals("") && name[0].equals(s)) { //name[0]: 주소록에 저장될 키워드
-                    for(String str : name) { //나눴던 키워드와 이름 결합
-                        nameOutput = nameOutput + str + " ";
-                    }
-                    workout_friend_adapter.addItem(nameOutput, number);
-                }
-            }
-
-        }
+        //소모임 목록을 불러와 띄워주는 AsyncTask
+        WorkoutFriendTask workoutFriendTask = new WorkoutFriendTask();
+        workoutFriendTask.execute();
 
     }
 
@@ -282,6 +255,58 @@ public class Workout_Friend_Activity extends AppCompatActivity {
         Toast.makeText(Workout_Friend_Activity.this, "[" + keywordArray[index] + "]키워드 제거", Toast.LENGTH_SHORT).show();
 
         onStart(); //액티비티 데이터 다시불러오기 위해
+    }
+
+//==================================================================================================
+
+    //주소록에서 데이터를 가져오는 클래스(AsyncTask)
+    private class WorkoutFriendTask extends AsyncTask<Void, String, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            //ContentResolver로 주소록 가져오기
+            ContentResolver contentResolver = getContentResolver();
+            Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+            String selection = null;
+            String[] projection = {ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+                    ContactsContract.CommonDataKinds.Phone.NUMBER};
+            String[] selectionArgs = null;
+            String sortOrder = null;
+
+            //Cursor객체에 데이터 저장
+            Cursor cursor = contentResolver.query(uri, projection, selection, selectionArgs, sortOrder);
+
+            //가져온 주소록을 키워드로 필터링하여 변수에 저장
+            while (cursor.moveToNext()) {
+                String[] name = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)).split(" ");
+                String number = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                String nameOutput = ""; //출력될 이름
+
+                //name[0]:키워드, name[1]:사람이름, number:전화번호, nameOutput:화면에 출력될 이름(키워드+사람이름)
+                publishProgress(name[0], name[1], number, nameOutput);
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+
+            //keywordArray의 크기만큼 반복해서 리스트에 데이터를 저장
+            for (String s : keywordArray) {
+
+                //키워드가 비어있지 않을때 키워드를 포함하는 데이터를 저장함
+                if (!s.equals("") && values[0].equals(s)) { //name[0]: 주소록에 저장될 키워드
+
+                    //name[0]:키워드, name[1]:사람이름, number:전화번호, nameOutput:화면에 출력될 이름(키워드+사람이름)
+                    values[3] = values[0] + " " + values[1];
+                    workout_friend_adapter.addItem(values[3], values[2]);
+                }
+            }
+
+        }
     }
 
 //==================================================================================================

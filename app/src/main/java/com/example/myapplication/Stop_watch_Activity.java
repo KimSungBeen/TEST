@@ -148,7 +148,7 @@ public class Stop_watch_Activity extends AppCompatActivity {
 
 //==================================================================================================
 
-    class ProgressBarTask extends AsyncTask<Void, Integer, Void> {
+    private class ProgressBarTask extends AsyncTask<Void, Integer, Void> {
 
         public static final int PROGRESSBAR_TIME_OFFSET = 1006; //프로그래스바 진행타임 오차
         boolean isMinute = false;
