@@ -49,8 +49,6 @@ public class Home_Activity extends AppCompatActivity {
     public static TextView TV_currentMusicTime, TV_allMusicTime;
     int videoPosition; // 영상이 Pause 되면 그 위치를 저장하기 위한 변수
 
-    ConstraintLayout layout;
-
     //북마크번호에 따른 Url
     String bookmarkNum1Url, bookmarkNum2Url, bookmarkNum3Url,
             bookmarkNum4Url, bookmarkNum5Url, bookmarkNum6Url;
@@ -60,6 +58,7 @@ public class Home_Activity extends AppCompatActivity {
     Button BTN_workoutFriend;
     TextView TV_notice, TV_back, TV_play, TV_pause, TV_stop, TV_next,
             TV_bookmarkNum1, TV_bookmarkNum2, TV_bookmarkNum3, TV_bookmarkNum4, TV_bookmarkNum5, TV_bookmarkNum6;
+    static TextView TV_musicInfo;
     ImageView  IV_thumbnail,
             IV_bookmarkNum1, IV_bookmarkNum2, IV_bookmarkNum3, IV_bookmarkNum4, IV_bookmarkNum5, IV_bookmarkNum6;
 
@@ -70,6 +69,7 @@ public class Home_Activity extends AppCompatActivity {
     MediaController mediaController; // 미디어 제어 (재생이나 정지) 버튼을 담당
 
 //    String videoURL = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";//테스트용 영상
+//        Uri uri = Uri.parse(videoURL); //영상 주소를 저장
     String path = "android.resource://com.example.myapplication/" + R.raw.video; //(홈)추천영상
     String noticeTitle      = "Empty";
 
@@ -79,26 +79,24 @@ public class Home_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-//        layout = findViewById(R.id.Home_Activity);
-//        layout.setBackgroundResource(R.drawable.loading_image);
-
         SingleTon.broadcastReceiver(this, receiver);
 
         //뷰 초기화
-        BTN_info        = findViewById(R.id.BTN_info);
-        BTN_stopwatch   = findViewById(R.id.BTN_stopwatch);
-        BTN_diary       = findViewById(R.id.BTN_diary);
-        BTN_workoutFriend        = findViewById(R.id.BTN_workoutFriend);
-        TV_back         = findViewById(R.id.TV_back);
-        TV_play         = findViewById(R.id.TV_play);
-        TV_pause        = findViewById(R.id.TV_pause);
-        TV_stop         = findViewById(R.id.TV_stop);
-        TV_next         = findViewById(R.id.TV_next);
-        TV_notice       = findViewById(R.id.TV_notice);
-        VV_movie        = findViewById(R.id.VV_movie);
-        IV_thumbnail    = findViewById(R.id.IV_thumbnail);
+        BTN_info            = findViewById(R.id.BTN_info);
+        BTN_stopwatch       = findViewById(R.id.BTN_stopwatch);
+        BTN_diary           = findViewById(R.id.BTN_diary);
+        BTN_workoutFriend   = findViewById(R.id.BTN_workoutFriend);
+        TV_back             = findViewById(R.id.TV_back);
+        TV_play             = findViewById(R.id.TV_play);
+        TV_pause            = findViewById(R.id.TV_pause);
+        TV_stop             = findViewById(R.id.TV_stop);
+        TV_next             = findViewById(R.id.TV_next);
+        TV_notice           = findViewById(R.id.TV_notice);
+        VV_movie            = findViewById(R.id.VV_movie);
+        IV_thumbnail        = findViewById(R.id.IV_thumbnail);
         TV_currentMusicTime = findViewById(R.id.TV_currentMusicTime);
-        TV_allMusicTime    = findViewById(R.id.TV_allMusicTime);
+        TV_allMusicTime     = findViewById(R.id.TV_allMusicTime);
+        TV_musicInfo        = findViewById(R.id.TV_musicInfo);
 
         //북마크 뷰 초기화
         IV_bookmarkNum1 = findViewById(R.id.IV_bookmarkNum1);
@@ -121,7 +119,6 @@ public class Home_Activity extends AppCompatActivity {
         mediaController = new MediaController(this); // 컨트롤러 생성
         mediaController.setAnchorView(VV_movie); //컨트롤러를 비디오뷰에 셋팅
 
-//        Uri uri = Uri.parse(videoURL); //영상 주소를 저장
         VV_movie.setMediaController(mediaController); //비디오 뷰에 영상 컨트롤러 셋팅
         VV_movie.setVideoURI(Uri.parse(path)); //비디오뷰에 영상URI 셋팅
 
@@ -136,25 +133,9 @@ public class Home_Activity extends AppCompatActivity {
         }
         TV_notice.setText(noticeTitle);
 
-        //---------------------------------------------------------------------------
-
 //        iniExoplayer();
 
-        //---------------------------------------------------------------------------
-
     }
-
-//    private void iniExoplayer() {
-//        playerView = findViewById(R.id.EXO_movie);
-//        simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(this);
-//        playerView.setPlayer(simpleExoPlayer);
-//        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(this,
-//                Util.getUserAgent(this, "MyApplication"));
-//        MediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
-//                .createMediaSource(Uri.parse(videoURL));
-//        simpleExoPlayer.prepare(videoSource);
-//        simpleExoPlayer.setPlayWhenReady(true);
-//    }
 
 //==================================================================================================
 
@@ -494,6 +475,8 @@ public class Home_Activity extends AppCompatActivity {
                         musicNum--;
                     }
                     startService(serviceIntent);
+                    TV_play.setVisibility(View.INVISIBLE);
+                    TV_pause.setVisibility(View.VISIBLE);
                 }
 
                 //실행중이 아니라면 일반 재생
@@ -558,6 +541,8 @@ public class Home_Activity extends AppCompatActivity {
                         musicNum++;
                     }
                     startService(serviceIntent);
+                    TV_play.setVisibility(View.INVISIBLE);
+                    TV_pause.setVisibility(View.VISIBLE);
                 }
 
                 //실행중이 아니라면 일반 재생
@@ -669,6 +654,21 @@ public class Home_Activity extends AppCompatActivity {
 //
 //        return it.next();
 //    }
+
+//==================================================================================================
+
+//        private void iniExoplayer() {
+//        playerView = findViewById(R.id.EXO_movie);
+//        simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(this);
+//        playerView.setPlayer(simpleExoPlayer);
+//        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(this,
+//                Util.getUserAgent(this, "MyApplication"));
+//        MediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
+//                .createMediaSource(Uri.parse(videoURL));
+//        simpleExoPlayer.prepare(videoSource);
+//        simpleExoPlayer.setPlayWhenReady(true);
+//    }
+
 //==================================================================================================
 }
 

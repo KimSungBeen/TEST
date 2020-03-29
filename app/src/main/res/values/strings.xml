@@ -144,7 +144,7 @@
     <string name="time">00:00</string>
     <string name="addKeyword">키워드 추가</string>
     <string name="removeKeyword">키워드 제거</string>
-    <string name="workoutFriend">운동 친구</string>
+    <string name="workoutFriend">소모임</string>
     <string name="cancel">취소</string>
     <string name="_1">1</string>
     <string name="_2">2</string>
@@ -153,4 +153,5 @@
     <string name="_5">5</string>
     <string name="_6">6</string>
     <string name="bookmarkDialog"><![CDATA[< 북마크 위치선택 >]]></string>
+    <string name="workoutFriendNotice">주소록을 (키워드 이름)으로 등록해주세요! \nex)소모임 김성빈</string>
 </resources>

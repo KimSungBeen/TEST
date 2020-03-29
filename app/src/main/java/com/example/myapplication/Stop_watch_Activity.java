@@ -151,6 +151,7 @@ public class Stop_watch_Activity extends AppCompatActivity {
     class ProgressBarTask extends AsyncTask<Void, Integer, Void> {
 
         public static final int PROGRESSBAR_TIME_OFFSET = 1006; //프로그래스바 진행타임 오차
+        boolean isMinute = false;
 
         @Override
         protected void onPreExecute() {
@@ -165,16 +166,12 @@ public class Stop_watch_Activity extends AppCompatActivity {
             //스탑워치가 실행중일때 반복문
             while(isRunning) {
                 currentTime = (int) ((SystemClock.elapsedRealtime() - chronometer.getBase() ) /1000) % 60;
-                //Log.i("onnn", "time"+currentTime);
+//                Log.i("onnn", "time"+currentTime);
+
                 publishProgress(currentTime);
 
                 //카운트시간과 프로그레스바의 오차를 줄이기위한 sleep
                 SystemClock.sleep(PROGRESSBAR_TIME_OFFSET);
-
-                //프로그레스바 MAX 값이 되면 다시 0으로 초기화
-                if(currentTime >= 60){
-                    currentTime = 0;
-                }
             }
             return null;
         }
@@ -185,7 +182,16 @@ public class Stop_watch_Activity extends AppCompatActivity {
             super.onProgressUpdate(values);
 //            Log.i("prog", "doInBackground: "+values[0]);
             progressBar.setProgress(values[0]);
+
+            if((values[0] == 0) && isMinute) {
+
+                //1분단위로 시간알림
+                Intent receiverIntent = new Intent(Broadcast_Receiver.ACTION_STOPWATCH);
+                sendBroadcast(receiverIntent);
+            }
+            isMinute = true;
         }
+
     }
 
 //==================================================================================================

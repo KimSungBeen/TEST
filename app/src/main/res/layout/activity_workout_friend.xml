@@ -51,11 +51,28 @@
             android:text="@string/removeKeyword" />
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/layoutColor"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.6"
+        android:text="@string/workoutFriendNotice"
+        android:gravity="center"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/layoutColor"/>
+
     <ListView
         android:id="@+id/LV_contact"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="8.5"
+        android:layout_weight="7.9"
         android:divider="#EEEEEE"
         android:dividerHeight="0px">
 

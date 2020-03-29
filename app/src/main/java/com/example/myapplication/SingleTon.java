@@ -42,7 +42,8 @@ public class SingleTon {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_POWER_CONNECTED);
         intentFilter.addAction(Intent.ACTION_POWER_DISCONNECTED);
-        intentFilter.addAction(Broadcast_Receiver.ACTION_NEXT_MUSIC);
+        intentFilter.addAction(Broadcast_Receiver.ACTION_PLAY_MUSIC);
+        intentFilter.addAction(Broadcast_Receiver.ACTION_STOPWATCH);
         context.registerReceiver(receiver, intentFilter);
     }
 

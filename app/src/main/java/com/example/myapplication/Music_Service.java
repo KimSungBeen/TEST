@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -8,11 +9,14 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.util.Log;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import static com.example.myapplication.Home_Activity.TV_allMusicTime;
 import static com.example.myapplication.Home_Activity.TV_currentMusicTime;
+import static com.example.myapplication.Home_Activity.TV_musicInfo;
 import static com.example.myapplication.Home_Activity.musicSeekBar;
 import static com.example.myapplication.Home_Activity.receiver;
 
@@ -24,6 +28,7 @@ public class Music_Service extends Service {
     static HandlerClass handlerClass = new HandlerClass();
     static int position, musicTime, currentMinute, currentSeconds, allMinute, allSeconds;
     static MediaPlayer[] mediaPlayer = new MediaPlayer[musicAmount]; //음악파일 배열
+    String[] musicName = new String[musicAmount]; //노래제목이 들어갈 배열
 
     public Music_Service() {
     }
@@ -37,25 +42,27 @@ public class Music_Service extends Service {
     public void onCreate() {
         super.onCreate();
         SingleTon.broadcastReceiver(this, receiver);
-        Log.i("service","oncreate");
+//        Log.i("service","oncreate");
 
         mediaPlayer[0] = MediaPlayer.create(this, R.raw.sametime); //음악 생성
         mediaPlayer[0].setLooping(false); //반복재생여부 off
+        musicName[0] = "Same Time";
 
         mediaPlayer[1] = MediaPlayer.create(this, R.raw.trespasss);
         mediaPlayer[1].setLooping(false);
+        musicName[1] = "Trespass";
 
         mediaPlayer[2] = MediaPlayer.create(this, R.raw.nothinyet);
         mediaPlayer[2].setLooping(false);
-
+        musicName[2] = "Nothin Yet";
     }
 
     //Service 시작
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i("service","onStartCommand");
+//        Log.i("service","onStartCommand");
 
-        //mediaPlayer[musicNum]내의 음악파일의 출력을 관리
+        //mediaPlayer[musicNum]안에 음악파일의 출력을 관리
         mediaPlayer[musicNum].setAudioStreamType(AudioManager.STREAM_MUSIC);
 
         //현재 재생중인 음악이 끝났을 때 감지 -> 다음 음악 재생
@@ -71,8 +78,6 @@ public class Music_Service extends Service {
                         if (musicNum < musicAmount - 1) {
                             musicNum++;
                         }
-                        Intent receiverIntent = new Intent(Broadcast_Receiver.ACTION_NEXT_MUSIC);
-                        sendBroadcast(receiverIntent);
                         startService(intent);
                     }
                 }
@@ -91,6 +96,10 @@ public class Music_Service extends Service {
             }
         });
 
+        TV_musicInfo.setText(musicName[musicNum]); //음악제목 출력
+        Intent receiverIntent = new Intent(Broadcast_Receiver.ACTION_PLAY_MUSIC);
+        sendBroadcast(receiverIntent);
+
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -98,7 +107,7 @@ public class Music_Service extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.i("service","onDestroy");
+//        Log.i("service","onDestroy");
 
         if (mediaPlayer[musicNum] != null) {
             mediaPlayer[musicNum].release(); // on Destroy시 메모리에서 음악의 데이터 삭제
