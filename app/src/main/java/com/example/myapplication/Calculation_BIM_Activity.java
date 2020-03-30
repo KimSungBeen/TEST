@@ -107,7 +107,7 @@ public class Calculation_BIM_Activity extends AppCompatActivity {
                     }
 
                     TV_bmiInfo.setText(String.format("성별: %s\n키: %scm\n몸무게: %skg\n표준몸무게: %skg\n비만도(BMI): %s%%\n판정결과: %s",
-                            sex, height, weight, standardWeight, String.format("%.2f", percentWeight), result));
+                            sex, height, weight, String.format("%.2f", standardWeight), String.format("%.2f", percentWeight), result));
                 }
                 }catch (Exception e) {
                     e.printStackTrace();

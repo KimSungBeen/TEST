@@ -17,6 +17,7 @@ import static com.example.myapplication.Home_Activity.receiver;
 
 public class Stop_watch_Activity extends AppCompatActivity {
 
+    boolean isMinute = false;
     boolean isRunning; //스톱워치의 실행상태
     long timeOffset; //일시정지 후 재시작 까지 오차
     int currentTime; //스탑워치의 현재시간
@@ -133,12 +134,14 @@ public class Stop_watch_Activity extends AppCompatActivity {
             }
         });
 
-        //스톱워치 중지
+        //스톱워치 리셋
         BTN_stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 chronometer.setBase(SystemClock.elapsedRealtime());
                 timeOffset = 0;
+                isMinute = false;
+                progressBar.setProgress(0);
 
                 TV_timeLog.setText("");
             }
@@ -151,11 +154,11 @@ public class Stop_watch_Activity extends AppCompatActivity {
     private class ProgressBarTask extends AsyncTask<Void, Integer, Void> {
 
         public static final int PROGRESSBAR_TIME_OFFSET = 1006; //프로그래스바 진행타임 오차
-        boolean isMinute = false;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            isMinute = false;
             progressBar.setMax(60);
         }
 
