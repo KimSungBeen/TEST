@@ -1,8 +1,10 @@
 package com.example.myapplication;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -69,7 +71,6 @@ public class Calculation_BIM_Activity extends AppCompatActivity {
 
         //확인 버튼
         BTN_apply.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View v) {
                 try {
@@ -91,28 +92,22 @@ public class Calculation_BIM_Activity extends AppCompatActivity {
                     // 신장(m) * 신장(m) * 22 : 남자
                     // 신장(m) * 신장(m) * 21 : 여자
         /*표준체중*/ double standardWeight = sex.equals("남성") ? (( height / 100) * (height / 100) * 22) : ((height / 100) * (height / 100) * 21);
-          /*비만도*/ double percentWeight = ((weight - standardWeight)/weight) * 100;
+          /*비만도*/ double percentWeight = weight / ((height / 100) * (height / 100));
                     String result;
 
                     //비만도 범위 측정
-                    if((percentWeight <= 10) && (percentWeight >= -10)) {
+                    if((percentWeight >= 18.5) && (percentWeight <= 22.9)) {
                         result = "정상";
-                    }else if((percentWeight >10) && (percentWeight <= 20)) {
+                    }else if((percentWeight >= 23) && (percentWeight <= 24.9)) {
                         result = "과체중";
-                    }else if(percentWeight > 20) {
+                    }else if(percentWeight >= 25) {
                         result = "비만";
-                    }else if((percentWeight < -10) && (percentWeight >= -20)) {
-                        result = "체중 감소 상태";
                     }else {
                         result = "너무 마른 상태";
                     }
 
-                    TV_bmiInfo.setText("성별: " + sex + "\n" +
-                            "키: " + height+ "cm" + "\n" +
-                            "몸무게: " + weight+ "kg" + "\n" +
-                            "표준몸무게: " + (int)standardWeight+ "kg" + "\n" +
-                            "비만도(BMI): " + (int)percentWeight+ "%" + "\n" +
-                            "판정결과: " + result);
+                    TV_bmiInfo.setText(String.format("성별: %s\n키: %scm\n몸무게: %skg\n표준몸무게: %skg\n비만도(BMI): %s%%\n판정결과: %s",
+                            sex, height, weight, standardWeight, String.format("%.2f", percentWeight), result));
                 }
                 }catch (Exception e) {
                     e.printStackTrace();
