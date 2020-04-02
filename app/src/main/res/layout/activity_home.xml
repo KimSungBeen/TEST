@@ -105,10 +105,21 @@
         android:background="@color/guideLine"
         app:layout_constraintTop_toBottomOf="@id/VV_movie" />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/LA_isPlayMusic"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="@id/TV_musicInfo"
+        app:layout_constraintRight_toLeftOf="@id/TV_musicInfo"
+        app:layout_constraintTop_toTopOf="@id/TV_musicInfo"
+        app:lottie_autoPlay="false"
+        app:lottie_fileName="playmusic.json"
+        app:lottie_loop="true" />
+
     <!--    음악플레이어-->
     <TextView
         android:id="@+id/TV_musicInfo"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/Music_info"

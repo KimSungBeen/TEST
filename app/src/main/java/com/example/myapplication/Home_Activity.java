@@ -31,6 +31,8 @@ import androidx.core.content.ContextCompat;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
+import com.airbnb.lottie.LottieAnimationView;
+
 import java.io.InputStream;
 
 import static com.example.myapplication.Music_Service.isPlaying;
@@ -61,6 +63,7 @@ public class Home_Activity extends AppCompatActivity {
     static TextView TV_musicInfo;
     ImageView  IV_thumbnail,
             IV_bookmarkNum1, IV_bookmarkNum2, IV_bookmarkNum3, IV_bookmarkNum4, IV_bookmarkNum5, IV_bookmarkNum6;
+    LottieAnimationView LA_isPlayMusic;
 
 //    PlayerView playerView;
 //    SimpleExoPlayer simpleExoPlayer;
@@ -98,6 +101,7 @@ public class Home_Activity extends AppCompatActivity {
         TV_currentMusicTime = findViewById(R.id.TV_currentMusicTime);
         TV_allMusicTime     = findViewById(R.id.TV_allMusicTime);
         TV_musicInfo        = findViewById(R.id.TV_musicInfo);
+        LA_isPlayMusic        = findViewById(R.id.LA_isPlayMusic);
 
         //북마크 뷰 초기화
         IV_bookmarkNum1 = findViewById(R.id.IV_bookmarkNum1);
@@ -487,6 +491,7 @@ public class Home_Activity extends AppCompatActivity {
                     startService(serviceIntent);
                     TV_play.setVisibility(View.INVISIBLE);
                     TV_pause.setVisibility(View.VISIBLE);
+                    LA_isPlayMusic.playAnimation();
                 }
 
                 //실행중이 아니라면 일반 재생
@@ -494,6 +499,7 @@ public class Home_Activity extends AppCompatActivity {
                     startService(serviceIntent);
                     TV_play.setVisibility(View.INVISIBLE);
                     TV_pause.setVisibility(View.VISIBLE);
+                    LA_isPlayMusic.playAnimation();
                 }
             }
         });
@@ -512,6 +518,8 @@ public class Home_Activity extends AppCompatActivity {
                 }
                 TV_play.setVisibility(View.INVISIBLE);
                 TV_pause.setVisibility(View.VISIBLE);
+                LA_isPlayMusic.playAnimation(); //음악이 재생인지아닌
+                
             }
         });
 
@@ -522,6 +530,7 @@ public class Home_Activity extends AppCompatActivity {
                 mediaPlayer[musicNum].pause();
                 TV_play.setVisibility(View.VISIBLE);
                 TV_pause.setVisibility(View.INVISIBLE);
+                LA_isPlayMusic.pauseAnimation();
             }
         });
 
@@ -533,6 +542,7 @@ public class Home_Activity extends AppCompatActivity {
                 TV_play.setVisibility(View.VISIBLE);
                 TV_pause.setVisibility(View.INVISIBLE);
                 isPlaying = false;
+                LA_isPlayMusic.pauseAnimation();
             }
         });
 
@@ -553,6 +563,7 @@ public class Home_Activity extends AppCompatActivity {
                     startService(serviceIntent);
                     TV_play.setVisibility(View.INVISIBLE);
                     TV_pause.setVisibility(View.VISIBLE);
+                    LA_isPlayMusic.playAnimation();
                 }
 
                 //실행중이 아니라면 일반 재생
@@ -560,6 +571,7 @@ public class Home_Activity extends AppCompatActivity {
                     startService(serviceIntent);
                     TV_play.setVisibility(View.INVISIBLE);
                     TV_pause.setVisibility(View.VISIBLE);
+                    LA_isPlayMusic.playAnimation();
                 }
             }
         });
