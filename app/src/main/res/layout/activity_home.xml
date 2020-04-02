@@ -143,24 +143,36 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/V_menuLine"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="@id/TV_play"
+        app:layout_constraintRight_toRightOf="@id/LA_play"
         tools:ignore="spUsage" />
 
-    <TextView
-        android:id="@+id/TV_play"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:text="@string/Play"
-        android:textColor="@color/black"
-        android:textSize="32dp"
-        android:textStyle="bold"
-        android:visibility="visible"
+<!--    <TextView-->
+<!--        android:id="@+id/TV_play"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:clickable="true"-->
+<!--        android:focusable="true"-->
+<!--        android:text="@string/Play"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="32dp"-->
+<!--        android:textStyle="bold"-->
+<!--        android:visibility="visible"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/V_menuLine"-->
+<!--        app:layout_constraintLeft_toLeftOf="@id/TV_back"-->
+<!--        app:layout_constraintRight_toRightOf="@id/TV_stop"-->
+<!--        tools:ignore="spUsage" />-->
+<!--    -->
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/LA_play"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         app:layout_constraintBottom_toTopOf="@id/V_menuLine"
         app:layout_constraintLeft_toLeftOf="@id/TV_back"
         app:layout_constraintRight_toRightOf="@id/TV_stop"
-        tools:ignore="spUsage" />
+        app:lottie_autoPlay="false"
+        app:lottie_fileName="playbutton.json"
+        app:lottie_loop="false" />
 
     <TextView
         android:id="@+id/TV_pause"
@@ -188,7 +200,7 @@
         android:textSize="32dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/V_menuLine"
-        app:layout_constraintLeft_toLeftOf="@id/TV_play"
+        app:layout_constraintLeft_toLeftOf="@id/LA_play"
         app:layout_constraintRight_toRightOf="@id/TV_next"
         tools:ignore="spUsage" />
 
@@ -431,7 +443,7 @@
         android:layout_height="wrap_content"
         android:progressTint="@color/red"
         android:thumbTint="@color/red"
-        app:layout_constraintBottom_toTopOf="@id/TV_play"
+        app:layout_constraintBottom_toTopOf="@id/LA_play"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/TV_musicInfo" />

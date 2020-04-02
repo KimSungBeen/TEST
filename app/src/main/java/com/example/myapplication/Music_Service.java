@@ -24,7 +24,8 @@ public class Music_Service extends Service {
 
     public static final int musicAmount = 3; //노래의 갯수
     public static int musicNum = 0; //노래의 번호
-    public static volatile boolean isPlaying; //음악이 재생되고 있는지에 따른 boolean
+    public static volatile boolean isPlaying = false; //음악이 재생되고 있는지에 따른 boolean
+    public static volatile boolean isPause = false; //일시정지인지 아닌지에 따른 boolean
     static HandlerClass handlerClass = new HandlerClass();
     static int position, musicTime, currentMinute, currentSeconds, allMinute, allSeconds;
     static MediaPlayer[] mediaPlayer = new MediaPlayer[musicAmount]; //음악파일 배열

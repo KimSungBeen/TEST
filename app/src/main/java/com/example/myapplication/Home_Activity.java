@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.Application;
 import android.app.Dialog;
@@ -35,6 +36,7 @@ import com.airbnb.lottie.LottieAnimationView;
 
 import java.io.InputStream;
 
+import static com.example.myapplication.Music_Service.isPause;
 import static com.example.myapplication.Music_Service.isPlaying;
 import static com.example.myapplication.Music_Service.mediaPlayer;
 import static com.example.myapplication.Music_Service.musicAmount;
@@ -58,12 +60,12 @@ public class Home_Activity extends AppCompatActivity {
     //뷰 선언
     Button BTN_info, BTN_stopwatch, BTN_diary;
     Button BTN_workoutFriend, BTN_BMI;
-    TextView TV_notice, TV_back, TV_play, TV_pause, TV_stop, TV_next,
+    TextView TV_notice, TV_back, TV_stop, TV_next,
             TV_bookmarkNum1, TV_bookmarkNum2, TV_bookmarkNum3, TV_bookmarkNum4, TV_bookmarkNum5, TV_bookmarkNum6;
     static TextView TV_musicInfo;
     ImageView  IV_thumbnail,
             IV_bookmarkNum1, IV_bookmarkNum2, IV_bookmarkNum3, IV_bookmarkNum4, IV_bookmarkNum5, IV_bookmarkNum6;
-    LottieAnimationView LA_isPlayMusic;
+    LottieAnimationView LA_isPlayMusic, LA_play;
 
 //    PlayerView playerView;
 //    SimpleExoPlayer simpleExoPlayer;
@@ -91,8 +93,7 @@ public class Home_Activity extends AppCompatActivity {
         BTN_workoutFriend   = findViewById(R.id.BTN_workoutFriend);
         BTN_BMI             = findViewById(R.id.BTN_BMI);
         TV_back             = findViewById(R.id.TV_back);
-        TV_play             = findViewById(R.id.TV_play);
-        TV_pause            = findViewById(R.id.TV_pause);
+        LA_play             = findViewById(R.id.LA_play);
         TV_stop             = findViewById(R.id.TV_stop);
         TV_next             = findViewById(R.id.TV_next);
         TV_notice           = findViewById(R.id.TV_notice);
@@ -489,48 +490,52 @@ public class Home_Activity extends AppCompatActivity {
                         musicNum--;
                     }
                     startService(serviceIntent);
-                    TV_play.setVisibility(View.INVISIBLE);
-                    TV_pause.setVisibility(View.VISIBLE);
                     LA_isPlayMusic.playAnimation();
+
+                    if(!isPause) {
+                        isPause = true;
+                        customAnimators(0f, 0.5f, 500);
+                    }
                 }
 
                 //실행중이 아니라면 일반 재생
                 if(!isPlaying) {
                     startService(serviceIntent);
-                    TV_play.setVisibility(View.INVISIBLE);
-                    TV_pause.setVisibility(View.VISIBLE);
                     LA_isPlayMusic.playAnimation();
+                    isPause = true;
+                    customAnimators(0f, 0.5f, 500);
                 }
             }
         });
 
-        //음악플레이어 플레이
-        TV_play.setOnClickListener(new View.OnClickListener() {
+        //음악플레이어 플레이, 일시정지
+        LA_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(isPlaying) {
-                    mediaPlayer[musicNum].start();
-                    Music_Service.ThreadClass thread = new Music_Service.ThreadClass();
-                    thread.start();
+                    if(isPause) {
+                        mediaPlayer[musicNum].pause();
+                        LA_isPlayMusic.pauseAnimation();
+                        isPause = false;
+                        customAnimators(0.5f, 1f, 500);
+                    }else {
+                        mediaPlayer[musicNum].start();
+                        Music_Service.ThreadClass thread = new Music_Service.ThreadClass();
+                        thread.start();
+                        LA_isPlayMusic.playAnimation();
+                        isPause = true; //다음 클릭시 pause상태
 
+                        //애니메이션의 시작위치, 종료위치, 진행속도를 설정
+                        customAnimators(0f, 0.5f, 500);
+                    }
                 }else {
                     startService(serviceIntent);
-                }
-                TV_play.setVisibility(View.INVISIBLE);
-                TV_pause.setVisibility(View.VISIBLE);
-                LA_isPlayMusic.playAnimation(); //음악이 재생인지아닌
-                
-            }
-        });
+                    LA_isPlayMusic.playAnimation(); //음악이 재생인지아닌
+                    isPause = true; //다음 클릭시 pause상태
 
-        //음악플레이어 일시정지
-        TV_pause.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mediaPlayer[musicNum].pause();
-                TV_play.setVisibility(View.VISIBLE);
-                TV_pause.setVisibility(View.INVISIBLE);
-                LA_isPlayMusic.pauseAnimation();
+                    //애니메이션의 시작위치, 종료위치, 진행속도를 설정
+                    customAnimators(0f, 0.5f, 500);
+                }
             }
         });
 
@@ -539,10 +544,10 @@ public class Home_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 stopService(serviceIntent);
-                TV_play.setVisibility(View.VISIBLE);
-                TV_pause.setVisibility(View.INVISIBLE);
                 isPlaying = false;
+                isPause = false;
                 LA_isPlayMusic.pauseAnimation();
+                customAnimators(0.5f, 1f, 500);
             }
         });
 
@@ -561,17 +566,21 @@ public class Home_Activity extends AppCompatActivity {
                         musicNum++;
                     }
                     startService(serviceIntent);
-                    TV_play.setVisibility(View.INVISIBLE);
-                    TV_pause.setVisibility(View.VISIBLE);
                     LA_isPlayMusic.playAnimation();
+
+                    if(!isPause) {
+                        isPause = true;
+                        customAnimators(0f, 0.5f, 500);
+                    }
                 }
 
                 //실행중이 아니라면 일반 재생
                 if(!isPlaying) {
                     startService(serviceIntent);
-                    TV_play.setVisibility(View.INVISIBLE);
-                    TV_pause.setVisibility(View.VISIBLE);
                     LA_isPlayMusic.playAnimation();
+
+                    isPause = true;
+                    customAnimators(0f, 0.5f, 500);
                 }
             }
         });
@@ -664,6 +673,18 @@ public class Home_Activity extends AppCompatActivity {
             TV_notice.setText(noticeTitle);
         }
 
+    }
+
+//==================================================================================================
+
+    private void customAnimators(float startPosition, float finishPosition, int duration) {
+
+        //애니메이션의 진행위치, 종료위치, 진행속도를 설정
+        ValueAnimator animator = ValueAnimator.ofFloat(startPosition, finishPosition).setDuration(duration);
+        animator.addUpdateListener(animation -> {
+            LA_play.setProgress((Float) animation.getAnimatedValue());
+        });
+        animator.start();
     }
 
 //==================================================================================================
