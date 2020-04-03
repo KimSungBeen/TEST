@@ -48,12 +48,12 @@ public class Home_Activity extends AppCompatActivity {
     //뷰 선언
     Button BTN_info, BTN_stopwatch, BTN_diary;
     Button BTN_workoutFriend, BTN_BMI;
-    TextView TV_notice, TV_back,
+    TextView TV_notice,
             TV_bookmarkNum1, TV_bookmarkNum2, TV_bookmarkNum3, TV_bookmarkNum4, TV_bookmarkNum5, TV_bookmarkNum6;
     static TextView TV_musicInfo;
     ImageView  IV_thumbnail,
             IV_bookmarkNum1, IV_bookmarkNum2, IV_bookmarkNum3, IV_bookmarkNum4, IV_bookmarkNum5, IV_bookmarkNum6;
-    LottieAnimationView LA_isPlayMusic, LA_play, LA_stop, LA_next;
+    LottieAnimationView LA_isPlayMusic, LA_play, LA_stop, LA_next, LA_back;
 
 //    PlayerView playerView;
 //    SimpleExoPlayer simpleExoPlayer;
@@ -80,7 +80,7 @@ public class Home_Activity extends AppCompatActivity {
         BTN_diary           = findViewById(R.id.BTN_diary);
         BTN_workoutFriend   = findViewById(R.id.BTN_workoutFriend);
         BTN_BMI             = findViewById(R.id.BTN_BMI);
-        TV_back             = findViewById(R.id.TV_back);
+        LA_back             = findViewById(R.id.LA_back);
         LA_play             = findViewById(R.id.LA_play);
         LA_stop             = findViewById(R.id.LA_stop);
         LA_next             = findViewById(R.id.LA_next);
@@ -463,7 +463,7 @@ public class Home_Activity extends AppCompatActivity {
         Intent serviceIntent = new Intent(Home_Activity.this, Music_Service.class);
 
         //음악플레이어 뒤로가기
-        TV_back.setOnClickListener(new View.OnClickListener() {
+        LA_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -480,8 +480,10 @@ public class Home_Activity extends AppCompatActivity {
                     startService(serviceIntent);
                     LA_isPlayMusic.playAnimation();
 
-                    if(!isPause) {
-                        isPause = true;
+                    if(isPause) {
+                        isPause = false;
+
+                        //애니메이션의 시작위치, 종료위치, 진행속도를 설정
                         playCustomAnimators(0f, 0.5f, 500);
                     }
                 }
@@ -490,9 +492,12 @@ public class Home_Activity extends AppCompatActivity {
                 if(!isPlaying) {
                     startService(serviceIntent);
                     LA_isPlayMusic.playAnimation();
-                    isPause = true;
+                    isPause = false;
+
+                    //애니메이션의 시작위치, 종료위치, 진행속도를 설정
                     playCustomAnimators(0f, 0.5f, 500);
                 }
+                LA_back.playAnimation();
             }
         });
 
@@ -501,17 +506,17 @@ public class Home_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(isPlaying) {
-                    if(isPause) {
+                    if(!isPause) {
                         mediaPlayer[musicNum].pause();
                         LA_isPlayMusic.pauseAnimation();
-                        isPause = false;
+                        isPause = true;
                         playCustomAnimators(0.5f, 1f, 500);
                     }else {
                         mediaPlayer[musicNum].start();
                         Music_Service.ThreadClass thread = new Music_Service.ThreadClass();
                         thread.start();
                         LA_isPlayMusic.playAnimation();
-                        isPause = true; //다음 클릭시 pause상태
+                        isPause = false; //다음 클릭시 pause상태
 
                         //애니메이션의 시작위치, 종료위치, 진행속도를 설정
                         playCustomAnimators(0f, 0.5f, 500);
@@ -519,7 +524,7 @@ public class Home_Activity extends AppCompatActivity {
                 }else {
                     startService(serviceIntent);
                     LA_isPlayMusic.playAnimation(); //음악이 재생인지아닌
-                    isPause = true; //다음 클릭시 pause상태
+                    isPause = false; //다음 클릭시 pause상태
 
                     //애니메이션의 시작위치, 종료위치, 진행속도를 설정
                     playCustomAnimators(0f, 0.5f, 500);
@@ -531,14 +536,17 @@ public class Home_Activity extends AppCompatActivity {
         LA_stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isPlaying) {
-                    stopService(serviceIntent);
-                    isPlaying = false;
-                    isPause = false;
+                if(isPlaying && !isPause) {
                     LA_isPlayMusic.pauseAnimation();
                     playCustomAnimators(0.5f, 1f, 500);
                 }
+                stopService(serviceIntent);
+                isPlaying = false;
+                isPause = true;
+
                 LA_stop.playAnimation();
+                musicSeekBar.setProgress(0);
+                TV_currentMusicTime.setText("0:00");
             }
         });
 
@@ -559,8 +567,8 @@ public class Home_Activity extends AppCompatActivity {
                     startService(serviceIntent);
                     LA_isPlayMusic.playAnimation();
 
-                    if(!isPause) {
-                        isPause = true;
+                    if(isPause) {
+                        isPause = false;
                         playCustomAnimators(0f, 0.5f, 500);
                     }
                 }
@@ -570,7 +578,7 @@ public class Home_Activity extends AppCompatActivity {
                     startService(serviceIntent);
                     LA_isPlayMusic.playAnimation();
 
-                    isPause = true;
+                    isPause = false;
                     playCustomAnimators(0f, 0.5f, 500);
                 }
                 LA_next.playAnimation();

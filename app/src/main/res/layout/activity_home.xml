@@ -131,27 +131,39 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view" />
 
-    <TextView
-        android:id="@+id/TV_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:text="@string/Back"
-        android:textColor="@color/black"
-        android:textSize="32dp"
-        android:textStyle="bold"
+<!--    <TextView-->
+<!--        android:id="@+id/TV_back"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:clickable="true"-->
+<!--        android:focusable="true"-->
+<!--        android:text="@string/Back"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="32dp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/V_menuLine"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="@id/LA_play"-->
+<!--        tools:ignore="spUsage" />-->
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/LA_back"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         app:layout_constraintBottom_toTopOf="@id/V_menuLine"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="@id/LA_play"
-        tools:ignore="spUsage" />
+        app:lottie_autoPlay="false"
+        app:lottie_fileName="previous_track_button.json"
+        app:lottie_loop="false" />
+
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/LA_play"
         android:layout_width="40dp"
         android:layout_height="40dp"
         app:layout_constraintBottom_toTopOf="@id/V_menuLine"
-        app:layout_constraintLeft_toLeftOf="@id/TV_back"
+        app:layout_constraintLeft_toLeftOf="@id/LA_back"
         app:layout_constraintRight_toRightOf="@id/LA_stop"
         app:lottie_autoPlay="false"
         app:lottie_fileName="play_button.json"
@@ -178,21 +190,6 @@
         app:lottie_autoPlay="false"
         app:lottie_fileName="next_track_button.json"
         app:lottie_loop="false" />
-
-<!--    <TextView-->
-<!--        android:id="@+id/TV_next"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:clickable="true"-->
-<!--        android:focusable="true"-->
-<!--        android:text="@string/Next"-->
-<!--        android:textColor="@color/black"-->
-<!--        android:textSize="32dp"-->
-<!--        android:textStyle="bold"-->
-<!--        app:layout_constraintBottom_toTopOf="@id/V_menuLine"-->
-<!--        app:layout_constraintLeft_toLeftOf="@id/LA_stop"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        tools:ignore="spUsage" />-->
 
     <View
         android:id="@+id/V_menuLine"
