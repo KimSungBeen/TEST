@@ -48,12 +48,12 @@ public class Home_Activity extends AppCompatActivity {
     //뷰 선언
     Button BTN_info, BTN_stopwatch, BTN_diary;
     Button BTN_workoutFriend, BTN_BMI;
-    TextView TV_notice, TV_back, TV_stop, TV_next,
+    TextView TV_notice, TV_back,
             TV_bookmarkNum1, TV_bookmarkNum2, TV_bookmarkNum3, TV_bookmarkNum4, TV_bookmarkNum5, TV_bookmarkNum6;
     static TextView TV_musicInfo;
     ImageView  IV_thumbnail,
             IV_bookmarkNum1, IV_bookmarkNum2, IV_bookmarkNum3, IV_bookmarkNum4, IV_bookmarkNum5, IV_bookmarkNum6;
-    LottieAnimationView LA_isPlayMusic, LA_play, LA_stop;
+    LottieAnimationView LA_isPlayMusic, LA_play, LA_stop, LA_next;
 
 //    PlayerView playerView;
 //    SimpleExoPlayer simpleExoPlayer;
@@ -83,7 +83,7 @@ public class Home_Activity extends AppCompatActivity {
         TV_back             = findViewById(R.id.TV_back);
         LA_play             = findViewById(R.id.LA_play);
         LA_stop             = findViewById(R.id.LA_stop);
-        TV_next             = findViewById(R.id.TV_next);
+        LA_next             = findViewById(R.id.LA_next);
         TV_notice           = findViewById(R.id.TV_notice);
         VV_movie            = findViewById(R.id.VV_movie);
         IV_thumbnail        = findViewById(R.id.IV_thumbnail);
@@ -543,7 +543,7 @@ public class Home_Activity extends AppCompatActivity {
         });
 
         //음악플레이어 앞으로가기
-        TV_next.setOnClickListener(new View.OnClickListener() {
+        LA_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //이전에 실행되고 있던 음악 종료
@@ -573,6 +573,7 @@ public class Home_Activity extends AppCompatActivity {
                     isPause = true;
                     playCustomAnimators(0f, 0.5f, 500);
                 }
+                LA_next.playAnimation();
             }
         });
 
