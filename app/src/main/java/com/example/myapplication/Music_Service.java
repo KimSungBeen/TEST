@@ -113,7 +113,6 @@ public class Music_Service extends Service {
         if (mediaPlayer[musicNum] != null) {
             mediaPlayer[musicNum].release(); // on Destroy시 메모리에서 음악의 데이터 삭제
         }
-
     }
 
     public static class ThreadClass extends Thread {
@@ -150,28 +149,29 @@ public class Music_Service extends Service {
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
+            if(isPlaying) {
+                musicSeekBar.setMax(musicTime);
+                musicSeekBar.setProgress(position);
 
-            musicSeekBar.setMax(musicTime);
-            musicSeekBar.setProgress(position);
-
-            //음악의 현재시간, 총 재생시간 출력
-            if(currentSeconds < 10) {
-                String currentMusicTime = currentMinute + ":0" + currentSeconds;
-                TV_currentMusicTime.setText(currentMusicTime);
+                //음악의 현재시간, 총 재생시간 출력
+                if(currentSeconds < 10) {
+                    String currentMusicTime = currentMinute + ":0" + currentSeconds;
+                    TV_currentMusicTime.setText(currentMusicTime);
+                }else {
+                    String currentMusicTime = currentMinute + ":" + currentSeconds;
+                    TV_currentMusicTime.setText(currentMusicTime);
+                }
+                if(allSeconds < 10) {
+                    String allMusicTime = allMinute + ":0" + allSeconds;
+                    TV_allMusicTime.setText(allMusicTime);
+                }else {
+                    String allMusicTime = allMinute + ":" + allSeconds;
+                    TV_allMusicTime.setText(allMusicTime);
+                }
             }else {
-                String currentMusicTime = currentMinute + ":" + currentSeconds;
-                TV_currentMusicTime.setText(currentMusicTime);
+                musicSeekBar.setProgress(0);
+                TV_currentMusicTime.setText("0:00");
             }
-            if(allSeconds < 10) {
-                String allMusicTime = allMinute + ":0" + allSeconds;
-                TV_allMusicTime.setText(allMusicTime);
-            }else {
-                String allMusicTime = allMinute + ":" + allSeconds;
-                TV_allMusicTime.setText(allMusicTime);
-            }
-
-
-
         }
     }
 
