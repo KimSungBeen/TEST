@@ -152,40 +152,36 @@
         android:layout_height="40dp"
         app:layout_constraintBottom_toTopOf="@id/V_menuLine"
         app:layout_constraintLeft_toLeftOf="@id/TV_back"
-        app:layout_constraintRight_toRightOf="@id/TV_stop"
+        app:layout_constraintRight_toRightOf="@id/LA_stop"
         app:lottie_autoPlay="false"
         app:lottie_fileName="play_button.json"
         app:lottie_loop="false" />
 
-    <TextView
-        android:id="@+id/TV_pause"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:text="@string/pause"
-        android:textColor="@color/black"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/V_menuLine"
-        app:layout_constraintLeft_toLeftOf="@id/TV_back"
-        app:layout_constraintRight_toRightOf="@id/TV_stop" />
-
-    <TextView
-        android:id="@+id/TV_stop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:text="@string/Stop"
-        android:textColor="@color/black"
-        android:textSize="32dp"
-        android:textStyle="bold"
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/LA_stop"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         app:layout_constraintBottom_toTopOf="@id/V_menuLine"
         app:layout_constraintLeft_toLeftOf="@id/LA_play"
         app:layout_constraintRight_toRightOf="@id/TV_next"
-        tools:ignore="spUsage" />
+        app:lottie_autoPlay="false"
+        app:lottie_fileName="stop_button.json"
+        app:lottie_loop="false" />
+
+<!--    <TextView-->
+<!--        android:id="@+id/TV_stop"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:clickable="true"-->
+<!--        android:focusable="true"-->
+<!--        android:text="@string/Stop"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="32dp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/V_menuLine"-->
+<!--        app:layout_constraintLeft_toLeftOf="@id/LA_play"-->
+<!--        app:layout_constraintRight_toRightOf="@id/TV_next"-->
+<!--        tools:ignore="spUsage" />-->
 
     <TextView
         android:id="@+id/TV_next"
@@ -198,7 +194,7 @@
         android:textSize="32dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/V_menuLine"
-        app:layout_constraintLeft_toLeftOf="@id/TV_stop"
+        app:layout_constraintLeft_toLeftOf="@id/LA_stop"
         app:layout_constraintRight_toRightOf="parent"
         tools:ignore="spUsage" />
 

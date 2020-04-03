@@ -65,7 +65,7 @@ public class Home_Activity extends AppCompatActivity {
     static TextView TV_musicInfo;
     ImageView  IV_thumbnail,
             IV_bookmarkNum1, IV_bookmarkNum2, IV_bookmarkNum3, IV_bookmarkNum4, IV_bookmarkNum5, IV_bookmarkNum6;
-    LottieAnimationView LA_isPlayMusic, LA_play;
+    LottieAnimationView LA_isPlayMusic, LA_play, LA_stop;
 
 //    PlayerView playerView;
 //    SimpleExoPlayer simpleExoPlayer;
@@ -94,7 +94,7 @@ public class Home_Activity extends AppCompatActivity {
         BTN_BMI             = findViewById(R.id.BTN_BMI);
         TV_back             = findViewById(R.id.TV_back);
         LA_play             = findViewById(R.id.LA_play);
-        TV_stop             = findViewById(R.id.TV_stop);
+        LA_stop             = findViewById(R.id.LA_stop);
         TV_next             = findViewById(R.id.TV_next);
         TV_notice           = findViewById(R.id.TV_notice);
         VV_movie            = findViewById(R.id.VV_movie);
@@ -494,7 +494,7 @@ public class Home_Activity extends AppCompatActivity {
 
                     if(!isPause) {
                         isPause = true;
-                        customAnimators(0f, 0.5f, 500);
+                        playCustomAnimators(0f, 0.5f, 500);
                     }
                 }
 
@@ -503,7 +503,7 @@ public class Home_Activity extends AppCompatActivity {
                     startService(serviceIntent);
                     LA_isPlayMusic.playAnimation();
                     isPause = true;
-                    customAnimators(0f, 0.5f, 500);
+                    playCustomAnimators(0f, 0.5f, 500);
                 }
             }
         });
@@ -517,7 +517,7 @@ public class Home_Activity extends AppCompatActivity {
                         mediaPlayer[musicNum].pause();
                         LA_isPlayMusic.pauseAnimation();
                         isPause = false;
-                        customAnimators(0.5f, 1f, 500);
+                        playCustomAnimators(0.5f, 1f, 500);
                     }else {
                         mediaPlayer[musicNum].start();
                         Music_Service.ThreadClass thread = new Music_Service.ThreadClass();
@@ -526,7 +526,7 @@ public class Home_Activity extends AppCompatActivity {
                         isPause = true; //다음 클릭시 pause상태
 
                         //애니메이션의 시작위치, 종료위치, 진행속도를 설정
-                        customAnimators(0f, 0.5f, 500);
+                        playCustomAnimators(0f, 0.5f, 500);
                     }
                 }else {
                     startService(serviceIntent);
@@ -534,20 +534,20 @@ public class Home_Activity extends AppCompatActivity {
                     isPause = true; //다음 클릭시 pause상태
 
                     //애니메이션의 시작위치, 종료위치, 진행속도를 설정
-                    customAnimators(0f, 0.5f, 500);
+                    playCustomAnimators(0f, 0.5f, 500);
                 }
             }
         });
 
         //음악플레이어 정지
-        TV_stop.setOnClickListener(new View.OnClickListener() {
+        LA_stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 stopService(serviceIntent);
                 isPlaying = false;
                 isPause = false;
                 LA_isPlayMusic.pauseAnimation();
-                customAnimators(0.5f, 1f, 500);
+                playCustomAnimators(0.5f, 1f, 500);
             }
         });
 
@@ -570,7 +570,7 @@ public class Home_Activity extends AppCompatActivity {
 
                     if(!isPause) {
                         isPause = true;
-                        customAnimators(0f, 0.5f, 500);
+                        playCustomAnimators(0f, 0.5f, 500);
                     }
                 }
 
@@ -580,7 +580,7 @@ public class Home_Activity extends AppCompatActivity {
                     LA_isPlayMusic.playAnimation();
 
                     isPause = true;
-                    customAnimators(0f, 0.5f, 500);
+                    playCustomAnimators(0f, 0.5f, 500);
                 }
             }
         });
@@ -677,7 +677,7 @@ public class Home_Activity extends AppCompatActivity {
 
 //==================================================================================================
 
-    private void customAnimators(float startPosition, float finishPosition, int duration) {
+    private void playCustomAnimators(float startPosition, float finishPosition, int duration) {
 
         //애니메이션의 진행위치, 종료위치, 진행속도를 설정
         ValueAnimator animator = ValueAnimator.ofFloat(startPosition, finishPosition).setDuration(duration);
