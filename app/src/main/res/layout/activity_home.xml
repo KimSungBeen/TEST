@@ -113,7 +113,7 @@
         app:layout_constraintRight_toLeftOf="@id/TV_musicInfo"
         app:layout_constraintTop_toTopOf="@id/TV_musicInfo"
         app:lottie_autoPlay="false"
-        app:lottie_fileName="playmusic.json"
+        app:lottie_fileName="play_music.json"
         app:lottie_loop="true" />
 
     <!--    음악플레이어-->
@@ -146,23 +146,6 @@
         app:layout_constraintRight_toRightOf="@id/LA_play"
         tools:ignore="spUsage" />
 
-<!--    <TextView-->
-<!--        android:id="@+id/TV_play"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:clickable="true"-->
-<!--        android:focusable="true"-->
-<!--        android:text="@string/Play"-->
-<!--        android:textColor="@color/black"-->
-<!--        android:textSize="32dp"-->
-<!--        android:textStyle="bold"-->
-<!--        android:visibility="visible"-->
-<!--        app:layout_constraintBottom_toTopOf="@id/V_menuLine"-->
-<!--        app:layout_constraintLeft_toLeftOf="@id/TV_back"-->
-<!--        app:layout_constraintRight_toRightOf="@id/TV_stop"-->
-<!--        tools:ignore="spUsage" />-->
-<!--    -->
-
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/LA_play"
         android:layout_width="40dp"
@@ -171,7 +154,7 @@
         app:layout_constraintLeft_toLeftOf="@id/TV_back"
         app:layout_constraintRight_toRightOf="@id/TV_stop"
         app:lottie_autoPlay="false"
-        app:lottie_fileName="playbutton.json"
+        app:lottie_fileName="play_button.json"
         app:lottie_loop="false" />
 
     <TextView
