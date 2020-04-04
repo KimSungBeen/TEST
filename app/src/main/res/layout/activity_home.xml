@@ -1,441 +1,434 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.drawerlayout.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="5dp"
-    tools:context=".Home_Activity"
-    android:id="@+id/Home_Activity">
+    android:id="@+id/drawer_layout"
+    tools:context=".Home_Activity">
 
-    <Button
-        android:id="@+id/BTN_workoutFriend"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
-        android:background="@color/white"
-        android:text="@string/workoutFriend"
-        app:layout_constraintBottom_toBottomOf="@id/TV_mainLogo"
-        app:layout_constraintEnd_toStartOf="@+id/TV_mainLogo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/TV_mainLogo" />
-
-    <!--    메인로고-->
-    <TextView
-        android:id="@+id/TV_mainLogo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Workout_mate"
-        android:textColor="@color/mainLogo"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/BTN_BMI"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:background="@color/white"
-        android:text="@string/bmiCalculate"
-        app:layout_constraintBottom_toBottomOf="@id/TV_mainLogo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/TV_mainLogo"
-        app:layout_constraintTop_toTopOf="@id/TV_mainLogo" />
-
-    <!--    공지사항-->
-    <TextView
-        android:id="@+id/TV_notice"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@color/notice"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center"
-        android:maxLines="2"
-        android:text="@string/Notice"
-        android:textColor="@color/noticeTitle"
-        android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@id/TV_mainLogo" />
+        android:layout_height="match_parent"
+        android:layout_margin="5dp">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Movie_info"
-        android:textColor="@color/black"
-        android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@id/IV_thumbnail"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/LA_menu"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_fileName="menu_button.json"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="true"/>
 
-    <ImageView
-        android:id="@+id/IV_thumbnail"
-        android:layout_width="400dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="5dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@drawable/thumbnail1"
-        app:layout_constraintBottom_toTopOf="@id/TV_musicInfo"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:ignore="ContentDescription" />
+        <!--    메인로고-->
+        <TextView
+            android:id="@+id/TV_mainLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Workout_mate"
+            android:textColor="@color/mainLogo"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <!--    운동영상-->
-    <VideoView
-        android:id="@+id/VV_movie"
-        android:layout_width="400dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="5dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/TV_musicInfo"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        <!--    공지사항-->
+        <TextView
+            android:id="@+id/TV_notice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/notice"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:maxLines="2"
+            android:text="@string/Notice"
+            android:textColor="@color/noticeTitle"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@id/TV_mainLogo" />
 
-    <View
-        android:id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/guideLine"
-        app:layout_constraintTop_toBottomOf="@id/VV_movie" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Movie_info"
+            android:textColor="@color/black"
+            android:textStyle="bold|italic"
+            app:layout_constraintBottom_toTopOf="@id/IV_thumbnail"
+            app:layout_constraintLeft_toLeftOf="parent" />
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/LA_isPlayMusic"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        app:layout_constraintBottom_toBottomOf="@id/TV_musicInfo"
-        app:layout_constraintRight_toLeftOf="@id/TV_musicInfo"
-        app:layout_constraintTop_toTopOf="@id/TV_musicInfo"
-        app:lottie_autoPlay="false"
-        app:lottie_fileName="play_music.json"
-        app:lottie_loop="true" />
+        <ImageView
+            android:id="@+id/IV_thumbnail"
+            android:layout_width="400dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="5dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/thumbnail1"
+            app:layout_constraintBottom_toTopOf="@id/TV_musicInfo"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:ignore="ContentDescription" />
 
-    <!--    음악플레이어-->
-    <TextView
-        android:id="@+id/TV_musicInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/Music_info"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        android:textStyle="italic|bold"
-        app:layout_constraintBottom_toTopOf="@id/musicSeekBar"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view" />
+        <!--    운동영상-->
+        <VideoView
+            android:id="@+id/VV_movie"
+            android:layout_width="400dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="5dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/TV_musicInfo"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
 
-<!--    <TextView-->
-<!--        android:id="@+id/TV_back"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:clickable="true"-->
-<!--        android:focusable="true"-->
-<!--        android:text="@string/Back"-->
-<!--        android:textColor="@color/black"-->
-<!--        android:textSize="32dp"-->
-<!--        android:textStyle="bold"-->
-<!--        app:layout_constraintBottom_toTopOf="@id/V_menuLine"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintRight_toRightOf="@id/LA_play"-->
-<!--        tools:ignore="spUsage" />-->
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/guideLine"
+            app:layout_constraintTop_toBottomOf="@id/VV_movie" />
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/LA_back"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        app:layout_constraintBottom_toTopOf="@id/V_menuLine"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="@id/LA_play"
-        app:lottie_autoPlay="false"
-        app:lottie_fileName="previous_track_button.json"
-        app:lottie_loop="false" />
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/LA_isPlayMusic"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintBottom_toBottomOf="@id/TV_musicInfo"
+            app:layout_constraintRight_toLeftOf="@id/TV_musicInfo"
+            app:layout_constraintTop_toTopOf="@id/TV_musicInfo"
+            app:lottie_autoPlay="false"
+            app:lottie_fileName="play_music.json"
+            app:lottie_loop="true" />
 
+        <!--    음악플레이어-->
+        <TextView
+            android:id="@+id/TV_musicInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/Music_info"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="italic|bold"
+            app:layout_constraintBottom_toTopOf="@id/musicSeekBar"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view" />
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/LA_play"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        app:layout_constraintBottom_toTopOf="@id/V_menuLine"
-        app:layout_constraintLeft_toLeftOf="@id/LA_back"
-        app:layout_constraintRight_toRightOf="@id/LA_stop"
-        app:lottie_autoPlay="false"
-        app:lottie_fileName="play_button.json"
-        app:lottie_loop="false" />
+        <!--    <TextView-->
+        <!--        android:id="@+id/TV_back"-->
+        <!--        android:layout_width="wrap_content"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:clickable="true"-->
+        <!--        android:focusable="true"-->
+        <!--        android:text="@string/Back"-->
+        <!--        android:textColor="@color/black"-->
+        <!--        android:textSize="32dp"-->
+        <!--        android:textStyle="bold"-->
+        <!--        app:layout_constraintBottom_toTopOf="@id/V_menuLine"-->
+        <!--        app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--        app:layout_constraintRight_toRightOf="@id/LA_play"-->
+        <!--        tools:ignore="spUsage" />-->
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/LA_stop"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        app:layout_constraintBottom_toTopOf="@id/V_menuLine"
-        app:layout_constraintLeft_toLeftOf="@id/LA_play"
-        app:layout_constraintRight_toRightOf="@id/LA_next"
-        app:lottie_autoPlay="false"
-        app:lottie_fileName="stop_button.json"
-        app:lottie_loop="false" />
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/LA_next"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        app:layout_constraintBottom_toTopOf="@id/V_menuLine"
-        app:layout_constraintLeft_toLeftOf="@id/LA_stop"
-        app:layout_constraintRight_toRightOf="parent"
-        app:lottie_autoPlay="false"
-        app:lottie_fileName="next_track_button.json"
-        app:lottie_loop="false" />
-
-    <View
-        android:id="@+id/V_menuLine"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginBottom="3dp"
-        android:background="@color/black"
-        app:layout_constraintBottom_toTopOf="@id/BTN_info" />
-
-    <!--    컨텐츠-->
-    <Button
-        android:id="@+id/BTN_home"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:text="@string/Home"
-        android:textColor="@color/currentButton"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
-
-    <Button
-        android:id="@+id/BTN_diary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:text="@string/Workout_diary"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
-
-    <Button
-        android:id="@+id/BTN_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:text="@string/Workout_info"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/BTN_stopwatch"
-        app:layout_constraintStart_toEndOf="@id/BTN_home" />
-
-    <Button
-        android:id="@+id/BTN_stopwatch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:text="@string/Stop_watch"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/BTN_info"
-        app:layout_constraintRight_toLeftOf="@id/BTN_diary" />
-
-    <TextView
-        android:id="@+id/TV_bookmarkInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/bookmark_info"
-        android:textColor="@color/black"
-        android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@id/IV_bookmarkNum1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/TV_notice" />
-
-    <!--    북마크-->
-
-    <ImageView
-        android:id="@+id/IV_bookmarkNum1"
-        android:layout_width="100dp"
-        android:layout_height="0dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="5dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@mipmap/ic_launcher_round"
-        app:layout_constraintBottom_toTopOf="@id/TV_bookmarkNum1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/TV_bookmarkInfo"
-        tools:ignore="ContentDescription" />
-
-    <ImageView
-        android:id="@+id/IV_bookmarkNum2"
-        android:layout_width="100dp"
-        android:layout_height="0dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@mipmap/ic_launcher_round"
-        app:layout_constraintBottom_toBottomOf="@id/IV_bookmarkNum1"
-        app:layout_constraintEnd_toStartOf="@id/IV_bookmarkNum3"
-        app:layout_constraintStart_toEndOf="@id/IV_bookmarkNum1"
-        app:layout_constraintTop_toTopOf="@id/IV_bookmarkNum1"
-        tools:ignore="ContentDescription" />
-
-    <ImageView
-        android:id="@+id/IV_bookmarkNum3"
-        android:layout_width="100dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:src="@mipmap/ic_launcher_round"
-        app:layout_constraintBottom_toBottomOf="@id/IV_bookmarkNum2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/IV_bookmarkNum2"
-        tools:ignore="ContentDescription" />
-
-    <TextView
-        android:id="@+id/TV_bookmarkNum1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:maxWidth="100dp"
-        android:maxLines="1"
-        android:text="bookmarkNum1"
-        app:layout_constraintBottom_toTopOf="@id/IV_bookmarkNum4"
-        app:layout_constraintEnd_toEndOf="@id/IV_bookmarkNum1"
-        app:layout_constraintStart_toStartOf="@id/IV_bookmarkNum1"
-        app:layout_constraintTop_toBottomOf="@id/IV_bookmarkNum1" />
-
-    <TextView
-        android:id="@+id/TV_bookmarkNum2"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:maxWidth="100dp"
-        android:maxLines="1"
-        android:text="bookmarkNum2"
-        app:layout_constraintEnd_toEndOf="@id/IV_bookmarkNum2"
-        app:layout_constraintStart_toStartOf="@id/IV_bookmarkNum2"
-        app:layout_constraintTop_toTopOf="@+id/TV_bookmarkNum1" />
-
-    <TextView
-        android:id="@+id/TV_bookmarkNum3"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:maxWidth="100dp"
-        android:maxLines="1"
-        android:text="bookmarkNum3"
-        app:layout_constraintEnd_toEndOf="@id/IV_bookmarkNum3"
-        app:layout_constraintStart_toStartOf="@id/IV_bookmarkNum3"
-        app:layout_constraintTop_toTopOf="@+id/TV_bookmarkNum1" />
-
-    <ImageView
-        android:id="@+id/IV_bookmarkNum4"
-        android:layout_width="100dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
-        android:src="@mipmap/ic_launcher_round"
-        app:layout_constraintBottom_toTopOf="@id/TV_bookmarkNum4"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TV_bookmarkNum1" />
-
-    <ImageView
-        android:id="@+id/IV_bookmarkNum5"
-        android:layout_width="100dp"
-        android:layout_height="0dp"
-        android:src="@mipmap/ic_launcher_round"
-        app:layout_constraintBottom_toBottomOf="@+id/IV_bookmarkNum4"
-        app:layout_constraintEnd_toStartOf="@+id/IV_bookmarkNum6"
-        app:layout_constraintStart_toEndOf="@+id/IV_bookmarkNum4"
-        app:layout_constraintTop_toTopOf="@+id/IV_bookmarkNum4"
-        tools:ignore="ContentDescription" />
-
-    <ImageView
-        android:id="@+id/IV_bookmarkNum6"
-        android:layout_width="100dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:src="@mipmap/ic_launcher_round"
-        app:layout_constraintBottom_toBottomOf="@+id/IV_bookmarkNum4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/IV_bookmarkNum4" />
-
-    <TextView
-        android:id="@+id/TV_bookmarkNum4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:maxWidth="100dp"
-        android:maxLines="1"
-        android:text="bookmarkNum4"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
-        app:layout_constraintEnd_toEndOf="@+id/IV_bookmarkNum4"
-        app:layout_constraintStart_toStartOf="@+id/IV_bookmarkNum4"
-        app:layout_constraintTop_toBottomOf="@+id/IV_bookmarkNum4"
-        tools:ignore="NestedWeights" />
-
-    <TextView
-        android:id="@+id/TV_bookmarkNum5"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:maxWidth="100dp"
-        android:maxLines="1"
-        android:text="bookmarkNum5"
-        app:layout_constraintEnd_toEndOf="@+id/IV_bookmarkNum5"
-        app:layout_constraintStart_toStartOf="@+id/IV_bookmarkNum5"
-        app:layout_constraintTop_toTopOf="@+id/TV_bookmarkNum4" />
-
-    <TextView
-        android:id="@+id/TV_bookmarkNum6"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:maxWidth="100dp"
-        android:maxLines="1"
-        android:text="bookmarkNum6"
-        app:layout_constraintEnd_toEndOf="@+id/IV_bookmarkNum6"
-        app:layout_constraintStart_toStartOf="@+id/IV_bookmarkNum6"
-        app:layout_constraintTop_toTopOf="@+id/TV_bookmarkNum4" />
-
-    <TextView
-        android:id="@+id/TV_currentMusicTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/time"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/musicSeekBar" />
-
-    <SeekBar
-        android:id="@+id/musicSeekBar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:progressTint="@color/red"
-        android:thumbTint="@color/red"
-        app:layout_constraintBottom_toTopOf="@id/LA_play"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/TV_musicInfo" />
-
-    <TextView
-        android:id="@+id/TV_allMusicTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/time"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/musicSeekBar" />
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/LA_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintBottom_toTopOf="@id/V_menuLine"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="@id/LA_play"
+            app:lottie_autoPlay="false"
+            app:lottie_fileName="previous_track_button.json"
+            app:lottie_loop="false" />
 
 
-    <!--    <com.google.android.exoplayer2.ui.PlayerView-->
-    <!--        android:id="@+id/EXO_movie"-->
-    <!--        android:layout_width="400dp"-->
-    <!--        android:layout_height="225dp"-->
-    <!--        app:layout_constraintBottom_toTopOf="@id/VV_movie"-->
-    <!--        app:layout_constraintLeft_toLeftOf="parent"-->
-    <!--        app:layout_constraintRight_toRightOf="parent"/>-->
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/LA_play"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintBottom_toTopOf="@id/V_menuLine"
+            app:layout_constraintLeft_toLeftOf="@id/LA_back"
+            app:layout_constraintRight_toRightOf="@id/LA_stop"
+            app:lottie_autoPlay="false"
+            app:lottie_fileName="play_button.json"
+            app:lottie_loop="false" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/LA_stop"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintBottom_toTopOf="@id/V_menuLine"
+            app:layout_constraintLeft_toLeftOf="@id/LA_play"
+            app:layout_constraintRight_toRightOf="@id/LA_next"
+            app:lottie_autoPlay="false"
+            app:lottie_fileName="stop_button.json"
+            app:lottie_loop="false" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/LA_next"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintBottom_toTopOf="@id/V_menuLine"
+            app:layout_constraintLeft_toLeftOf="@id/LA_stop"
+            app:layout_constraintRight_toRightOf="parent"
+            app:lottie_autoPlay="false"
+            app:lottie_fileName="next_track_button.json"
+            app:lottie_loop="false" />
+
+        <View
+            android:id="@+id/V_menuLine"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="3dp"
+            android:background="@color/black"
+            app:layout_constraintBottom_toTopOf="@id/BTN_info" />
+
+        <!--    컨텐츠-->
+        <Button
+            android:id="@+id/BTN_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:text="@string/Home"
+            android:textColor="@color/currentButton"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <Button
+            android:id="@+id/BTN_diary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:text="@string/Workout_diary"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <Button
+            android:id="@+id/BTN_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:text="@string/Workout_info"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/BTN_stopwatch"
+            app:layout_constraintStart_toEndOf="@id/BTN_home" />
+
+        <Button
+            android:id="@+id/BTN_stopwatch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:text="@string/Stop_watch"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/BTN_info"
+            app:layout_constraintRight_toLeftOf="@id/BTN_diary" />
+
+        <TextView
+            android:id="@+id/TV_bookmarkInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bookmark_info"
+            android:textColor="@color/black"
+            android:textStyle="bold|italic"
+            app:layout_constraintBottom_toTopOf="@id/IV_bookmarkNum1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/TV_notice" />
+
+        <!--    북마크-->
+
+        <ImageView
+            android:id="@+id/IV_bookmarkNum1"
+            android:layout_width="100dp"
+            android:layout_height="0dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="5dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@mipmap/ic_launcher_round"
+            app:layout_constraintBottom_toTopOf="@id/TV_bookmarkNum1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/TV_bookmarkInfo"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/IV_bookmarkNum2"
+            android:layout_width="100dp"
+            android:layout_height="0dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@mipmap/ic_launcher_round"
+            app:layout_constraintBottom_toBottomOf="@id/IV_bookmarkNum1"
+            app:layout_constraintEnd_toStartOf="@id/IV_bookmarkNum3"
+            app:layout_constraintStart_toEndOf="@id/IV_bookmarkNum1"
+            app:layout_constraintTop_toTopOf="@id/IV_bookmarkNum1"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/IV_bookmarkNum3"
+            android:layout_width="100dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/ic_launcher_round"
+            app:layout_constraintBottom_toBottomOf="@id/IV_bookmarkNum2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/IV_bookmarkNum2"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/TV_bookmarkNum1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:maxWidth="100dp"
+            android:maxLines="1"
+            android:text="bookmarkNum1"
+            app:layout_constraintBottom_toTopOf="@id/IV_bookmarkNum4"
+            app:layout_constraintEnd_toEndOf="@id/IV_bookmarkNum1"
+            app:layout_constraintStart_toStartOf="@id/IV_bookmarkNum1"
+            app:layout_constraintTop_toBottomOf="@id/IV_bookmarkNum1" />
+
+        <TextView
+            android:id="@+id/TV_bookmarkNum2"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:maxWidth="100dp"
+            android:maxLines="1"
+            android:text="bookmarkNum2"
+            app:layout_constraintEnd_toEndOf="@id/IV_bookmarkNum2"
+            app:layout_constraintStart_toStartOf="@id/IV_bookmarkNum2"
+            app:layout_constraintTop_toTopOf="@+id/TV_bookmarkNum1" />
+
+        <TextView
+            android:id="@+id/TV_bookmarkNum3"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:maxWidth="100dp"
+            android:maxLines="1"
+            android:text="bookmarkNum3"
+            app:layout_constraintEnd_toEndOf="@id/IV_bookmarkNum3"
+            app:layout_constraintStart_toStartOf="@id/IV_bookmarkNum3"
+            app:layout_constraintTop_toTopOf="@+id/TV_bookmarkNum1" />
+
+        <ImageView
+            android:id="@+id/IV_bookmarkNum4"
+            android:layout_width="100dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:src="@mipmap/ic_launcher_round"
+            app:layout_constraintBottom_toTopOf="@id/TV_bookmarkNum4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TV_bookmarkNum1" />
+
+        <ImageView
+            android:id="@+id/IV_bookmarkNum5"
+            android:layout_width="100dp"
+            android:layout_height="0dp"
+            android:src="@mipmap/ic_launcher_round"
+            app:layout_constraintBottom_toBottomOf="@+id/IV_bookmarkNum4"
+            app:layout_constraintEnd_toStartOf="@+id/IV_bookmarkNum6"
+            app:layout_constraintStart_toEndOf="@+id/IV_bookmarkNum4"
+            app:layout_constraintTop_toTopOf="@+id/IV_bookmarkNum4"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/IV_bookmarkNum6"
+            android:layout_width="100dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/ic_launcher_round"
+            app:layout_constraintBottom_toBottomOf="@+id/IV_bookmarkNum4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/IV_bookmarkNum4" />
+
+        <TextView
+            android:id="@+id/TV_bookmarkNum4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:maxWidth="100dp"
+            android:maxLines="1"
+            android:text="bookmarkNum4"
+            app:layout_constraintBottom_toTopOf="@+id/textView"
+            app:layout_constraintEnd_toEndOf="@+id/IV_bookmarkNum4"
+            app:layout_constraintStart_toStartOf="@+id/IV_bookmarkNum4"
+            app:layout_constraintTop_toBottomOf="@+id/IV_bookmarkNum4"
+            tools:ignore="NestedWeights" />
+
+        <TextView
+            android:id="@+id/TV_bookmarkNum5"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:maxWidth="100dp"
+            android:maxLines="1"
+            android:text="bookmarkNum5"
+            app:layout_constraintEnd_toEndOf="@+id/IV_bookmarkNum5"
+            app:layout_constraintStart_toStartOf="@+id/IV_bookmarkNum5"
+            app:layout_constraintTop_toTopOf="@+id/TV_bookmarkNum4" />
+
+        <TextView
+            android:id="@+id/TV_bookmarkNum6"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:maxWidth="100dp"
+            android:maxLines="1"
+            android:text="bookmarkNum6"
+            app:layout_constraintEnd_toEndOf="@+id/IV_bookmarkNum6"
+            app:layout_constraintStart_toStartOf="@+id/IV_bookmarkNum6"
+            app:layout_constraintTop_toTopOf="@+id/TV_bookmarkNum4" />
+
+        <TextView
+            android:id="@+id/TV_currentMusicTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/time"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/musicSeekBar" />
+
+        <SeekBar
+            android:id="@+id/musicSeekBar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:progressTint="@color/red"
+            android:thumbTint="@color/red"
+            app:layout_constraintBottom_toTopOf="@id/LA_play"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/TV_musicInfo" />
+
+        <TextView
+            android:id="@+id/TV_allMusicTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/time"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/musicSeekBar" />
+
+
+        <!--    <com.google.android.exoplayer2.ui.PlayerView-->
+        <!--        android:id="@+id/EXO_movie"-->
+        <!--        android:layout_width="400dp"-->
+        <!--        android:layout_height="225dp"-->
+        <!--        app:layout_constraintBottom_toTopOf="@id/VV_movie"-->
+        <!--        app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--        app:layout_constraintRight_toRightOf="parent"/>-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--    홈 액티비티에 activity_drawer.xml 연결-->
+    <include layout="@layout/activity_drawer" />
+
+</androidx.drawerlayout.widget.DrawerLayout>
 

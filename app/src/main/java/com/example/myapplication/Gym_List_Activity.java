@@ -18,6 +18,17 @@ import org.json.JSONObject;
 
 public class Gym_List_Activity extends AppCompatActivity {
 
+    /**
+     *  Volley: 네트워크 요청을 관리하는 Android 용 네트워킹 라이브러리
+     *          RequestQueue를 통해 자동으로 비동기 처리를 해줌
+     *
+     * 네트워크 요청의 자동 예약.
+     * 여러 개의 동시 네트워크 연결.
+     * 캐싱.
+     * 우선 순위 요청.
+     * 진행중인 API 요청 취소
+     * */
+
     TextView TV_gymList;
     RequestQueue queue;
 
@@ -32,8 +43,9 @@ public class Gym_List_Activity extends AppCompatActivity {
         parse();
     }
 
+    //공공데이터 JSON 파일에서 데이터를 Parsing 하는 메소드
     private void parse() {
-        String key = "key";
+        String key = "616e4e545970737636334349416466";
         String url = "http://openapi.seoul.go.kr:8088/" + key + "/json/totalPhysicalTrainInfo/1/5/";
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -43,6 +55,7 @@ public class Gym_List_Activity extends AppCompatActivity {
                     JSONObject jsonObject = response.getJSONObject("totalPhysicalTrainInfo");
                     JSONArray jsonArray = jsonObject.getJSONArray("row");
 
+                    //배열의 길이만큼 반복해서 데이터 출력
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject gym = jsonArray.getJSONObject(i);
                         String name = gym.getString("NM");
@@ -50,6 +63,7 @@ public class Gym_List_Activity extends AppCompatActivity {
                         String state = gym.getString("STATE");
                         String tel = gym.getString("TEL");
 
+                        //출력할 데이터 조합
                         StringBuilder stringBuilder = new StringBuilder();
                         stringBuilder.append("업체명: ").append(name).append("\n").
                                 append("주소: ").append(address).append("\n").
@@ -64,6 +78,8 @@ public class Gym_List_Activity extends AppCompatActivity {
 
             }
         }, Throwable::printStackTrace);
+
+        //대기열에 데이터를 Parsing 하는 요청을 넣음
         queue.add(jsonObjectRequest);
     }
 

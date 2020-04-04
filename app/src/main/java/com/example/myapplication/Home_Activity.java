@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,9 +17,11 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
 
@@ -32,6 +35,9 @@ import static com.example.myapplication.Music_Service.musicNum;
 import static com.example.myapplication.Notice_write_Activity.SP_data;
 
 public class Home_Activity extends AppCompatActivity {
+
+    private DrawerLayout drawerLayout;
+    private  View drawerView;
 
     public static Broadcast_Receiver receiver = new Broadcast_Receiver();
 
@@ -47,13 +53,12 @@ public class Home_Activity extends AppCompatActivity {
 
     //뷰 선언
     Button BTN_info, BTN_stopwatch, BTN_diary;
-    Button BTN_workoutFriend, BTN_BMI;
-    TextView TV_notice,
+    TextView TV_notice, TV_workoutFriend, TV_BMI,
             TV_bookmarkNum1, TV_bookmarkNum2, TV_bookmarkNum3, TV_bookmarkNum4, TV_bookmarkNum5, TV_bookmarkNum6;
     static TextView TV_musicInfo;
     ImageView  IV_thumbnail,
             IV_bookmarkNum1, IV_bookmarkNum2, IV_bookmarkNum3, IV_bookmarkNum4, IV_bookmarkNum5, IV_bookmarkNum6;
-    LottieAnimationView LA_isPlayMusic, LA_play, LA_stop, LA_next, LA_back;
+    LottieAnimationView LA_menu, LA_isPlayMusic, LA_play, LA_stop, LA_next, LA_back;
 
 //    PlayerView playerView;
 //    SimpleExoPlayer simpleExoPlayer;
@@ -74,12 +79,16 @@ public class Home_Activity extends AppCompatActivity {
 
         SingleTon.broadcastReceiver(this, receiver);
 
+        drawerLayout = findViewById(R.id.drawer_layout);
+        drawerView = findViewById(R.id.drawer);
+
         //뷰 초기화
         BTN_info            = findViewById(R.id.BTN_info);
         BTN_stopwatch       = findViewById(R.id.BTN_stopwatch);
         BTN_diary           = findViewById(R.id.BTN_diary);
-        BTN_workoutFriend   = findViewById(R.id.BTN_workoutFriend);
-        BTN_BMI             = findViewById(R.id.BTN_BMI);
+        TV_workoutFriend   = findViewById(R.id.TV_workoutFriend);
+        TV_BMI             = findViewById(R.id.TV_BMI);
+        LA_menu             = findViewById(R.id.LA_menu);
         LA_back             = findViewById(R.id.LA_back);
         LA_play             = findViewById(R.id.LA_play);
         LA_stop             = findViewById(R.id.LA_stop);
@@ -266,7 +275,22 @@ public class Home_Activity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-    //북마크 클릭이벤트
+        LA_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(drawerView);
+            }
+        });
+
+        drawerLayout.addDrawerListener(drawerListener);
+        drawerView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
+
+    //북마크 롱클릭이벤트
         AlertDialog.Builder dialog = new AlertDialog.Builder(Home_Activity.this);
         dialog.setIcon(R.mipmap.ic_launcher); //Dialog icon
         dialog.setTitle("제거하시겠습니까?"); //Dialog title
@@ -382,7 +406,7 @@ public class Home_Activity extends AppCompatActivity {
 //==================================================================================================
 
         //운동 친구목록으로 이동
-        BTN_workoutFriend.setOnClickListener(new View.OnClickListener() {
+        TV_workoutFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Home_Activity.this, Workout_Friend_Activity.class);
@@ -392,7 +416,7 @@ public class Home_Activity extends AppCompatActivity {
         });
 
         //BMI 측정메뉴로 이동
-        BTN_BMI.setOnClickListener(new View.OnClickListener() {
+        TV_BMI.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Home_Activity.this, Calculation_BIM_Activity.class);
@@ -686,6 +710,30 @@ public class Home_Activity extends AppCompatActivity {
         });
         animator.start();
     }
+
+//==================================================================================================
+
+    DrawerLayout.DrawerListener drawerListener = new DrawerLayout.DrawerListener() {
+        @Override
+        public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+
+        }
+
+        @Override
+        public void onDrawerOpened(@NonNull View drawerView) {
+
+        }
+
+        @Override
+        public void onDrawerClosed(@NonNull View drawerView) {
+
+        }
+
+        @Override
+        public void onDrawerStateChanged(int newState) {
+
+        }
+    };
 
 //==================================================================================================
 
