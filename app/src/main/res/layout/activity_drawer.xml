@@ -66,6 +66,7 @@
         android:background="@color/layoutColor" />
 
     <TextView
+        android:id="@+id/gymInfo"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_margin="5dp"

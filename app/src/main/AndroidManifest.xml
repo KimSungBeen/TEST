@@ -60,7 +60,7 @@
         <activity android:name=".Notice_write_Activity" />
         <activity android:name=".Workout_Friend_Activity" />
         <activity android:name=".Calculation_BIM_Activity" />
-        <activity android:name=".Gym_List_Activity">
+        <activity android:name=".Gym_Info_Activity">
 
         </activity>
 

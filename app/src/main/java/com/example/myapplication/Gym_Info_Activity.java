@@ -1,14 +1,12 @@
 package com.example.myapplication;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -16,7 +14,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Gym_List_Activity extends AppCompatActivity {
+public class Gym_Info_Activity extends AppCompatActivity {
 
     /**
      *  Volley: 네트워크 요청을 관리하는 Android 용 네트워킹 라이브러리
@@ -35,7 +33,7 @@ public class Gym_List_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gym__list_);
+        setContentView(R.layout.activity_gym__info_);
 
         TV_gymList = findViewById(R.id.TV_gymList);
 

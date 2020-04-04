@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Gym_List_Activity">
+    tools:context=".Gym_Info_Activity">
 
     <TextView
         android:id="@+id/TV_gymList"
