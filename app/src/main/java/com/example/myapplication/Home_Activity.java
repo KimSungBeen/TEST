@@ -282,13 +282,7 @@ public class Home_Activity extends AppCompatActivity {
             }
         });
 
-        drawerLayout.addDrawerListener(drawerListener);
-        drawerView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;
-            }
-        });
+//==================================================================================================
 
     //북마크 롱클릭이벤트
         AlertDialog.Builder dialog = new AlertDialog.Builder(Home_Activity.this);
@@ -710,30 +704,6 @@ public class Home_Activity extends AppCompatActivity {
         });
         animator.start();
     }
-
-//==================================================================================================
-
-    DrawerLayout.DrawerListener drawerListener = new DrawerLayout.DrawerListener() {
-        @Override
-        public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
-
-        }
-
-        @Override
-        public void onDrawerOpened(@NonNull View drawerView) {
-
-        }
-
-        @Override
-        public void onDrawerClosed(@NonNull View drawerView) {
-
-        }
-
-        @Override
-        public void onDrawerStateChanged(int newState) {
-
-        }
-    };
 
 //==================================================================================================
 
