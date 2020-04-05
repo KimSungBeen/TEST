@@ -14,7 +14,7 @@
         android:layout_weight="0.8"
         android:gravity="center"
         android:text="운동 소모임!!"
-        android:textSize="32dp"
+        android:textSize="32sp"
         android:textColor="@color/mainLogo"/>
 
     <LinearLayout

@@ -1,18 +1,25 @@
 package com.example.myapplication;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import static com.example.myapplication.Gym_Info_Adapter.gymArrayList;
 
 public class Gym_Info_Activity extends AppCompatActivity {
 
@@ -27,24 +34,45 @@ public class Gym_Info_Activity extends AppCompatActivity {
      * 진행중인 API 요청 취소
      * */
 
-    TextView TV_gymList;
+    TextView TV_errorText;
     RequestQueue queue;
+    RecyclerView RV_gymInfo;
+    Gym_Info_Adapter gym_info_adapter;
+    LinearLayoutManager linearLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gym__info_);
+        setContentView(R.layout.activity_gym_info_);
 
-        TV_gymList = findViewById(R.id.TV_gymList);
+        TV_errorText = findViewById(R.id.TV_errorText); //에러출력용 텍스트뷰
 
+    //리싸이클러뷰
+        RV_gymInfo   = findViewById(R.id.RV_gymInfo);
+
+        //리싸이클러뷰내의 레이아웃을 컨트롤할 수 있게 해줌
+        linearLayoutManager = new LinearLayoutManager(this);
+        RV_gymInfo.setLayoutManager(linearLayoutManager);
+
+        //아이템의 데이터가 저장될 ArrayList 생성
+        gymArrayList = new ArrayList<>();
+
+        // gymArrayList에 있는 값을 gym_info_adapter에 저장
+        //리사이클러뷰에 gym_info_adapter 안의 값을 셋팅
+        gym_info_adapter = new Gym_Info_Adapter(gymArrayList);
+        RV_gymInfo.setAdapter(gym_info_adapter);
+
+        //볼리 Request 큐 생성
         queue = Volley.newRequestQueue(this);
-        parse();
+        parse(); //데이터 parsing 메소드 호출
     }
+
+//==================================================================================================
 
     //공공데이터 JSON 파일에서 데이터를 Parsing 하는 메소드
     private void parse() {
         String key = "616e4e545970737636334349416466";
-        String url = "http://openapi.seoul.go.kr:8088/" + key + "/json/totalPhysicalTrainInfo/1/5/";
+        String url = "http://openapi.seoul.go.kr:8088/" + key + "/json/totalPhysicalTrainInfo/1/99/";
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -68,17 +96,29 @@ public class Gym_Info_Activity extends AppCompatActivity {
                                 append("운영상태: ").append(state).append("\n").
                                 append("전화번호: ").append(tel);
 
-                        TV_gymList.setText(stringBuilder);
+                        //가져온 데이터 리스트에 저장
+                        Gym_Info_Item item = new Gym_Info_Item(String.valueOf(stringBuilder));
+                        gymArrayList.add(item);
                     }
+                    gym_info_adapter.notifyDataSetChanged(); //리스트에 저장한 데이터 띄우기(새로고침)
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
             }
-        }, Throwable::printStackTrace);
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                TV_errorText.setText("인터넷 연결상태를 확인해 주십시오.");
+            }
+        });
 
         //대기열에 데이터를 Parsing 하는 요청을 넣음
         queue.add(jsonObjectRequest);
     }
+
+//==================================================================================================
 
 }
