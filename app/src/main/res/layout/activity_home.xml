@@ -17,11 +17,12 @@
             android:id="@+id/LA_menu"
             android:layout_width="60dp"
             android:layout_height="50dp"
+            android:background="@color/white"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
             app:lottie_fileName="menu_button.json"
-            app:lottie_loop="true"
-            app:lottie_autoPlay="true"/>
+            app:lottie_loop="true" />
 
         <!--    메인로고-->
         <TextView

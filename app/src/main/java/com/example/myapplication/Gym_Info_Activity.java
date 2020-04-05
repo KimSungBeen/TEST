@@ -1,7 +1,10 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,7 +28,7 @@ public class Gym_Info_Activity extends AppCompatActivity {
 
     /**
      *  Volley: 네트워크 요청을 관리하는 Android 용 네트워킹 라이브러리
-     *          RequestQueue를 통해 자동으로 비동기 처리를 해줌
+     *          RequestQueue를 통해 자동으로 비동기 처리를 해줌 = 쓰레드, AsyncTask 사용할 필요가 X
      *
      * 네트워크 요청의 자동 예약.
      * 여러 개의 동시 네트워크 연결.
@@ -34,7 +37,8 @@ public class Gym_Info_Activity extends AppCompatActivity {
      * 진행중인 API 요청 취소
      * */
 
-    TextView TV_errorText;
+    TextView TV_gymInfoNotice;
+    Button BTN_exit;
     RequestQueue queue;
     RecyclerView RV_gymInfo;
     Gym_Info_Adapter gym_info_adapter;
@@ -45,7 +49,8 @@ public class Gym_Info_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gym_info_);
 
-        TV_errorText = findViewById(R.id.TV_errorText); //에러출력용 텍스트뷰
+        TV_gymInfoNotice = findViewById(R.id.TV_gymInfoNotice); //알림용 텍스트뷰
+        BTN_exit     = findViewById(R.id.BTN_exit);
 
     //리싸이클러뷰
         RV_gymInfo   = findViewById(R.id.RV_gymInfo);
@@ -67,7 +72,22 @@ public class Gym_Info_Activity extends AppCompatActivity {
         parse(); //데이터 parsing 메소드 호출
     }
 
-//==================================================================================================
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        //나가기 버튼
+        BTN_exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), Home_Activity.class);
+                startActivity(intent);
+            }
+        });
+
+    }
+
+    //==================================================================================================
 
     //공공데이터 JSON 파일에서 데이터를 Parsing 하는 메소드
     private void parse() {
@@ -93,11 +113,11 @@ public class Gym_Info_Activity extends AppCompatActivity {
                         StringBuilder stringBuilder = new StringBuilder();
                         stringBuilder.append("업체명: ").append(name).append("\n").
                                 append("주소: ").append(address).append("\n").
-                                append("운영상태: ").append(state).append("\n").
-                                append("전화번호: ").append(tel);
+                                append("운영상태: ").append(state);
 
                         //가져온 데이터 리스트에 저장
-                        Gym_Info_Item item = new Gym_Info_Item(String.valueOf(stringBuilder));
+                        Gym_Info_Item item = new Gym_Info_Item(String.valueOf(stringBuilder),
+                                "전화번호: " + tel);
                         gymArrayList.add(item);
                     }
                     gym_info_adapter.notifyDataSetChanged(); //리스트에 저장한 데이터 띄우기(새로고침)
@@ -111,7 +131,7 @@ public class Gym_Info_Activity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                TV_errorText.setText("인터넷 연결상태를 확인해 주십시오.");
+                TV_gymInfoNotice.setText("인터넷 연결상태를 확인해 주십시오.");
             }
         });
 

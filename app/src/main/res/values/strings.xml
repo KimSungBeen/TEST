@@ -164,4 +164,5 @@
     <string name="kg">kg</string>
     <string name="subMenu">서브 메뉴</string>
     <string name="gymInfo">헬스장 현황</string>
+    <string name="gymInfoNotice">서울 소재 헬스장 100개 현황입니다. \n출처: 서울특별시 열린데이터 광장</string>
 </resources>
