@@ -24,17 +24,64 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/foodDB"
-        android:textSize="32sp"
         android:textColor="@color/mainLogo"
-        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="32sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/TV_manufacturedGoodsSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="제품명 검색"
+        android:textColor="@color/red"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/TV_mainLogo" />
+
+    <EditText
+        android:id="@+id/ET_search"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/TV_manufacturedGoodsSearch"
+        app:layout_constraintRight_toLeftOf="@id/LA_search"
+        app:layout_constraintWidth_percent="0.8" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/LA_search"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="@id/ET_search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/ET_search"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="searching.json"
+        app:lottie_loop="true" />
+
+    <TextView
+        android:id="@+id/TV_manufacturedGoodsChoice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="제품군 선택"
+        android:textColor="@color/red"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ET_search" />
+
+    <!--    제품군 선택 휠뷰-->
     <com.contrarywind.view.WheelView
         android:id="@+id/wheelView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/TV_mainLogo" />
+        app:layout_constraintTop_toBottomOf="@id/TV_manufacturedGoodsChoice" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
