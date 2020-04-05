@@ -2,14 +2,15 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -22,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
 import static com.example.myapplication.Gym_Info_Adapter.gymArrayList;
 
 public class Gym_Info_Activity extends AppCompatActivity {
@@ -43,6 +45,7 @@ public class Gym_Info_Activity extends AppCompatActivity {
     RecyclerView RV_gymInfo;
     Gym_Info_Adapter gym_info_adapter;
     LinearLayoutManager linearLayoutManager;
+    LottieAnimationView LA_gymGuy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,7 @@ public class Gym_Info_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_gym_info_);
 
         TV_gymInfoNotice = findViewById(R.id.TV_gymInfoNotice); //알림용 텍스트뷰
+        LA_gymGuy = findViewById(R.id.LA_gymGuy);
         BTN_exit     = findViewById(R.id.BTN_exit);
 
     //리싸이클러뷰
@@ -87,11 +91,11 @@ public class Gym_Info_Activity extends AppCompatActivity {
 
     }
 
-    //==================================================================================================
+//==================================================================================================
 
     //공공데이터 JSON 파일에서 데이터를 Parsing 하는 메소드
     private void parse() {
-        String key = "616e4e545970737636334349416466";
+        String key = "key";
         String url = "http://openapi.seoul.go.kr:8088/" + key + "/json/totalPhysicalTrainInfo/1/99/";
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {

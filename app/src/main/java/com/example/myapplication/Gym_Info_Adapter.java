@@ -12,6 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
+
 import java.util.ArrayList;
 
 public class Gym_Info_Adapter extends RecyclerView.Adapter<Gym_Info_Adapter.MyViewHolder> {
@@ -62,6 +64,8 @@ public class Gym_Info_Adapter extends RecyclerView.Adapter<Gym_Info_Adapter.MyVi
                 dialog.show();
             }
         });
+
+        holder.LA_gymGuy.playAnimation(); //아이템의 로티애니메이션 재생
     }
 
     //item의 총 갯수 리턴 (null이라면 리턴값: 0)
@@ -74,10 +78,12 @@ public class Gym_Info_Adapter extends RecyclerView.Adapter<Gym_Info_Adapter.MyVi
 
         TextView TV_gymInfoList;
         TextView TV_gymCallNumber;
+        LottieAnimationView LA_gymGuy;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            this.LA_gymGuy = itemView.findViewById(R.id.LA_gymGuy);
             this.TV_gymInfoList = itemView.findViewById(R.id.TV_gymInfoList);
             this.TV_gymCallNumber = itemView.findViewById(R.id.TV_gymCallNumber);
         }

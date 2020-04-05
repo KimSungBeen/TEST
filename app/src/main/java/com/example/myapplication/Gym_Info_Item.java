@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import com.airbnb.lottie.LottieAnimationView;
+
 public class Gym_Info_Item {
 
     private String TV_gymInfoList;
@@ -25,4 +27,5 @@ public class Gym_Info_Item {
     public void setTV_gymCallNumber(String TV_gymCallNumber) {
         this.TV_gymCallNumber = TV_gymCallNumber;
     }
+
 }
