@@ -49,9 +49,9 @@ public class Standard_Food_Elements_DB_Activity extends AppCompatActivity {
     String key = "key";
     String url = "";
 
-    Button BTN_exit;
+    Button BTN_exit, BTN_resultZoomIn,BTN_resultZoomOut;
     WheelView wheelView;
-    TextView TV_foodElementsNotice;
+    TextView TV_foodElementsNotice, TV_manufacturedGoodsSearch, TV_manufacturedGoodsChoice;
     EditText ET_search;
     LottieAnimationView LA_search;
     RecyclerView RV_foodElements;
@@ -67,9 +67,13 @@ public class Standard_Food_Elements_DB_Activity extends AppCompatActivity {
 
         wheelView = findViewById(R.id.wheelView);
         BTN_exit = findViewById(R.id.BTN_exit);
+        BTN_resultZoomIn = findViewById(R.id.BTN_resultZoomIn);
+        BTN_resultZoomOut = findViewById(R.id.BTN_resultZoomOut);
         ET_search = findViewById(R.id.ET_search);
         LA_search = findViewById(R.id.LA_search);
         TV_foodElementsNotice = findViewById(R.id.TV_foodElementsNotice);
+        TV_manufacturedGoodsSearch = findViewById(R.id.TV_manufacturedGoodsSearch);
+        TV_manufacturedGoodsChoice = findViewById(R.id.TV_manufacturedGoodsChoice);
         RV_foodElements = findViewById(R.id.RV_foodElements);
 
     //리싸이클러뷰
@@ -221,7 +225,36 @@ public class Standard_Food_Elements_DB_Activity extends AppCompatActivity {
                     Toast.makeText(Standard_Food_Elements_DB_Activity.this, "검색어를 입력하십시오.", Toast.LENGTH_SHORT).show();
                 }else {
                     parse();
+                    Toast.makeText(Standard_Food_Elements_DB_Activity.this, "검색중............", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        //결과 크게보기
+        BTN_resultZoomIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TV_manufacturedGoodsSearch.setVisibility(View.GONE);
+                ET_search.setVisibility(View.GONE);
+                LA_search.setVisibility(View.GONE);
+                TV_manufacturedGoodsChoice.setVisibility(View.GONE);
+                wheelView.setVisibility(View.GONE);
+                BTN_resultZoomIn.setVisibility(View.GONE);
+                BTN_resultZoomOut.setVisibility(View.VISIBLE);
+            }
+        });
+
+        //결과 작게보기
+        BTN_resultZoomOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TV_manufacturedGoodsSearch.setVisibility(View.VISIBLE);
+                ET_search.setVisibility(View.VISIBLE);
+                LA_search.setVisibility(View.VISIBLE);
+                TV_manufacturedGoodsChoice.setVisibility(View.VISIBLE);
+                wheelView.setVisibility(View.VISIBLE);
+                BTN_resultZoomIn.setVisibility(View.VISIBLE);
+                BTN_resultZoomOut.setVisibility(View.GONE);
             }
         });
 
@@ -231,6 +264,7 @@ public class Standard_Food_Elements_DB_Activity extends AppCompatActivity {
 
     //공공데이터 JSON 파일에서 데이터를 Parsing 하는 메소드
     private void parse() {
+        foodArrayList.clear();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
