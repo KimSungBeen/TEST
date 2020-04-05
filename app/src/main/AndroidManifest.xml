@@ -21,7 +21,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".Standard_Food_Elements_DB"></activity>
+        <activity android:name=".Standard_Food_Elements_DB_Activity"></activity>
 
         <receiver
             android:name=".Broadcast_Receiver"

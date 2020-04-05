@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="5dp"
-    tools:context=".Standard_Food_Elements_DB">
+    tools:context=".Standard_Food_Elements_DB_Activity">
 
 <!--    나가기-->
     <Button
@@ -30,6 +30,28 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/layoutColor"
+        app:layout_constraintTop_toBottomOf="@id/TV_mainLogo" />
+
+    <TextView
+        android:id="@+id/TV_foodElementsNotice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/foodElementsNotice"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/TV_mainLogo"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/layoutColor"
+        app:layout_constraintTop_toBottomOf="@id/TV_foodElementsNotice" />
+
     <TextView
         android:id="@+id/TV_manufacturedGoodsSearch"
         android:layout_width="wrap_content"
@@ -41,27 +63,39 @@
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/TV_mainLogo" />
+        app:layout_constraintTop_toBottomOf="@id/view" />
 
     <EditText
         android:id="@+id/ET_search"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:hint="ex)쌀"
+        app:layout_constraintEnd_toEndOf="@+id/TV_mainLogo"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/TV_manufacturedGoodsSearch"
         app:layout_constraintRight_toLeftOf="@id/LA_search"
-        app:layout_constraintWidth_percent="0.8" />
+        app:layout_constraintStart_toEndOf="@+id/BTN_exit"
+        app:layout_constraintTop_toBottomOf="@id/TV_manufacturedGoodsSearch" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/LA_search"
         android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
         app:layout_constraintBottom_toBottomOf="@id/ET_search"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/ET_search"
+        app:layout_constraintStart_toEndOf="@id/ET_search"
+        app:layout_constraintTop_toTopOf="@id/ET_search"
         app:lottie_autoPlay="true"
         app:lottie_fileName="searching.json"
         app:lottie_loop="true" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
+        android:background="#FF9800"
+        app:layout_constraintBottom_toTopOf="@id/TV_manufacturedGoodsChoice"/>
 
     <TextView
         android:id="@+id/TV_manufacturedGoodsChoice"
@@ -82,6 +116,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/TV_manufacturedGoodsChoice" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
+        android:background="#FF9800"
+        app:layout_constraintTop_toBottomOf="@id/wheelView" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/RV_foodElements"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scrollbarSize="5dp"
+        android:scrollbars="vertical"
+        app:layout_constraintTop_toBottomOf="@id/view2"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

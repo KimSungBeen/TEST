@@ -315,7 +315,7 @@ public class Home_Activity extends AppCompatActivity {
         TV_foodElements.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), Standard_Food_Elements_DB.class);
+                Intent intent = new Intent(v.getContext(), Standard_Food_Elements_DB_Activity.class);
                 startActivity(intent);
             }
         });

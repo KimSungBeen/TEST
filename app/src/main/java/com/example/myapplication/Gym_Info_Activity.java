@@ -95,7 +95,7 @@ public class Gym_Info_Activity extends AppCompatActivity {
 
     //공공데이터 JSON 파일에서 데이터를 Parsing 하는 메소드
     private void parse() {
-        String key = "616e4e545970737636334349416466";
+        String key = "key";
         String url = "http://openapi.seoul.go.kr:8088/" + key + "/json/totalPhysicalTrainInfo/1/99/";
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
