@@ -1,7 +1,5 @@
 package com.example.myapplication;
 
-import com.airbnb.lottie.LottieAnimationView;
-
 public class Gym_Info_Item {
 
     private String TV_gymInfoList;

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -52,13 +53,24 @@ public class Gym_Info_Adapter extends RecyclerView.Adapter<Gym_Info_Adapter.MyVi
                 dialog.setIcon(R.mipmap.ic_launcher);
                 dialog.setTitle("작업을 선택 하십시오.");
 
-                dialog.setPositiveButton("전화", new DialogInterface.OnClickListener() {
+                //전화로 연결해주는 다이얼로그 버튼
+                dialog.setNegativeButton("전화", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String callNumber = "tel:" + gymArrayList.get(position).getTV_gymCallNumber();
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(callNumber));
                         v.getContext().startActivity(intent);
+                        Toast.makeText(v.getContext(), "전화연결", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
+                    }
+                });
+
+                //다이얼로그 취소버튼
+                dialog.setPositiveButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        Toast.makeText(v.getContext(), "취소", Toast.LENGTH_SHORT).show();
                     }
                 });
                 dialog.show();
