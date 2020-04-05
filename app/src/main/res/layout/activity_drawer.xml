@@ -8,7 +8,7 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-<TextView
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginBottom="20dp"
@@ -50,6 +50,8 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_margin="5dp"
+        android:clickable="true"
+        android:focusable="true"
         android:gravity="center"
         android:text="@string/bmiCalculate"
         android:textColor="@color/black"
@@ -70,8 +72,32 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_margin="5dp"
+        android:clickable="true"
+        android:focusable="true"
         android:gravity="center"
         android:text="@string/gymInfo"
+        android:textColor="@color/black"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/layoutColor" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/layoutColor" />
+
+    <TextView
+        android:id="@+id/TV_foodElements"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="5dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:text="@string/foodDB"
         android:textColor="@color/black"
         android:textStyle="bold" />
 

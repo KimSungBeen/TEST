@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="5dp"
+    tools:context=".Standard_Food_Elements_DB">
+
+<!--    나가기-->
+    <Button
+        android:id="@+id/BTN_exit"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:text="@string/Exit"
+        app:layout_constraintBottom_toBottomOf="@id/TV_mainLogo"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/TV_mainLogo"/>
+
+<!--    메인로고-->
+    <TextView
+        android:id="@+id/TV_mainLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/foodDB"
+        android:textSize="32sp"
+        android:textColor="@color/mainLogo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <com.contrarywind.view.WheelView
+        android:id="@+id/wheelView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/TV_mainLogo" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

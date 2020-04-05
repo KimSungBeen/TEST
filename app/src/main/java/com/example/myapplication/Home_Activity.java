@@ -51,7 +51,7 @@ public class Home_Activity extends AppCompatActivity {
 
     //뷰 선언
     Button BTN_info, BTN_stopwatch, BTN_diary;
-    TextView TV_notice, TV_workoutFriend, TV_BMI, TV_gymInfo,
+    TextView TV_notice, TV_workoutFriend, TV_BMI, TV_gymInfo, TV_foodElements,
             TV_bookmarkNum1, TV_bookmarkNum2, TV_bookmarkNum3, TV_bookmarkNum4, TV_bookmarkNum5, TV_bookmarkNum6;
     static TextView TV_musicInfo;
     ImageView  IV_thumbnail,
@@ -87,6 +87,7 @@ public class Home_Activity extends AppCompatActivity {
         TV_workoutFriend    = findViewById(R.id.TV_workoutFriend);
         TV_BMI              = findViewById(R.id.TV_BMI);
         TV_gymInfo          = findViewById(R.id.TV_gymInfo);
+        TV_foodElements     =findViewById(R.id.TV_foodElements);
         LA_menu             = findViewById(R.id.LA_menu);
         LA_back             = findViewById(R.id.LA_back);
         LA_play             = findViewById(R.id.LA_play);
@@ -306,6 +307,15 @@ public class Home_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Home_Activity.this, Gym_Info_Activity.class);
+                startActivity(intent);
+            }
+        });
+
+        //국가표준식품성분 검색 액티비티로 이동
+        TV_foodElements.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), Standard_Food_Elements_DB.class);
                 startActivity(intent);
             }
         });
