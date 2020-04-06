@@ -1,9 +1,11 @@
 package com.example.myapplication;
 
+import android.Manifest;
 import android.animation.ValueAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -17,8 +19,10 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -30,6 +34,12 @@ import com.google.android.youtube.player.YouTubeThumbnailLoader;
 import com.google.android.youtube.player.YouTubeThumbnailView;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+
+import rebus.permissionutils.AskAgainCallback;
+import rebus.permissionutils.FullCallback;
+import rebus.permissionutils.PermissionEnum;
+import rebus.permissionutils.PermissionManager;
 
 import static com.example.myapplication.Music_Service.isPause;
 import static com.example.myapplication.Music_Service.isPlaying;
@@ -77,6 +87,8 @@ public class Home_Activity extends YouTubeBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        permission(); //권한요청 메소드
 
         SingleTon.broadcastReceiver(this, receiver);
 
@@ -138,7 +150,12 @@ public class Home_Activity extends YouTubeBaseActivity {
         }catch (Exception e) {
             e.printStackTrace();
         }
-        TV_notice.setText(noticeTitle);
+        if(noticeTitle.equals("")) {
+            noticeTitle = "공지사항";
+            TV_notice.setText(noticeTitle);
+        }else {
+            TV_notice.setText(noticeTitle);
+        }
 
 //        iniExoplayer();
 //==================================================================================================
@@ -749,7 +766,9 @@ public class Home_Activity extends YouTubeBaseActivity {
             SP_notice.getString("notice", "");
             String[] notice = (SP_notice.getString("notice", "")).split(",");
             noticeTitle = notice[0];
-            TV_notice.setText(noticeTitle);
+            if(!noticeTitle.equals("")) {
+                TV_notice.setText(noticeTitle);
+            }
         }
 
     }
@@ -764,6 +783,58 @@ public class Home_Activity extends YouTubeBaseActivity {
             LA_play.setProgress((Float) animation.getAnimatedValue());
         });
         animator.start();
+    }
+
+//==================================================================================================
+
+    //permission util library 사용( onRequestPermissionsResult 재정의)
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        PermissionManager.handleResult(this, requestCode, permissions, grantResults);
+    }
+
+    //권한요청을 묻는 다이얼로그 호출 메소드
+    private void showDialog(final AskAgainCallback.UserResponse response) {
+        new AlertDialog.Builder(Home_Activity.this)
+                .setTitle("Permission needed")
+                .setMessage("This app realy need to use this permission, you wont to authorize it?")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        response.result(true);
+                    }
+                })
+                .setNegativeButton("NOT NOW", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        response.result(false);
+                    }
+                })
+                .setCancelable(false)
+                .show();
+    }
+
+    //oncreate시 호출될 권한요청 메소드
+    private void permission() {
+        PermissionManager.Builder()
+                .permission(PermissionEnum.READ_PHONE_STATE, PermissionEnum.READ_EXTERNAL_STORAGE,
+                        PermissionEnum.WRITE_EXTERNAL_STORAGE, PermissionEnum.READ_CONTACTS,
+                        PermissionEnum.CAMERA) // You can put all permissions here
+                .askAgain(true)
+                .askAgainCallback(new AskAgainCallback() {
+                    @Override
+                    public void showRequestPermission(UserResponse response) {
+                        showDialog(response);
+
+                    }
+                })
+                .callback(new FullCallback() {
+                    @Override
+                    public void result(ArrayList<PermissionEnum> permissionsGranted, ArrayList<PermissionEnum> permissionsDenied, ArrayList<PermissionEnum> permissionsDeniedForever, ArrayList<PermissionEnum> permissionsAsked) {
+                    }
+                })
+                .ask(this);
     }
 
 //==================================================================================================
@@ -792,5 +863,6 @@ public class Home_Activity extends YouTubeBaseActivity {
 //    }
 
 //==================================================================================================
+
 }
 

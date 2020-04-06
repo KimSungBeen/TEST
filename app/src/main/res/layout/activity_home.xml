@@ -207,36 +207,36 @@
             app:layout_constraintLeft_toRightOf="@id/BTN_info"
             app:layout_constraintRight_toLeftOf="@id/BTN_diary" />
 
-        <TextView
-            android:id="@+id/TV_bookmarkInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/bookmark_info"
-            android:textColor="@color/black"
-            android:textStyle="bold|italic"
-            app:layout_constraintBottom_toTopOf="@id/IV_bookmarkNum1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/TV_notice" />
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/LA_bookmark"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/IV_bookmarkNum1"
+            app:layout_constraintTop_toTopOf="@id/IV_bookmarkNum1"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="bookmark.json"
+            app:lottie_loop="true" />
 
         <!--    북마크-->
-
         <ImageView
             android:id="@+id/IV_bookmarkNum1"
-            android:layout_width="100dp"
+            android:layout_width="75dp"
             android:layout_height="0dp"
-            android:layout_marginLeft="12dp"
             android:layout_marginTop="5dp"
             android:clickable="true"
             android:focusable="true"
             android:src="@mipmap/ic_launcher_round"
             app:layout_constraintBottom_toTopOf="@id/TV_bookmarkNum1"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/TV_bookmarkInfo"
+            app:layout_constraintLeft_toRightOf="@id/LA_bookmark"
+            app:layout_constraintTop_toBottomOf="@+id/TV_notice"
             tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/IV_bookmarkNum2"
-            android:layout_width="100dp"
+            android:layout_width="75dp"
             android:layout_height="0dp"
             android:clickable="true"
             android:focusable="true"
@@ -249,10 +249,10 @@
 
         <ImageView
             android:id="@+id/IV_bookmarkNum3"
-            android:layout_width="100dp"
+            android:layout_width="75dp"
             android:layout_height="0dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
             android:src="@mipmap/ic_launcher_round"
             app:layout_constraintBottom_toBottomOf="@id/IV_bookmarkNum2"
             app:layout_constraintEnd_toEndOf="parent"
@@ -297,19 +297,17 @@
 
         <ImageView
             android:id="@+id/IV_bookmarkNum4"
-            android:layout_width="100dp"
+            android:layout_width="75dp"
             android:layout_height="0dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:src="@mipmap/ic_launcher_round"
             app:layout_constraintBottom_toTopOf="@id/TV_bookmarkNum4"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/IV_bookmarkNum1"
             app:layout_constraintTop_toBottomOf="@+id/TV_bookmarkNum1" />
 
         <ImageView
             android:id="@+id/IV_bookmarkNum5"
-            android:layout_width="100dp"
+            android:layout_width="75dp"
             android:layout_height="0dp"
             android:src="@mipmap/ic_launcher_round"
             app:layout_constraintBottom_toBottomOf="@+id/IV_bookmarkNum4"
@@ -320,10 +318,10 @@
 
         <ImageView
             android:id="@+id/IV_bookmarkNum6"
-            android:layout_width="100dp"
+            android:layout_width="75dp"
             android:layout_height="0dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
             android:src="@mipmap/ic_launcher_round"
             app:layout_constraintBottom_toBottomOf="@+id/IV_bookmarkNum4"
             app:layout_constraintEnd_toEndOf="parent"
