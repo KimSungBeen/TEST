@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -18,10 +19,15 @@ import android.widget.VideoView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.google.android.youtube.player.YouTubeBaseActivity;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerView;
+import com.google.android.youtube.player.YouTubeThumbnailLoader;
+import com.google.android.youtube.player.YouTubeThumbnailView;
 
 import java.io.InputStream;
 
@@ -32,42 +38,39 @@ import static com.example.myapplication.Music_Service.musicAmount;
 import static com.example.myapplication.Music_Service.musicNum;
 import static com.example.myapplication.Notice_write_Activity.SP_data;
 
-public class Home_Activity extends AppCompatActivity {
-
-    private DrawerLayout drawerLayout;
-    private  View drawerView;
-
-    public static Broadcast_Receiver receiver = new Broadcast_Receiver();
+public class Home_Activity extends YouTubeBaseActivity {
 
     public static final int REQUEST_TO_NOTICE = 11;
     public static final int BOOKMARK_COUNT = 6;
     public static SeekBar musicSeekBar; //MP3 Player SeekBar
     public static TextView TV_currentMusicTime, TV_allMusicTime;
+    public static Broadcast_Receiver receiver = new Broadcast_Receiver();
+    private DrawerLayout drawerLayout;
+    private  View drawerView;
     int videoPosition; // 영상이 Pause 되면 그 위치를 저장하기 위한 변수
 
     //북마크번호에 따른 Url
-    String bookmarkNum1Url, bookmarkNum2Url, bookmarkNum3Url,
-            bookmarkNum4Url, bookmarkNum5Url, bookmarkNum6Url;
+    String bookmarkNum1Url, bookmarkNum2Url, bookmarkNum3Url, bookmarkNum4Url, bookmarkNum5Url, bookmarkNum6Url;
 
     //뷰 선언
     Button BTN_info, BTN_stopwatch, BTN_diary;
-    TextView TV_notice, TV_workoutFriend, TV_BMI, TV_gymInfo, TV_foodElements,
-            TV_bookmarkNum1, TV_bookmarkNum2, TV_bookmarkNum3, TV_bookmarkNum4, TV_bookmarkNum5, TV_bookmarkNum6;
+    TextView TV_notice, TV_workoutFriend, TV_BMI, TV_gymInfo, TV_foodElements, TV_bookmarkNum1, TV_bookmarkNum2, TV_bookmarkNum3, TV_bookmarkNum4, TV_bookmarkNum5, TV_bookmarkNum6;
     static TextView TV_musicInfo;
-    ImageView  IV_thumbnail,
-            IV_bookmarkNum1, IV_bookmarkNum2, IV_bookmarkNum3, IV_bookmarkNum4, IV_bookmarkNum5, IV_bookmarkNum6;
+    ImageView IV_bookmarkNum1, IV_bookmarkNum2, IV_bookmarkNum3, IV_bookmarkNum4, IV_bookmarkNum5, IV_bookmarkNum6;
     LottieAnimationView LA_menu, LA_isPlayMusic, LA_play, LA_stop, LA_next, LA_back;
+
+    //유튜브 플레이어
+    YouTubePlayer myYouTubePlayer;
+    YouTubePlayerView youTubePlayerView;
+    YouTubeThumbnailView youTubeThumbnailView;
+    YouTubePlayer.OnInitializedListener playerInitialized;
+    YouTubePlayer.PlayerStateChangeListener playerStateChangeListener;
+    YouTubeThumbnailView.OnInitializedListener thumbnailInitialized;
 
 //    PlayerView playerView;
 //    SimpleExoPlayer simpleExoPlayer;
-
-    VideoView VV_movie;
-    MediaController mediaController; // 미디어 제어 (재생이나 정지) 버튼을 담당
-
-//    String videoURL = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";//테스트용 영상
-//        Uri uri = Uri.parse(videoURL); //영상 주소를 저장
-    String path = "android.resource://com.example.myapplication/" + R.raw.video; //(홈)추천영상
-    String noticeTitle      = "Empty";
+//    VideoView VV_movie;
+//    MediaController mediaController; // 미디어 제어 (재생이나 정지) 버튼을 담당
 
     //액티비티를 생성하는 구간
     @Override
@@ -87,19 +90,20 @@ public class Home_Activity extends AppCompatActivity {
         TV_workoutFriend    = findViewById(R.id.TV_workoutFriend);
         TV_BMI              = findViewById(R.id.TV_BMI);
         TV_gymInfo          = findViewById(R.id.TV_gymInfo);
-        TV_foodElements     =findViewById(R.id.TV_foodElements);
+        TV_foodElements     = findViewById(R.id.TV_foodElements);
         LA_menu             = findViewById(R.id.LA_menu);
         LA_back             = findViewById(R.id.LA_back);
         LA_play             = findViewById(R.id.LA_play);
         LA_stop             = findViewById(R.id.LA_stop);
         LA_next             = findViewById(R.id.LA_next);
         TV_notice           = findViewById(R.id.TV_notice);
-        VV_movie            = findViewById(R.id.VV_movie);
-        IV_thumbnail        = findViewById(R.id.IV_thumbnail);
         TV_currentMusicTime = findViewById(R.id.TV_currentMusicTime);
         TV_allMusicTime     = findViewById(R.id.TV_allMusicTime);
         TV_musicInfo        = findViewById(R.id.TV_musicInfo);
-        LA_isPlayMusic        = findViewById(R.id.LA_isPlayMusic);
+        LA_isPlayMusic      = findViewById(R.id.LA_isPlayMusic);
+    //유튜브플레이어
+        youTubePlayerView   = findViewById(R.id.youTubePlayerView);
+        youTubeThumbnailView= findViewById(R.id.youTubeThumbnailView);
 
         //북마크 뷰 초기화
         IV_bookmarkNum1 = findViewById(R.id.IV_bookmarkNum1);
@@ -114,16 +118,16 @@ public class Home_Activity extends AppCompatActivity {
         TV_bookmarkNum5 = findViewById(R.id.TV_bookmarkNum5);
         IV_bookmarkNum6 = findViewById(R.id.IV_bookmarkNum6);
         TV_bookmarkNum6 = findViewById(R.id.TV_bookmarkNum6);
-
+//==================================================================================================
         //MP3 Player SeekBar
         musicSeekBar = findViewById(R.id.musicSeekBar);
 
         //운동 영상 Player
-        mediaController = new MediaController(this); // 컨트롤러 생성
-        mediaController.setAnchorView(VV_movie); //컨트롤러를 비디오뷰에 셋팅
-
-        VV_movie.setMediaController(mediaController); //비디오 뷰에 영상 컨트롤러 셋팅
-        VV_movie.setVideoURI(Uri.parse(path)); //비디오뷰에 영상URI 셋팅
+//        mediaController = new MediaController(this); // 컨트롤러 생성
+//        mediaController.setAnchorView(VV_movie); //컨트롤러를 비디오뷰에 셋팅
+//
+//        VV_movie.setMediaController(mediaController); //비디오 뷰에 영상 컨트롤러 셋팅
+//        VV_movie.setVideoURI(Uri.parse(path)); //비디오뷰에 영상URI 셋팅
 
         // notice 키 안에서 제목을 가져와서 공지사항제목 호출
         try {
@@ -137,6 +141,34 @@ public class Home_Activity extends AppCompatActivity {
         TV_notice.setText(noticeTitle);
 
 //        iniExoplayer();
+//==================================================================================================
+
+        //유튜브 플레이어 초기화리스너(= 초기화 될 때 재생할 영상의 ID 설정)
+        playerInitialized = new YouTubePlayer.OnInitializedListener() {
+            @Override
+            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+                myYouTubePlayer = youTubePlayer;
+                myYouTubePlayer.loadVideo("BOE8rR9uDz8");
+            }
+
+            @Override
+            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+
+            }
+        };
+
+        thumbnailInitialized = new YouTubeThumbnailView.OnInitializedListener() {
+            @Override
+            public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader youTubeThumbnailLoader) {
+                youTubeThumbnailLoader.setVideo("BOE8rR9uDz8");
+            }
+
+            @Override
+            public void onInitializationFailure(YouTubeThumbnailView youTubeThumbnailView, YouTubeInitializationResult youTubeInitializationResult) {
+
+            }
+        };
+        youTubeThumbnailView.initialize(youtubeAPIKey, thumbnailInitialized); //유튜브 썸네일 뷰 초기화
 
     }
 
@@ -265,7 +297,7 @@ public class Home_Activity extends AppCompatActivity {
 
         }
 
-        VV_movie.seekTo(videoPosition);// 영상이 Pause 되면 다시 실행될때 이전 위치부터 실행
+//        VV_movie.seekTo(videoPosition);// 영상이 Pause 되면 다시 실행될때 이전 위치부터 실행
     }
 
 //==================================================================================================
@@ -484,13 +516,23 @@ public class Home_Activity extends AppCompatActivity {
 
 //==================================================================================================
 
-        //동영상을 클릭리스너
-        IV_thumbnail.setOnClickListener(new View.OnClickListener() {
+        //동영상 클릭리스너
+//        IV_thumbnail.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                IV_thumbnail.setVisibility(View.INVISIBLE);
+//                VV_movie.setVisibility(View.VISIBLE);
+//                VV_movie.start();
+//            }
+//        });
+
+        //썸네일 클릭시 동영상재생
+        youTubeThumbnailView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IV_thumbnail.setVisibility(View.INVISIBLE);
-                VV_movie.setVisibility(View.VISIBLE);
-                VV_movie.start();
+                youTubeThumbnailView.setVisibility(View.INVISIBLE);
+                youTubePlayerView.setVisibility(View.VISIBLE);
+                youTubePlayerView.initialize(youtubeAPIKey, playerInitialized); //유튜브 플레이어 초기화
             }
         });
 
@@ -656,8 +698,8 @@ public class Home_Activity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        VV_movie.pause();
-        videoPosition = VV_movie.getCurrentPosition();
+//        VV_movie.pause();
+//        videoPosition = VV_movie.getCurrentPosition();
 
     }
 

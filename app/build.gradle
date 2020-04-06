@@ -43,6 +43,7 @@ dependencies {
 
 /**pickerView Library*/
     implementation 'com.contrarywind:Android-PickerView:4.1.9'
+    implementation files('libs\\YouTubeAndroidPlayerApi.jar')
 
 //    implementation 'com.google.android.exoplayer:exoplayer:2.11.3'
 //    implementation 'com.google.android.exoplayer:exoplayer-core:2.11.3'
