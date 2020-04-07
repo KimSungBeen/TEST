@@ -16,27 +16,27 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:text="@string/Menu"
         android:background="@color/white"
+        android:text="@string/Menu"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/TV_mainLogo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/TV_mainLogo" />
 
-<!--    메인로고-->
+    <!--    메인로고-->
     <TextView
         android:id="@+id/TV_mainLogo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
+        android:focusable="true"
         android:text="@string/Workout_diary"
         android:textColor="@color/mainLogo"
         android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/BTN_workoutFriend"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:focusable="true" />
+        app:layout_constraintRight_toRightOf="parent" />
 
     <!--    캘린더-->
     <CalendarView
@@ -48,116 +48,127 @@
         app:layout_constraintTop_toBottomOf="@id/GUI_horizontal" />
 
     <!--    일정 들어갈 곳-->
-<!--    <ImageView-->
-<!--        android:id="@+id/IV_image"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="100dp"-->
-<!--        app:layout_constraintHeight_percent="0.1"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/calendarView"-->
-<!--        app:layout_constraintWidth_percent="0.2" />-->
+    <!--    <ImageView-->
+    <!--        android:id="@+id/IV_image"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="100dp"-->
+    <!--        app:layout_constraintHeight_percent="0.1"-->
+    <!--        app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/calendarView"-->
+    <!--        app:layout_constraintWidth_percent="0.2" />-->
 
-<!--    <TextView-->
-<!--        android:id="@+id/TV_diaryInput"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:layout_constraintWidth_percent="0.8"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/calendarView"-->
-<!--        app:layout_constraintLeft_toRightOf="@id/GUI_vertical"-->
-<!--        android:hint="@string/Empty"/>-->
+    <!--    <TextView-->
+    <!--        android:id="@+id/TV_diaryInput"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        app:layout_constraintWidth_percent="0.8"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/calendarView"-->
+    <!--        app:layout_constraintLeft_toRightOf="@id/GUI_vertical"-->
+    <!--        android:hint="@string/Empty"/>-->
 
     <TextView
         android:id="@+id/test"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/calendarView"
         app:layout_constraintBottom_toTopOf="@id/V_menuLine"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/calendarView" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/RV_diary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/calendarView"
-            app:layout_constraintBottom_toTopOf="@id/IV_scroll"
-            android:layout_gravity="center"
-            android:scrollbarSize="5dp"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/RV_diary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:scrollbarSize="5dp"
+        app:layout_constraintBottom_toTopOf="@id/LA_scroll"
+        app:layout_constraintTop_toBottomOf="@id/calendarView" />
 
-    <ImageView
-        android:id="@+id/IV_scroll"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/GUI_horizontal8.5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.85" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/LA_scroll"
         android:layout_width="50dp"
-        android:layout_height="0dp"
-        android:src="@drawable/arrowimage"
-        app:layout_constraintBottom_toTopOf="@+id/V_menuLine"
-        app:layout_constraintTop_toBottomOf="@+id/RV_diary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="@id/V_menuLine"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/GUI_horizontal8.5"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="horizontal_scroll.json"
+        app:lottie_loop="true" />
 
     <View
         android:id="@+id/V_menuLine"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        app:layout_constraintBottom_toTopOf="@id/BTN_info"
         android:layout_marginBottom="3dp"
-        android:background="@color/black"/>
+        android:background="@color/black"
+        app:layout_constraintBottom_toTopOf="@id/BTN_info" />
 
-<!--    컨텐츠-->
+    <!--    컨텐츠-->
     <Button
         android:id="@id/BTN_home"
-        android:text="@string/Home"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
         android:background="@color/white"
+        android:text="@string/Home"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintLeft_toLeftOf="parent" />
+
     <Button
         android:id="@id/BTN_diary"
-        android:text="@string/Workout_diary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
         android:background="@color/white"
+        android:text="@string/Workout_diary"
         android:textColor="@color/currentButton"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent" />
+
     <Button
         android:id="@id/BTN_info"
-        android:text="@string/Workout_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
         android:background="@color/white"
+        android:text="@string/Workout_info"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/BTN_stopwatch"
         app:layout_constraintStart_toEndOf="@id/BTN_home" />
+
     <Button
         android:id="@id/BTN_stopwatch"
-        android:text="@string/Stop_watch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
         android:background="@color/white"
+        android:text="@string/Stop_watch"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/BTN_diary"
-        app:layout_constraintLeft_toRightOf="@id/BTN_info"/>
+        app:layout_constraintLeft_toRightOf="@id/BTN_info"
+        app:layout_constraintRight_toLeftOf="@id/BTN_diary" />
 
-<!--    배치용 가이드라인-->
+    <!--    배치용 가이드라인-->
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/GUI_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.1"/>
+        app:layout_constraintGuide_percent="0.1" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/GUI_vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.2"/>
-
-
+        app:layout_constraintGuide_percent="0.2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
