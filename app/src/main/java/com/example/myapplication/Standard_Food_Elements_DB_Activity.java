@@ -111,6 +111,7 @@ public class Standard_Food_Elements_DB_Activity extends AppCompatActivity {
 
         wheelView.setCyclic(false);
 
+        //제품군 리스트
         final List<String> optionsItems = new ArrayList<>();
         optionsItems.add("곡류및그제품");
         optionsItems.add("감자류및전분류");

@@ -94,6 +94,7 @@ public class PublicSptCenter_Info_Activity extends AppCompatActivity {
 //==================================================================================================
 
     //공공데이터 JSON 파일에서 데이터를 Parsing 하는 메소드
+    //공공체육시설
     private void parse() {
         String key = "key";
         String url = "http://openapi.seoul.go.kr:8088/" + key + "/json/TbPublicSptCenter2019/1/751/";

@@ -772,6 +772,7 @@ public class Home_Activity extends YouTubeBaseActivity {
 
 //==================================================================================================
 
+    //로티애니메이션 커스텀메소드
     private void playCustomAnimators(float startPosition, float finishPosition, int duration) {
 
         //애니메이션의 진행위치, 종료위치, 진행속도를 설정
