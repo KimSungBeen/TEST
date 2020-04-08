@@ -16,9 +16,9 @@
         android:text="@string/Exit"
         app:layout_constraintBottom_toBottomOf="@id/TV_mainLogo"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/TV_mainLogo"/>
+        app:layout_constraintRight_toLeftOf="@id/TV_mainLogo" />
 
-<!--    메인로고-->
+    <!--    메인로고-->
     <TextView
         android:id="@+id/TV_mainLogo"
         android:layout_width="wrap_content"
@@ -30,7 +30,29 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/BTN_resultZoomIn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="결과\n크게보기"
+        app:layout_constraintBottom_toBottomOf="@+id/BTN_exit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/TV_mainLogo"
+        app:layout_constraintTop_toTopOf="@+id/BTN_exit" />
+
+    <Button
+        android:id="@+id/BTN_resultZoomOut"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="결과\n작게보기"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/BTN_exit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/TV_mainLogo"
+        app:layout_constraintTop_toTopOf="@+id/BTN_exit" />
+
     <View
+        android:id="@+id/view3"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/layoutColor"
@@ -40,10 +62,10 @@
         android:id="@+id/TV_foodElementsNotice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/foodElementsNotice"
         android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/TV_mainLogo"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        android:text="@string/foodElementsNotice"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/TV_mainLogo" />
 
     <View
         android:id="@+id/view"
@@ -95,7 +117,7 @@
         android:layout_marginTop="3dp"
         android:layout_marginBottom="3dp"
         android:background="#FF9800"
-        app:layout_constraintBottom_toTopOf="@id/TV_manufacturedGoodsChoice"/>
+        app:layout_constraintBottom_toTopOf="@id/TV_manufacturedGoodsChoice" />
 
     <TextView
         android:id="@+id/TV_manufacturedGoodsChoice"
@@ -132,8 +154,7 @@
         android:layout_height="0dp"
         android:scrollbarSize="5dp"
         android:scrollbars="vertical"
-        app:layout_constraintTop_toBottomOf="@id/view2"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

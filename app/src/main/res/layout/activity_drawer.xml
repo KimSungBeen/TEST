@@ -68,14 +68,14 @@
         android:background="@color/layoutColor" />
 
     <TextView
-        android:id="@+id/TV_gymInfo"
+        android:id="@+id/TV_publicSptCenterInfo"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_margin="5dp"
         android:clickable="true"
         android:focusable="true"
         android:gravity="center"
-        android:text="@string/gymInfo"
+        android:text="@string/publicSptCenter"
         android:textColor="@color/black"
         android:textStyle="bold" />
 

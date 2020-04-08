@@ -181,10 +181,11 @@
         app:layout_constraintGuide_percent="0.5" />
 
     <View
+        android:id="@+id/view4"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/layoutColor"
-        app:layout_constraintBottom_toTopOf="@+id/GUI_horizontal5" />
+        app:layout_constraintTop_toBottomOf="@id/GUI_horizontal5" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/GUI_vertical5"
@@ -215,5 +216,15 @@
         app:layout_constraintLeft_toRightOf="@+id/GUI_vertical5"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/GUI_horizontal5" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/LA_kakaoLink"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="share_button.json"
+        app:lottie_loop="true" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -52,54 +52,45 @@
             android:textSize="18sp"
             app:layout_constraintTop_toBottomOf="@id/TV_mainLogo" />
 
-        <TextView
-            android:id="@+id/textView"
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/GUI_horizontal4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/Movie_info"
-            android:textColor="@color/black"
-            android:textStyle="bold|italic"
-            app:layout_constraintBottom_toTopOf="@id/IV_thumbnail"
-            app:layout_constraintLeft_toLeftOf="parent" />
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.4" />
 
-        <ImageView
-            android:id="@+id/IV_thumbnail"
-            android:layout_width="400dp"
+        <!--        썸네일-->
+        <com.google.android.youtube.player.YouTubeThumbnailView
+            android:id="@+id/youTubeThumbnailView"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginBottom="5dp"
             android:clickable="true"
             android:focusable="true"
-            android:src="@drawable/thumbnail1"
-            app:layout_constraintBottom_toTopOf="@id/TV_musicInfo"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@id/LA_isPlayMusic"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/GUI_horizontal4"
             tools:ignore="ContentDescription" />
 
         <!--    운동영상-->
-        <VideoView
-            android:id="@+id/VV_movie"
-            android:layout_width="400dp"
-            android:layout_height="0dp"
-            android:layout_marginBottom="5dp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@id/TV_musicInfo"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
-
-        <View
-            android:id="@+id/view"
+        <com.google.android.youtube.player.YouTubePlayerView
+            android:id="@+id/youTubePlayerView"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/guideLine"
-            app:layout_constraintTop_toBottomOf="@id/VV_movie" />
+            android:layout_height="0dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@id/LA_isPlayMusic"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/GUI_horizontal4" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/LA_isPlayMusic"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            app:layout_constraintBottom_toBottomOf="@id/TV_musicInfo"
-            app:layout_constraintRight_toLeftOf="@id/TV_musicInfo"
-            app:layout_constraintTop_toTopOf="@id/TV_musicInfo"
+            app:layout_constraintBottom_toBottomOf="@+id/TV_musicInfo"
+            app:layout_constraintEnd_toStartOf="@+id/TV_musicInfo"
+            app:layout_constraintTop_toTopOf="@+id/TV_musicInfo"
             app:lottie_autoPlay="false"
             app:lottie_fileName="play_music.json"
             app:lottie_loop="true" />
@@ -117,22 +108,7 @@
             app:layout_constraintBottom_toTopOf="@id/musicSeekBar"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/view" />
-
-        <!--    <TextView-->
-        <!--        android:id="@+id/TV_back"-->
-        <!--        android:layout_width="wrap_content"-->
-        <!--        android:layout_height="wrap_content"-->
-        <!--        android:clickable="true"-->
-        <!--        android:focusable="true"-->
-        <!--        android:text="@string/Back"-->
-        <!--        android:textColor="@color/black"-->
-        <!--        android:textSize="32dp"-->
-        <!--        android:textStyle="bold"-->
-        <!--        app:layout_constraintBottom_toTopOf="@id/V_menuLine"-->
-        <!--        app:layout_constraintLeft_toLeftOf="parent"-->
-        <!--        app:layout_constraintRight_toRightOf="@id/LA_play"-->
-        <!--        tools:ignore="spUsage" />-->
+            app:layout_constraintTop_toBottomOf="@id/youTubePlayerView" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/LA_back"
@@ -231,36 +207,36 @@
             app:layout_constraintLeft_toRightOf="@id/BTN_info"
             app:layout_constraintRight_toLeftOf="@id/BTN_diary" />
 
-        <TextView
-            android:id="@+id/TV_bookmarkInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/bookmark_info"
-            android:textColor="@color/black"
-            android:textStyle="bold|italic"
-            app:layout_constraintBottom_toTopOf="@id/IV_bookmarkNum1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/TV_notice" />
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/LA_bookmark"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/IV_bookmarkNum1"
+            app:layout_constraintTop_toTopOf="@id/IV_bookmarkNum1"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="bookmark.json"
+            app:lottie_loop="true" />
 
         <!--    북마크-->
-
         <ImageView
             android:id="@+id/IV_bookmarkNum1"
-            android:layout_width="100dp"
+            android:layout_width="75dp"
             android:layout_height="0dp"
-            android:layout_marginLeft="12dp"
             android:layout_marginTop="5dp"
             android:clickable="true"
             android:focusable="true"
             android:src="@mipmap/ic_launcher_round"
             app:layout_constraintBottom_toTopOf="@id/TV_bookmarkNum1"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/TV_bookmarkInfo"
+            app:layout_constraintLeft_toRightOf="@id/LA_bookmark"
+            app:layout_constraintTop_toBottomOf="@+id/TV_notice"
             tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/IV_bookmarkNum2"
-            android:layout_width="100dp"
+            android:layout_width="75dp"
             android:layout_height="0dp"
             android:clickable="true"
             android:focusable="true"
@@ -273,10 +249,10 @@
 
         <ImageView
             android:id="@+id/IV_bookmarkNum3"
-            android:layout_width="100dp"
+            android:layout_width="75dp"
             android:layout_height="0dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
             android:src="@mipmap/ic_launcher_round"
             app:layout_constraintBottom_toBottomOf="@id/IV_bookmarkNum2"
             app:layout_constraintEnd_toEndOf="parent"
@@ -321,19 +297,17 @@
 
         <ImageView
             android:id="@+id/IV_bookmarkNum4"
-            android:layout_width="100dp"
+            android:layout_width="75dp"
             android:layout_height="0dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:src="@mipmap/ic_launcher_round"
             app:layout_constraintBottom_toTopOf="@id/TV_bookmarkNum4"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/IV_bookmarkNum1"
             app:layout_constraintTop_toBottomOf="@+id/TV_bookmarkNum1" />
 
         <ImageView
             android:id="@+id/IV_bookmarkNum5"
-            android:layout_width="100dp"
+            android:layout_width="75dp"
             android:layout_height="0dp"
             android:src="@mipmap/ic_launcher_round"
             app:layout_constraintBottom_toBottomOf="@+id/IV_bookmarkNum4"
@@ -344,10 +318,10 @@
 
         <ImageView
             android:id="@+id/IV_bookmarkNum6"
-            android:layout_width="100dp"
+            android:layout_width="75dp"
             android:layout_height="0dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
             android:src="@mipmap/ic_launcher_round"
             app:layout_constraintBottom_toBottomOf="@+id/IV_bookmarkNum4"
             app:layout_constraintEnd_toEndOf="parent"
@@ -361,7 +335,7 @@
             android:maxWidth="100dp"
             android:maxLines="1"
             android:text="bookmarkNum4"
-            app:layout_constraintBottom_toTopOf="@+id/textView"
+            app:layout_constraintBottom_toTopOf="@+id/GUI_horizontal4"
             app:layout_constraintEnd_toEndOf="@+id/IV_bookmarkNum4"
             app:layout_constraintStart_toStartOf="@+id/IV_bookmarkNum4"
             app:layout_constraintTop_toBottomOf="@+id/IV_bookmarkNum4"
@@ -427,7 +401,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--    홈 액티비티에 activity_drawer.xml 연결-->
+    <!--    홈 액티비티에 activity_drawer.xml 연결-->
     <include layout="@layout/activity_drawer" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

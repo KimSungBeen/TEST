@@ -11,19 +11,29 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.MediaController;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.VideoView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.google.android.youtube.player.YouTubeBaseActivity;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerView;
+import com.google.android.youtube.player.YouTubeThumbnailLoader;
+import com.google.android.youtube.player.YouTubeThumbnailView;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+
+import rebus.permissionutils.AskAgainCallback;
+import rebus.permissionutils.FullCallback;
+import rebus.permissionutils.PermissionEnum;
+import rebus.permissionutils.PermissionManager;
 
 import static com.example.myapplication.Music_Service.isPause;
 import static com.example.myapplication.Music_Service.isPlaying;
@@ -32,48 +42,50 @@ import static com.example.myapplication.Music_Service.musicAmount;
 import static com.example.myapplication.Music_Service.musicNum;
 import static com.example.myapplication.Notice_write_Activity.SP_data;
 
-public class Home_Activity extends AppCompatActivity {
-
-    private DrawerLayout drawerLayout;
-    private  View drawerView;
-
-    public static Broadcast_Receiver receiver = new Broadcast_Receiver();
+public class Home_Activity extends YouTubeBaseActivity {
 
     public static final int REQUEST_TO_NOTICE = 11;
     public static final int BOOKMARK_COUNT = 6;
     public static SeekBar musicSeekBar; //MP3 Player SeekBar
     public static TextView TV_currentMusicTime, TV_allMusicTime;
+    public static Broadcast_Receiver receiver = new Broadcast_Receiver();
+    private DrawerLayout drawerLayout;
+    private  View drawerView;
     int videoPosition; // 영상이 Pause 되면 그 위치를 저장하기 위한 변수
 
+    String noticeTitle;
+    String youtubeAPIKey = "key"; //유튜브 API 인증Key
+
     //북마크번호에 따른 Url
-    String bookmarkNum1Url, bookmarkNum2Url, bookmarkNum3Url,
-            bookmarkNum4Url, bookmarkNum5Url, bookmarkNum6Url;
+    String bookmarkNum1Url, bookmarkNum2Url, bookmarkNum3Url, bookmarkNum4Url, bookmarkNum5Url, bookmarkNum6Url;
 
     //뷰 선언
     Button BTN_info, BTN_stopwatch, BTN_diary;
-    TextView TV_notice, TV_workoutFriend, TV_BMI, TV_gymInfo, TV_foodElements,
-            TV_bookmarkNum1, TV_bookmarkNum2, TV_bookmarkNum3, TV_bookmarkNum4, TV_bookmarkNum5, TV_bookmarkNum6;
+    TextView TV_notice, TV_workoutFriend, TV_BMI, TV_publicSptCenterInfo, TV_foodElements, TV_bookmarkNum1, TV_bookmarkNum2, TV_bookmarkNum3, TV_bookmarkNum4, TV_bookmarkNum5, TV_bookmarkNum6;
     static TextView TV_musicInfo;
-    ImageView  IV_thumbnail,
-            IV_bookmarkNum1, IV_bookmarkNum2, IV_bookmarkNum3, IV_bookmarkNum4, IV_bookmarkNum5, IV_bookmarkNum6;
+    ImageView IV_bookmarkNum1, IV_bookmarkNum2, IV_bookmarkNum3, IV_bookmarkNum4, IV_bookmarkNum5, IV_bookmarkNum6;
     LottieAnimationView LA_menu, LA_isPlayMusic, LA_play, LA_stop, LA_next, LA_back;
+
+    //유튜브 플레이어
+    YouTubePlayer myYouTubePlayer;
+    YouTubePlayerView youTubePlayerView;
+    YouTubeThumbnailView youTubeThumbnailView;
+    YouTubePlayer.OnInitializedListener playerInitialized;
+    YouTubePlayer.PlayerStateChangeListener playerStateChangeListener;
+    YouTubeThumbnailView.OnInitializedListener thumbnailInitialized;
 
 //    PlayerView playerView;
 //    SimpleExoPlayer simpleExoPlayer;
-
-    VideoView VV_movie;
-    MediaController mediaController; // 미디어 제어 (재생이나 정지) 버튼을 담당
-
-//    String videoURL = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";//테스트용 영상
-//        Uri uri = Uri.parse(videoURL); //영상 주소를 저장
-    String path = "android.resource://com.example.myapplication/" + R.raw.video; //(홈)추천영상
-    String noticeTitle      = "Empty";
+//    VideoView VV_movie;
+//    MediaController mediaController; // 미디어 제어 (재생이나 정지) 버튼을 담당
 
     //액티비티를 생성하는 구간
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        permission(); //권한요청 메소드
 
         SingleTon.broadcastReceiver(this, receiver);
 
@@ -86,20 +98,21 @@ public class Home_Activity extends AppCompatActivity {
         BTN_diary           = findViewById(R.id.BTN_diary);
         TV_workoutFriend    = findViewById(R.id.TV_workoutFriend);
         TV_BMI              = findViewById(R.id.TV_BMI);
-        TV_gymInfo          = findViewById(R.id.TV_gymInfo);
-        TV_foodElements     =findViewById(R.id.TV_foodElements);
+        TV_publicSptCenterInfo = findViewById(R.id.TV_publicSptCenterInfo);
+        TV_foodElements     = findViewById(R.id.TV_foodElements);
         LA_menu             = findViewById(R.id.LA_menu);
         LA_back             = findViewById(R.id.LA_back);
         LA_play             = findViewById(R.id.LA_play);
         LA_stop             = findViewById(R.id.LA_stop);
         LA_next             = findViewById(R.id.LA_next);
         TV_notice           = findViewById(R.id.TV_notice);
-        VV_movie            = findViewById(R.id.VV_movie);
-        IV_thumbnail        = findViewById(R.id.IV_thumbnail);
         TV_currentMusicTime = findViewById(R.id.TV_currentMusicTime);
         TV_allMusicTime     = findViewById(R.id.TV_allMusicTime);
         TV_musicInfo        = findViewById(R.id.TV_musicInfo);
-        LA_isPlayMusic        = findViewById(R.id.LA_isPlayMusic);
+        LA_isPlayMusic      = findViewById(R.id.LA_isPlayMusic);
+    //유튜브플레이어
+        youTubePlayerView   = findViewById(R.id.youTubePlayerView);
+        youTubeThumbnailView= findViewById(R.id.youTubeThumbnailView);
 
         //북마크 뷰 초기화
         IV_bookmarkNum1 = findViewById(R.id.IV_bookmarkNum1);
@@ -114,16 +127,16 @@ public class Home_Activity extends AppCompatActivity {
         TV_bookmarkNum5 = findViewById(R.id.TV_bookmarkNum5);
         IV_bookmarkNum6 = findViewById(R.id.IV_bookmarkNum6);
         TV_bookmarkNum6 = findViewById(R.id.TV_bookmarkNum6);
-
+//==================================================================================================
         //MP3 Player SeekBar
         musicSeekBar = findViewById(R.id.musicSeekBar);
 
         //운동 영상 Player
-        mediaController = new MediaController(this); // 컨트롤러 생성
-        mediaController.setAnchorView(VV_movie); //컨트롤러를 비디오뷰에 셋팅
-
-        VV_movie.setMediaController(mediaController); //비디오 뷰에 영상 컨트롤러 셋팅
-        VV_movie.setVideoURI(Uri.parse(path)); //비디오뷰에 영상URI 셋팅
+//        mediaController = new MediaController(this); // 컨트롤러 생성
+//        mediaController.setAnchorView(VV_movie); //컨트롤러를 비디오뷰에 셋팅
+//
+//        VV_movie.setMediaController(mediaController); //비디오 뷰에 영상 컨트롤러 셋팅
+//        VV_movie.setVideoURI(Uri.parse(path)); //비디오뷰에 영상URI 셋팅
 
         // notice 키 안에서 제목을 가져와서 공지사항제목 호출
         try {
@@ -134,9 +147,42 @@ public class Home_Activity extends AppCompatActivity {
         }catch (Exception e) {
             e.printStackTrace();
         }
-        TV_notice.setText(noticeTitle);
+        if(noticeTitle.equals("")) {
+            noticeTitle = "공지사항";
+            TV_notice.setText(noticeTitle);
+        }else {
+            TV_notice.setText(noticeTitle);
+        }
 
 //        iniExoplayer();
+//==================================================================================================
+
+        //유튜브 플레이어 초기화리스너(= 초기화 될 때 재생할 영상의 ID 설정)
+        playerInitialized = new YouTubePlayer.OnInitializedListener() {
+            @Override
+            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+                myYouTubePlayer = youTubePlayer;
+                myYouTubePlayer.loadVideo("BOE8rR9uDz8");
+            }
+
+            @Override
+            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+
+            }
+        };
+
+        thumbnailInitialized = new YouTubeThumbnailView.OnInitializedListener() {
+            @Override
+            public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader youTubeThumbnailLoader) {
+                youTubeThumbnailLoader.setVideo("BOE8rR9uDz8");
+            }
+
+            @Override
+            public void onInitializationFailure(YouTubeThumbnailView youTubeThumbnailView, YouTubeInitializationResult youTubeInitializationResult) {
+
+            }
+        };
+        youTubeThumbnailView.initialize(youtubeAPIKey, thumbnailInitialized); //유튜브 썸네일 뷰 초기화
 
     }
 
@@ -265,7 +311,7 @@ public class Home_Activity extends AppCompatActivity {
 
         }
 
-        VV_movie.seekTo(videoPosition);// 영상이 Pause 되면 다시 실행될때 이전 위치부터 실행
+//        VV_movie.seekTo(videoPosition);// 영상이 Pause 되면 다시 실행될때 이전 위치부터 실행
     }
 
 //==================================================================================================
@@ -303,10 +349,10 @@ public class Home_Activity extends AppCompatActivity {
         });
 
         //헬스장 현황목록으로 이동
-        TV_gymInfo.setOnClickListener(new View.OnClickListener() {
+        TV_publicSptCenterInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Home_Activity.this, Gym_Info_Activity.class);
+                Intent intent = new Intent(Home_Activity.this, PublicSptCenter_Info_Activity.class);
                 startActivity(intent);
             }
         });
@@ -484,13 +530,23 @@ public class Home_Activity extends AppCompatActivity {
 
 //==================================================================================================
 
-        //동영상을 클릭리스너
-        IV_thumbnail.setOnClickListener(new View.OnClickListener() {
+        //동영상 클릭리스너
+//        IV_thumbnail.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                IV_thumbnail.setVisibility(View.INVISIBLE);
+//                VV_movie.setVisibility(View.VISIBLE);
+//                VV_movie.start();
+//            }
+//        });
+
+        //썸네일 클릭시 동영상재생
+        youTubeThumbnailView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IV_thumbnail.setVisibility(View.INVISIBLE);
-                VV_movie.setVisibility(View.VISIBLE);
-                VV_movie.start();
+                youTubeThumbnailView.setVisibility(View.INVISIBLE);
+                youTubePlayerView.setVisibility(View.VISIBLE);
+                youTubePlayerView.initialize(youtubeAPIKey, playerInitialized); //유튜브 플레이어 초기화
             }
         });
 
@@ -656,8 +712,8 @@ public class Home_Activity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        VV_movie.pause();
-        videoPosition = VV_movie.getCurrentPosition();
+//        VV_movie.pause();
+//        videoPosition = VV_movie.getCurrentPosition();
 
     }
 
@@ -707,13 +763,16 @@ public class Home_Activity extends AppCompatActivity {
             SP_notice.getString("notice", "");
             String[] notice = (SP_notice.getString("notice", "")).split(",");
             noticeTitle = notice[0];
-            TV_notice.setText(noticeTitle);
+            if(!noticeTitle.equals("")) {
+                TV_notice.setText(noticeTitle);
+            }
         }
 
     }
 
 //==================================================================================================
 
+    //로티애니메이션 커스텀메소드
     private void playCustomAnimators(float startPosition, float finishPosition, int duration) {
 
         //애니메이션의 진행위치, 종료위치, 진행속도를 설정
@@ -722,6 +781,58 @@ public class Home_Activity extends AppCompatActivity {
             LA_play.setProgress((Float) animation.getAnimatedValue());
         });
         animator.start();
+    }
+
+//==================================================================================================
+
+    //permission util library 사용( onRequestPermissionsResult 재정의)
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        PermissionManager.handleResult(this, requestCode, permissions, grantResults);
+    }
+
+    //권한요청을 묻는 다이얼로그 호출 메소드
+    private void showDialog(final AskAgainCallback.UserResponse response) {
+        new AlertDialog.Builder(Home_Activity.this)
+                .setTitle("Permission needed")
+                .setMessage("This app realy need to use this permission, you wont to authorize it?")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        response.result(true);
+                    }
+                })
+                .setNegativeButton("NOT NOW", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        response.result(false);
+                    }
+                })
+                .setCancelable(false)
+                .show();
+    }
+
+    //oncreate시 호출될 권한요청 메소드
+    private void permission() {
+        PermissionManager.Builder()
+                .permission(PermissionEnum.READ_PHONE_STATE, PermissionEnum.READ_EXTERNAL_STORAGE,
+                        PermissionEnum.WRITE_EXTERNAL_STORAGE, PermissionEnum.READ_CONTACTS,
+                        PermissionEnum.CAMERA) // You can put all permissions here
+                .askAgain(true)
+                .askAgainCallback(new AskAgainCallback() {
+                    @Override
+                    public void showRequestPermission(UserResponse response) {
+                        showDialog(response);
+
+                    }
+                })
+                .callback(new FullCallback() {
+                    @Override
+                    public void result(ArrayList<PermissionEnum> permissionsGranted, ArrayList<PermissionEnum> permissionsDenied, ArrayList<PermissionEnum> permissionsDeniedForever, ArrayList<PermissionEnum> permissionsAsked) {
+                    }
+                })
+                .ask(this);
     }
 
 //==================================================================================================
@@ -750,5 +861,6 @@ public class Home_Activity extends AppCompatActivity {
 //    }
 
 //==================================================================================================
+
 }
 
