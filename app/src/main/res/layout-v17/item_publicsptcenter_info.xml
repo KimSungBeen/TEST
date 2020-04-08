@@ -8,13 +8,13 @@
     card_view:cardCornerRadius="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/gymInfoLayout"
+        android:id="@+id/publicSptCenterInfoLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/TV_gymInfoList"
+            android:id="@+id/TV_publicSptCenterInfoList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
@@ -23,15 +23,15 @@
             card_view:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/TV_gymCallNumber"
+            android:id="@+id/TV_publicSptCenterCallNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:textColor="@color/black"
-            card_view:layout_constraintTop_toBottomOf="@id/TV_gymInfoList" />
+            card_view:layout_constraintTop_toBottomOf="@id/TV_publicSptCenterInfoList" />
 
         <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/LA_gymGuy"
+            android:id="@+id/LA_publicSptCenterGuy"
             android:layout_width="80dp"
             android:layout_height="80dp"
             card_view:layout_constraintBottom_toBottomOf="parent"

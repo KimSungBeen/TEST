@@ -24,9 +24,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import static com.example.myapplication.Gym_Info_Adapter.gymArrayList;
+import static com.example.myapplication.PublicSptCenter_Info_Adapter.publicSptCenterArrayList;
 
-public class Gym_Info_Activity extends AppCompatActivity {
+public class PublicSptCenter_Info_Activity extends AppCompatActivity {
 
     /**
      *  Volley: 네트워크 요청을 관리하는 Android 용 네트워킹 라이브러리
@@ -39,37 +39,37 @@ public class Gym_Info_Activity extends AppCompatActivity {
      * 진행중인 API 요청 취소
      * */
 
-    TextView TV_gymInfoNotice;
+    TextView TV_publicSptCenterInfoNotice;
     Button BTN_exit;
     RequestQueue queue;
-    RecyclerView RV_gymInfo;
-    Gym_Info_Adapter gym_info_adapter;
+    RecyclerView RV_publicSptCenterInfo;
+    PublicSptCenter_Info_Adapter publicSptCenter_info_adapter;
     LinearLayoutManager linearLayoutManager;
-    LottieAnimationView LA_gymGuy;
+    LottieAnimationView LA_publicSptCenterGuy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gym_info_);
+        setContentView(R.layout.activity_publicsptcenter_info_);
 
-        TV_gymInfoNotice = findViewById(R.id.TV_gymInfoNotice); //알림용 텍스트뷰
-        LA_gymGuy = findViewById(R.id.LA_gymGuy);
+        TV_publicSptCenterInfoNotice = findViewById(R.id.TV_publicSptCenterInfoNotice); //알림용 텍스트뷰
+        LA_publicSptCenterGuy = findViewById(R.id.LA_publicSptCenterGuy);
         BTN_exit     = findViewById(R.id.BTN_exit);
 
     //리싸이클러뷰
-        RV_gymInfo   = findViewById(R.id.RV_gymInfo);
+        RV_publicSptCenterInfo   = findViewById(R.id.RV_publicSptCenterInfo);
 
         //리싸이클러뷰내의 레이아웃을 컨트롤할 수 있게 해줌
         linearLayoutManager = new LinearLayoutManager(this);
-        RV_gymInfo.setLayoutManager(linearLayoutManager);
+        RV_publicSptCenterInfo.setLayoutManager(linearLayoutManager);
 
         //아이템의 데이터가 저장될 ArrayList 생성
-        gymArrayList = new ArrayList<>();
+        publicSptCenterArrayList = new ArrayList<>();
 
-        // gymArrayList에 있는 값을 gym_info_adapter에 저장
-        //리사이클러뷰에 gym_info_adapter 안의 값을 셋팅
-        gym_info_adapter = new Gym_Info_Adapter(gymArrayList);
-        RV_gymInfo.setAdapter(gym_info_adapter);
+        // publicSptCenterArrayList에 있는 값을 publicSptCenter_info_adapter에 저장
+        //리사이클러뷰에 publicSptCenter_info_adapter 안의 값을 셋팅
+        publicSptCenter_info_adapter = new PublicSptCenter_Info_Adapter(publicSptCenterArrayList, this);
+        RV_publicSptCenterInfo.setAdapter(publicSptCenter_info_adapter);
 
         //볼리 Request 큐 생성
         queue = Volley.newRequestQueue(this);
@@ -96,35 +96,37 @@ public class Gym_Info_Activity extends AppCompatActivity {
     //공공데이터 JSON 파일에서 데이터를 Parsing 하는 메소드
     private void parse() {
         String key = "key";
-        String url = "http://openapi.seoul.go.kr:8088/" + key + "/json/totalPhysicalTrainInfo/1/99/";
+        String url = "http://openapi.seoul.go.kr:8088/" + key + "/json/TbPublicSptCenter2019/1/751/";
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    JSONObject jsonObject = response.getJSONObject("totalPhysicalTrainInfo");
+                    JSONObject jsonObject = response.getJSONObject("TbPublicSptCenter2019");
                     JSONArray jsonArray = jsonObject.getJSONArray("row");
 
                     //배열의 길이만큼 반복해서 데이터 출력
                     for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject gym = jsonArray.getJSONObject(i);
-                        String name = gym.getString("NM");
-                        String address = gym.getString("ADDR");
-                        String state = gym.getString("STATE");
-                        String tel = gym.getString("TEL");
+                        JSONObject center = jsonArray.getJSONObject(i);
+                        String name = center.getString("NM");
+                        String address = center.getString("ADDR");
+                        String in_out = center.getString("IN_OUT");
+                        String tel = "02-" + center.getString("TEL");
+                        String YCODE = center.getString("YCODE");
+                        String XCODE = center.getString("XCODE");
 
                         //출력할 데이터 조합
                         StringBuilder stringBuilder = new StringBuilder();
-                        stringBuilder.append("업체명: ").append(name).append("\n").
+                        stringBuilder.append("시설명: ").append(name).append("\n").
                                 append("주소: ").append(address).append("\n").
-                                append("운영상태: ").append(state);
+                                append("실내/실외: ").append(in_out);
 
                         //가져온 데이터 리스트에 저장
-                        Gym_Info_Item item = new Gym_Info_Item(String.valueOf(stringBuilder),
-                                "전화번호: " + tel);
-                        gymArrayList.add(item);
+                        PublicSptCenter_Info_Item item = new PublicSptCenter_Info_Item(String.valueOf(stringBuilder),
+                                "전화번호: " + tel, YCODE, XCODE);
+                        publicSptCenterArrayList.add(item);
                     }
-                    gym_info_adapter.notifyDataSetChanged(); //리스트에 저장한 데이터 띄우기(새로고침)
+                    publicSptCenter_info_adapter.notifyDataSetChanged(); //리스트에 저장한 데이터 띄우기(새로고침)
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -135,7 +137,7 @@ public class Gym_Info_Activity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                TV_gymInfoNotice.setText("인터넷 연결상태를 확인해 주십시오.");
+                TV_publicSptCenterInfoNotice.setText("인터넷 연결상태를 확인해 주십시오.");
             }
         });
 

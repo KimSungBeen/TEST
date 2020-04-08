@@ -1,28 +1,22 @@
 package com.example.myapplication;
 
-import android.Manifest;
 import android.animation.ValueAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.MediaController;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -67,7 +61,7 @@ public class Home_Activity extends YouTubeBaseActivity {
 
     //뷰 선언
     Button BTN_info, BTN_stopwatch, BTN_diary;
-    TextView TV_notice, TV_workoutFriend, TV_BMI, TV_gymInfo, TV_foodElements, TV_bookmarkNum1, TV_bookmarkNum2, TV_bookmarkNum3, TV_bookmarkNum4, TV_bookmarkNum5, TV_bookmarkNum6;
+    TextView TV_notice, TV_workoutFriend, TV_BMI, TV_publicSptCenterInfo, TV_foodElements, TV_bookmarkNum1, TV_bookmarkNum2, TV_bookmarkNum3, TV_bookmarkNum4, TV_bookmarkNum5, TV_bookmarkNum6;
     static TextView TV_musicInfo;
     ImageView IV_bookmarkNum1, IV_bookmarkNum2, IV_bookmarkNum3, IV_bookmarkNum4, IV_bookmarkNum5, IV_bookmarkNum6;
     LottieAnimationView LA_menu, LA_isPlayMusic, LA_play, LA_stop, LA_next, LA_back;
@@ -104,7 +98,7 @@ public class Home_Activity extends YouTubeBaseActivity {
         BTN_diary           = findViewById(R.id.BTN_diary);
         TV_workoutFriend    = findViewById(R.id.TV_workoutFriend);
         TV_BMI              = findViewById(R.id.TV_BMI);
-        TV_gymInfo          = findViewById(R.id.TV_gymInfo);
+        TV_publicSptCenterInfo = findViewById(R.id.TV_publicSptCenterInfo);
         TV_foodElements     = findViewById(R.id.TV_foodElements);
         LA_menu             = findViewById(R.id.LA_menu);
         LA_back             = findViewById(R.id.LA_back);
@@ -355,10 +349,10 @@ public class Home_Activity extends YouTubeBaseActivity {
         });
 
         //헬스장 현황목록으로 이동
-        TV_gymInfo.setOnClickListener(new View.OnClickListener() {
+        TV_publicSptCenterInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Home_Activity.this, Gym_Info_Activity.class);
+                Intent intent = new Intent(Home_Activity.this, PublicSptCenter_Info_Activity.class);
                 startActivity(intent);
             }
         });

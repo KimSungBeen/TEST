@@ -59,23 +59,25 @@
         <activity android:name=".Notice_read_Activity" />
         <activity android:name=".Notice_write_Activity" />
         <activity android:name=".Workout_Friend_Activity" />
-
         <activity android:name=".Calculation_BIM_Activity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
                 <data
-                    android:scheme="@string/kakao_scheme"
-                    android:host="@string/kakaolink_host" />
+                    android:host="@string/kakaolink_host"
+                    android:scheme="@string/kakao_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".Gym_Info_Activity" />
+        <activity android:name=".PublicSptCenter_Info_Activity" />
         <activity android:name=".Standard_Food_Elements_DB_Activity" />
-
+        <activity android:name=".Naver_Map"/>
         <meta-data
             android:name="com.kakao.sdk.AppKey"
-            android:value="@string/kakao_app_key"/>
+            android:value="@string/kakao_app_key" />
+        <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="@string/naver_map_key" />
     </application>
+
 </manifest>

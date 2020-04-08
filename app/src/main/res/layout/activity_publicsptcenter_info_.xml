@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="5dp"
-    tools:context=".Gym_Info_Activity">
+    tools:context=".PublicSptCenter_Info_Activity">
 
     <TextView
-        android:id="@+id/TV_gymInfoLogo"
+        android:id="@+id/TV_publicSptCenterInfoLogo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/gymInfo"
+        android:text="@string/publicSptCenter"
         android:textSize="32sp"
         android:textColor="@color/mainLogo"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -31,13 +32,13 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/layoutColor"
-        app:layout_constraintBottom_toTopOf="@id/TV_gymInfoNotice" />
+        app:layout_constraintBottom_toTopOf="@id/TV_publicSptCenterInfoNotice" />
 
     <TextView
-        android:id="@+id/TV_gymInfoNotice"
+        android:id="@+id/TV_publicSptCenterInfoNotice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/gymInfoNotice"
+        android:text="@string/publicSptCenterInfoNotice"
         android:gravity="center"
         app:layout_constraintTop_toBottomOf="@id/BTN_exit"
         app:layout_constraintLeft_toLeftOf="parent" />
@@ -46,15 +47,15 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/layoutColor"
-        app:layout_constraintTop_toBottomOf="@id/TV_gymInfoNotice" />
+        app:layout_constraintTop_toBottomOf="@id/TV_publicSptCenterInfoNotice" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/RV_gymInfo"
+        android:id="@+id/RV_publicSptCenterInfo"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:scrollbarSize="5dp"
         android:scrollbars="vertical"
-        app:layout_constraintTop_toBottomOf="@id/TV_gymInfoNotice"
+        app:layout_constraintTop_toBottomOf="@id/TV_publicSptCenterInfoNotice"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
