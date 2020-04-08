@@ -44,7 +44,7 @@ public class Standard_Food_Elements_DB_Activity extends AppCompatActivity {
     //API URL의 요청변수
     String foodGrupp = "";
     String foodName = "";
-    String key = "key";
+    String key = Key_API.FoodElementsKey;
     String url = "";
 
     Button BTN_exit, BTN_resultZoomIn,BTN_resultZoomOut;
