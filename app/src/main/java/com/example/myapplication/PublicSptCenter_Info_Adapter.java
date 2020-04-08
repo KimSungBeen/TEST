@@ -34,9 +34,8 @@ public class PublicSptCenter_Info_Adapter extends RecyclerView.Adapter<PublicSpt
     public PublicSptCenter_Info_Adapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //레이아웃과 아이템 연결
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_publicsptcenter_info, parent, false);
-        MyViewHolder holder = new MyViewHolder(view);
 
-        return holder;
+        return new MyViewHolder(view);
     }
 
     //ViewHolder에 데이터를 넣는 작업을 수행함
