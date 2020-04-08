@@ -54,7 +54,7 @@ public class Home_Activity extends YouTubeBaseActivity {
     int videoPosition; // 영상이 Pause 되면 그 위치를 저장하기 위한 변수
 
     String noticeTitle;
-    String youtubeAPIKey = "key"; //유튜브 API 인증Key
+    String youtubeAPIKey = Key_API.YoutubeKey; //유튜브 API 인증Key
 
     //북마크번호에 따른 Url
     String bookmarkNum1Url, bookmarkNum2Url, bookmarkNum3Url, bookmarkNum4Url, bookmarkNum5Url, bookmarkNum6Url;
