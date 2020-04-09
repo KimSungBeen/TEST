@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer"
     android:layout_width="240dp"
     android:layout_height="match_parent"
@@ -9,101 +10,254 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/TV_logo"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginBottom="20dp"
-        android:background="@color/notice"
         android:gravity="center"
         android:text="@string/subMenu"
         android:textColor="@color/mainLogo"
         android:textStyle="bold|italic" />
 
     <View
+        android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/layoutColor" />
 
-    <TextView
-        android:id="@+id/TV_workoutFriend"
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="5dp">
+
+        <TextView
+            android:id="@+id/TV_workoutFriend"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/select"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="@string/workoutFriend"
+            android:textColor="@color/black" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="group.json"
+            app:lottie_loop="true" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="5dp">
+
+        <TextView
+            android:id="@+id/TV_BMI"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/select"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="@string/bmiCalculate"
+            android:textColor="@color/black" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="weight_measure_machine.json"
+            app:lottie_loop="true" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="5dp">
+
+        <TextView
+            android:id="@+id/TV_publicSptCenterInfo"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/select"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="@string/publicSptCenter"
+            android:textColor="@color/black" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="public_spt_center.json"
+            app:lottie_loop="true" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="5dp">
+
+        <TextView
+            android:id="@+id/TV_foodElements"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/select"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="@string/foodDB"
+            android:textColor="@color/black" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="food.json"
+            app:lottie_loop="true" />
+
+    </FrameLayout>
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_margin="5dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center"
-        android:text="@string/workoutFriend"
-        android:textColor="@color/black"
-        android:textStyle="bold" />
+        android:visibility="invisible">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/layoutColor" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/select"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="@string/foodDB"
+            android:textColor="@color/black" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/layoutColor" />
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="food.json"
+            app:lottie_loop="true" />
 
-    <TextView
-        android:id="@+id/TV_BMI"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_margin="5dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center"
-        android:text="@string/bmiCalculate"
-        android:textColor="@color/black"
-        android:textStyle="bold" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/layoutColor" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/layoutColor" />
-
-    <TextView
-        android:id="@+id/TV_publicSptCenterInfo"
+    </FrameLayout>
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_margin="5dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center"
-        android:text="@string/publicSptCenter"
-        android:textColor="@color/black"
-        android:textStyle="bold" />
+        android:visibility="invisible">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/layoutColor" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/select"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="@string/foodDB"
+            android:textColor="@color/black" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/layoutColor" />
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="food.json"
+            app:lottie_loop="true" />
 
-    <TextView
-        android:id="@+id/TV_foodElements"
+    </FrameLayout>
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_margin="5dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center"
-        android:text="@string/foodDB"
-        android:textColor="@color/black"
-        android:textStyle="bold" />
+        android:visibility="invisible">
 
-    <View
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/select"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="@string/foodDB"
+            android:textColor="@color/black" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="food.json"
+            app:lottie_loop="true" />
+
+    </FrameLayout>
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/layoutColor" />
+        android:layout_height="40dp"
+        android:layout_margin="5dp"
+        android:visibility="invisible">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/select"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="@string/foodDB"
+            android:textColor="@color/black" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="food.json"
+            app:lottie_loop="true" />
+
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="5dp"
+        android:visibility="invisible">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/select"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="@string/foodDB"
+            android:textColor="@color/black" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="food.json"
+            app:lottie_loop="true" />
+
+    </FrameLayout>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:lottie_fileName="drawer_theme.json"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true" />
 
 </LinearLayout>
