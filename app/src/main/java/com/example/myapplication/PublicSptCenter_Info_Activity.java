@@ -84,8 +84,7 @@ public class PublicSptCenter_Info_Activity extends AppCompatActivity {
         BTN_exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), Home_Activity.class);
-                startActivity(intent);
+                finish();
             }
         });
 

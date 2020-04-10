@@ -45,6 +45,7 @@ public class Workout_Friend_Activity extends AppCompatActivity {
         BTN_addKeyword = findViewById(R.id.BTN_addKeyword);
         BTN_removeKeyword = findViewById(R.id.BTN_removeKeyword);
         BTN_exit = findViewById(R.id.BTN_exit);
+
     }
 
 //==================================================================================================
@@ -78,8 +79,6 @@ public class Workout_Friend_Activity extends AppCompatActivity {
         BTN_exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Home_Activity.class);
-                startActivity(intent);
                 finish();
             }
         });

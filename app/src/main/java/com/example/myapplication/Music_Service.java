@@ -1,10 +1,14 @@
 package com.example.myapplication;
 
+import android.app.Notification;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.session.MediaSession;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -13,6 +17,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
 import static com.example.myapplication.Home_Activity.TV_allMusicTime;
 import static com.example.myapplication.Home_Activity.TV_currentMusicTime;
@@ -56,6 +61,7 @@ public class Music_Service extends Service {
         mediaPlayer[2] = MediaPlayer.create(this, R.raw.nothinyet);
         mediaPlayer[2].setLooping(false);
         musicName[2] = "Nothin Yet";
+
     }
 
     //Service 시작

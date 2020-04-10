@@ -1,9 +1,11 @@
 package com.example.myapplication;
 
+import android.Manifest;
 import android.animation.ValueAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -182,7 +185,7 @@ public class Home_Activity extends YouTubeBaseActivity {
 
             }
         };
-        youTubeThumbnailView.initialize(youtubeAPIKey, thumbnailInitialized); //유튜브 썸네일 뷰 초기화
+            youTubeThumbnailView.initialize(youtubeAPIKey, thumbnailInitialized); //유튜브 썸네일 뷰 초기화
 
     }
 
@@ -321,7 +324,7 @@ public class Home_Activity extends YouTubeBaseActivity {
     protected void onResume() {
         super.onResume();
 
-        //좌상단 메뉴애니메이션 클릭리스너
+        //좌상단 메뉴 애니메이션 클릭리스너
         LA_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -329,13 +332,28 @@ public class Home_Activity extends YouTubeBaseActivity {
             }
         });
 
-        //운동 친구목록으로 이동
+        //소모임목록으로 이동
         TV_workoutFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Home_Activity.this, Workout_Friend_Activity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                startActivity(intent);
+                if(ActivityCompat.checkSelfPermission(v.getContext(), Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+                    Intent intent = new Intent(Home_Activity.this, Workout_Friend_Activity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(intent);
+                }else {
+                    //TODO 권한설정
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(v.getContext());
+                    dialog.setIcon(R.mipmap.ic_launcher);
+                    dialog.setTitle("권한이 필요합니다.");
+                    dialog.setMessage("권한을 설정해 주십시오.");
+                    dialog.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    dialog.show();
+                }
             }
         });
 
@@ -772,7 +790,7 @@ public class Home_Activity extends YouTubeBaseActivity {
 
 //==================================================================================================
 
-    //로티애니메이션 커스텀메소드
+    //play 로티애니메이션 커스텀메소드
     private void playCustomAnimators(float startPosition, float finishPosition, int duration) {
 
         //애니메이션의 진행위치, 종료위치, 진행속도를 설정
@@ -795,15 +813,15 @@ public class Home_Activity extends YouTubeBaseActivity {
     //권한요청을 묻는 다이얼로그 호출 메소드
     private void showDialog(final AskAgainCallback.UserResponse response) {
         new AlertDialog.Builder(Home_Activity.this)
-                .setTitle("Permission needed")
-                .setMessage("This app realy need to use this permission, you wont to authorize it?")
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setTitle("권한 알림")
+                .setMessage("이 앱은 권한을 사용해야 하는데도 승인하지 않겠습니까?")
+                .setPositiveButton("재설정", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         response.result(true);
                     }
                 })
-                .setNegativeButton("NOT NOW", new DialogInterface.OnClickListener() {
+                .setNegativeButton("지금 하지 않음", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         response.result(false);

@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
+import android.animation.ValueAnimator;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,15 +48,17 @@ public class Standard_Food_Elements_DB_Activity extends AppCompatActivity {
     String foodName = "";
     String key = Key_API.FoodElementsKey;
     String url = "";
+    boolean isSearch;
 
     Button BTN_exit, BTN_resultZoomIn,BTN_resultZoomOut;
     WheelView wheelView;
     TextView TV_foodElementsNotice, TV_manufacturedGoodsSearch, TV_manufacturedGoodsChoice;
     EditText ET_search;
-    LottieAnimationView LA_search;
+    LottieAnimationView LA_search, LA_loading;
     RecyclerView RV_foodElements;
     Food_Elements_Adapter food_elements_adapter;
     LinearLayoutManager linearLayoutManager;
+    View view, view2, view3, view4;
 
     RequestQueue queue;
 
@@ -63,16 +67,22 @@ public class Standard_Food_Elements_DB_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_standard__food_elements__d_b);
 
+        //뷰 선언
         wheelView = findViewById(R.id.wheelView);
         BTN_exit = findViewById(R.id.BTN_exit);
         BTN_resultZoomIn = findViewById(R.id.BTN_resultZoomIn);
         BTN_resultZoomOut = findViewById(R.id.BTN_resultZoomOut);
         ET_search = findViewById(R.id.ET_search);
         LA_search = findViewById(R.id.LA_search);
+        LA_loading = findViewById(R.id.LA_loading);
         TV_foodElementsNotice = findViewById(R.id.TV_foodElementsNotice);
         TV_manufacturedGoodsSearch = findViewById(R.id.TV_manufacturedGoodsSearch);
         TV_manufacturedGoodsChoice = findViewById(R.id.TV_manufacturedGoodsChoice);
         RV_foodElements = findViewById(R.id.RV_foodElements);
+        view = findViewById(R.id.view);
+        view2 = findViewById(R.id.view2);
+        view3 = findViewById(R.id.view3);
+        view4 = findViewById(R.id.view4);
 
     //리싸이클러뷰
         RV_foodElements   = findViewById(R.id.RV_foodElements);
@@ -109,19 +119,10 @@ public class Standard_Food_Elements_DB_Activity extends AppCompatActivity {
 
 //==================================================================================================
 
-        wheelView.setCyclic(false);
+        wheelView.setCyclic(true);
 
         //제품군 리스트
         final List<String> optionsItems = new ArrayList<>();
-        optionsItems.add("곡류및그제품");
-        optionsItems.add("감자류및전분류");
-        optionsItems.add("당류");
-        optionsItems.add("두류");
-        optionsItems.add("견과류및종실류");
-        optionsItems.add("채소류");
-        optionsItems.add("버섯류");
-        optionsItems.add("과일류");
-        optionsItems.add("육류");
         optionsItems.add("난류");
         optionsItems.add("어패류및기타수산물");
         optionsItems.add("해조류");
@@ -133,10 +134,20 @@ public class Standard_Food_Elements_DB_Activity extends AppCompatActivity {
         optionsItems.add("조미료류");
         optionsItems.add("조리가공식품류");
         optionsItems.add("기타");
+        optionsItems.add("전체검색");
+        optionsItems.add("곡류및그제품");
+        optionsItems.add("감자류및전분류");
+        optionsItems.add("당류");
+        optionsItems.add("두류");
+        optionsItems.add("견과류및종실류");
+        optionsItems.add("채소류");
+        optionsItems.add("버섯류");
+        optionsItems.add("과일류");
+        optionsItems.add("육류");
 
-        wheelView.setAdapter(new ArrayWheelAdapter(optionsItems));
+        wheelView.setAdapter(new ArrayWheelAdapter<>(optionsItems));
 
-        //제품군을 선택하는 휠뷰
+        //제품군을 선택하는 휠뷰 선택리스너
         wheelView.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(int index) {
@@ -144,6 +155,9 @@ public class Standard_Food_Elements_DB_Activity extends AppCompatActivity {
 
                 //wheelView에 따른 KEY 요청변수 foodGrupp을 초기화
                 switch (optionsItems.get(index)) {
+                    case "전체검색":
+                        foodGrupp = "";
+                        break;
                     case "곡류및그제품":
                         foodGrupp = "A";
                         break;
@@ -224,7 +238,21 @@ public class Standard_Food_Elements_DB_Activity extends AppCompatActivity {
                     Toast.makeText(Standard_Food_Elements_DB_Activity.this, "검색어를 입력하십시오.", Toast.LENGTH_SHORT).show();
                 }else {
                     parse();
-                    Toast.makeText(Standard_Food_Elements_DB_Activity.this, "검색중............", Toast.LENGTH_SHORT).show();
+
+                    //로딩 애니메이션
+                    Handler handler = new Handler();
+                    handler.post(new Thread() {
+                        @Override
+                        public void run() {
+                            loadingCustomAnimators(0.3f, 0.57f, 900);
+                            if (isSearch) {
+                                handler.postDelayed(this, 950);
+                            } else {
+                                loadingCustomAnimators(0.57f, 1f, 1000);
+                            }
+                        }
+                    });
+
                 }
             }
         });
@@ -239,6 +267,11 @@ public class Standard_Food_Elements_DB_Activity extends AppCompatActivity {
                 TV_manufacturedGoodsChoice.setVisibility(View.GONE);
                 wheelView.setVisibility(View.GONE);
                 BTN_resultZoomIn.setVisibility(View.GONE);
+                TV_foodElementsNotice.setVisibility(View.GONE);
+                view.setVisibility(View.GONE);
+                view2.setVisibility(View.GONE);
+                view3.setVisibility(View.GONE);
+                view4.setVisibility(View.GONE);
                 BTN_resultZoomOut.setVisibility(View.VISIBLE);
             }
         });
@@ -253,6 +286,11 @@ public class Standard_Food_Elements_DB_Activity extends AppCompatActivity {
                 TV_manufacturedGoodsChoice.setVisibility(View.VISIBLE);
                 wheelView.setVisibility(View.VISIBLE);
                 BTN_resultZoomIn.setVisibility(View.VISIBLE);
+                TV_foodElementsNotice.setVisibility(View.VISIBLE);
+                view.setVisibility(View.VISIBLE);
+                view2.setVisibility(View.VISIBLE);
+                view3.setVisibility(View.VISIBLE);
+                view4.setVisibility(View.VISIBLE);
                 BTN_resultZoomOut.setVisibility(View.GONE);
             }
         });
@@ -263,6 +301,7 @@ public class Standard_Food_Elements_DB_Activity extends AppCompatActivity {
 
     //공공데이터 JSON 파일에서 데이터를 Parsing 하는 메소드
     private void parse() {
+        isSearch = true; //검색중
         foodArrayList.clear();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -306,9 +345,11 @@ public class Standard_Food_Elements_DB_Activity extends AppCompatActivity {
                         Food_Elements_Item item = new Food_Elements_Item(String.valueOf(stringBuilder));
                         foodArrayList.add(item);
                     }
+                    isSearch = false; //검색완료
                     food_elements_adapter.notifyDataSetChanged(); //리스트에 저장한 데이터 띄우기(새로고침)
 
                 } catch (JSONException e) {
+                    isSearch = false; //검색완료
                     e.printStackTrace();
                     Toast.makeText(Standard_Food_Elements_DB_Activity.this, "검색결과가 없습니다.", Toast.LENGTH_SHORT).show();
                 }
@@ -323,6 +364,19 @@ public class Standard_Food_Elements_DB_Activity extends AppCompatActivity {
 
         //대기열에 데이터를 Parsing 하는 요청을 넣음
         queue.add(jsonObjectRequest);
+    }
+
+//==================================================================================================
+
+    //loading 로티애니메이션 커스텀메소드
+    private void loadingCustomAnimators(float startPosition, float finishPosition, int duration) {
+
+        //애니메이션의 진행위치, 종료위치, 진행속도를 설정
+        ValueAnimator animator = ValueAnimator.ofFloat(startPosition, finishPosition).setDuration(duration);
+        animator.addUpdateListener(animation -> {
+            LA_loading.setProgress((Float) animation.getAnimatedValue());
+        });
+        animator.start();
     }
 
 //==================================================================================================

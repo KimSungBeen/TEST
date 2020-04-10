@@ -34,7 +34,7 @@
         android:id="@+id/BTN_resultZoomIn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="결과\n크게보기"
+        android:text="결과\n확대"
         app:layout_constraintBottom_toBottomOf="@+id/BTN_exit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/TV_mainLogo"
@@ -44,7 +44,7 @@
         android:id="@+id/BTN_resultZoomOut"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="결과\n작게보기"
+        android:text="결과\n축소"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/BTN_exit"
         app:layout_constraintEnd_toEndOf="parent"
@@ -56,7 +56,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/layoutColor"
-        app:layout_constraintTop_toBottomOf="@id/TV_mainLogo" />
+        app:layout_constraintTop_toBottomOf="@id/BTN_resultZoomIn" />
 
     <TextView
         android:id="@+id/TV_foodElementsNotice"
@@ -65,7 +65,7 @@
         android:gravity="center"
         android:text="@string/foodElementsNotice"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/TV_mainLogo" />
+        app:layout_constraintTop_toBottomOf="@id/view3" />
 
     <View
         android:id="@+id/view"
@@ -112,6 +112,7 @@
         app:lottie_loop="true" />
 
     <View
+        android:id="@+id/view4"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="3dp"
@@ -156,5 +157,17 @@
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view2" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/LA_loading"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="false"
+        app:lottie_fileName="loading.json"
+        app:lottie_loop="true" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
