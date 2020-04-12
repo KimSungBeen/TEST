@@ -8,6 +8,8 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
 
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
@@ -74,7 +76,9 @@
         <activity android:name=".PublicSptCenter_Info_Activity" />
         <activity android:name=".Standard_Food_Elements_DB_Activity" />
         <activity android:name=".Naver_Map" />
-        <activity android:name=".Test_Activity"/>
+        <activity android:name=".Test_Activity">
+
+        </activity>
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

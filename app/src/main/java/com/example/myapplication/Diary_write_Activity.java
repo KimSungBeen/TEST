@@ -105,7 +105,7 @@ public class Diary_write_Activity extends AppCompatActivity {
                     AlertDialog.Builder dialog = new AlertDialog.Builder(v.getContext());
                     dialog.setIcon(R.mipmap.ic_launcher);
                     dialog.setTitle("권한이 필요합니다.");
-                    dialog.setMessage("권한을 설정해 주십시오.");
+                    dialog.setMessage("권한을 설정해 주십시오.\n[설정] -> [애플리케이션] -> [Workout Mate] -> [권한]에서 카메라 권한 허용.");
                     dialog.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {

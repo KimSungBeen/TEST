@@ -8,13 +8,16 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.hardware.biometrics.BiometricPrompt;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CancellationSignal;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,6 +35,8 @@ import com.google.android.youtube.player.YouTubeThumbnailView;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import rebus.permissionutils.AskAgainCallback;
 import rebus.permissionutils.FullCallback;
@@ -130,7 +135,9 @@ public class Home_Activity extends YouTubeBaseActivity {
         TV_bookmarkNum5 = findViewById(R.id.TV_bookmarkNum5);
         IV_bookmarkNum6 = findViewById(R.id.IV_bookmarkNum6);
         TV_bookmarkNum6 = findViewById(R.id.TV_bookmarkNum6);
+
 //==================================================================================================
+
         //MP3 Player SeekBar
         musicSeekBar = findViewById(R.id.musicSeekBar);
 
@@ -336,24 +343,56 @@ public class Home_Activity extends YouTubeBaseActivity {
         TV_workoutFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ActivityCompat.checkSelfPermission(v.getContext(), Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
-                    Intent intent = new Intent(Home_Activity.this, Workout_Friend_Activity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                    startActivity(intent);
-                }else {
-                    //TODO 권한설정
-                    AlertDialog.Builder dialog = new AlertDialog.Builder(v.getContext());
-                    dialog.setIcon(R.mipmap.ic_launcher);
-                    dialog.setTitle("권한이 필요합니다.");
-                    dialog.setMessage("권한을 설정해 주십시오.");
-                    dialog.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-                    dialog.show();
-                }
+
+                //개별적인 쓰레드 생성
+                Executor executor = Executors.newSingleThreadExecutor();
+
+                //지문인식을 요구하는 창을 생성
+                BiometricPrompt biometricPrompt = new BiometricPrompt.Builder(v.getContext())
+                        .setTitle("지문 인식")
+                        .setSubtitle("소모임 주소록 목록")
+                        .setDescription("개인 정보 보호")
+                        .setNegativeButton("취소", executor, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        }).build();
+                Home_Activity activity = new Home_Activity();
+
+                //지문인식 완료에 따른 작업을 작성
+                biometricPrompt.authenticate(new CancellationSignal(), executor, new BiometricPrompt.AuthenticationCallback() {
+                    @Override
+                    public void onAuthenticationSucceeded(BiometricPrompt.AuthenticationResult result) {
+
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                if (ActivityCompat.checkSelfPermission(v.getContext(), Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+                                    Intent intent = new Intent(Home_Activity.this, Workout_Friend_Activity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                                    startActivity(intent);
+                                } else {
+                                    AlertDialog.Builder dialog = new AlertDialog.Builder(v.getContext());
+                                    dialog.setIcon(R.mipmap.ic_launcher);
+                                    dialog.setTitle("권한이 필요합니다.");
+                                    dialog.setMessage("권한을 설정해 주십시오.\n[설정] -> [애플리케이션] -> [Workout Mate] -> [권한]에서 주소록 권한 허용.");
+                                    dialog.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+                                    dialog.show();
+                                }
+                            }
+                        });
+
+                    }
+                });
+
+
             }
         });
 
